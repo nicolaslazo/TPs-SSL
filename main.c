@@ -28,7 +28,10 @@ void escribirResultado(int estado) //Funcion que va a devolver un archivo de tex
 
 	switch (estado) // TODO: Asignarle a stringAEscribir el renglon que se tiene que escribir en el archivo
 	{
-		
+	// Asumimos que estado 2 es hexadecimal
+		case 2:
+			stringAEscribir = numeroCompleto(concat)"\tHEXADECIMAL\n"
+			break;	
 	}
 
 	// TODO: Hacer la parte de guardar en archivo
