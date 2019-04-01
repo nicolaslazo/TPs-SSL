@@ -1,27 +1,41 @@
 #include <stdio.h>
 
-int determinarCategoria(char charLeido) // Determina la categoria de cambio de estado.
+int determinarColumna(char charLeido, int estado) // Determina la columna de cambio de estado.
 {
-	/* Tabla de outputs:
-	 * 	0: {0}
-	 * 	1: [1-7]
-	 * 	2: [8-9]
-	 * 	3: [A-F] U [a-f]
-	 * 	4: {x, X}
-	 * 	5: Otros
-	 */
+    switch (estado){ // "estado" seria la fila
 
-	// Les dije que quedaria mejor como un char, pero me di cuenta de que era agregar pasos al pedo. Ahora es un index en la tabla de transiciones.
-	// Les diria que dejemos esa tabla en el comentario como documentacion del programa.
-
-	/* Tip: se puede usar
-	 * 	if ( charLeido >= 'a' && charLeido <= 'f' )
-	 * Para verificar que esta en ese rango
-	 */
-
-	// TODO: Completar
+case 0: if (charLeido=='0') //case 0 es el caso de fila 1
+            return 0; // te dice de ir a la columna 1, unica posibilidad. OJO: el indice del array es 0 pero es columna 1
+        if (charLeido>='1' && charLeido<='9')
+            return 1; //aca puede ser la columna 2 o 3, pero lo simplifico en columna 2
+         else return 3; //acá puede ser la columna 4, 5 o 6, pero simplifico en columna 4
+         break;
+case 1:  if (charLeido>='0' && charLeido<='9')
+         return 0; // aca puede ser columna 1,2 o 3
+         else return 3; // pueden ser 4, 5 o 6
+         break;
+case 2:  if (charLeido>='0' && charLeido<='7')
+         return 0; //1 o 2
+         if (charLeido=='x' || charLeido=='X')
+            return 4; // columna 5, unica posibilidad
+         else return 2; // 3, 4 o 6
+         break;
+case 3: if (charLeido>='0' && charLeido<='9' || charLeido >= 'a' && charLeido <= 'f' || charLeido >= 'A' && charLeido <= 'F')
+        return 0; // columnas 1, 2, 3 o 4
+        else return 4; // columna 5 o 6
+        break;
+case 4: if (charLeido>='0' && charLeido <='7')
+        return 0;
+        else return 2;
+        break;
+case 5: if (charLeido>='0' && charLeido<='9' || charLeido >= 'a' && charLeido <= 'f' || charLeido >= 'A' && charLeido <= 'F')
+        return 0;
+        else return 4;
+        break;
+case 6: return 0;
+break;
+    }
 }
-
 void escribirResultado(int estado) //Funcion que va a devolver un archivo de texto, con la clasificacion de cada cadena de caracteres(separados por una coma)
 {
 	char stringAEscribir[40];
@@ -40,7 +54,7 @@ void escribirResultado(int estado) //Funcion que va a devolver un archivo de tex
 int main() 
 {
 	int estado = 0;
-	int transiciones[6][7] = { 
+	int transiciones[7][6] = { 
 		                   {2, 1, 1, 6, 6, 6},
 				   {1, 1, 1, 6, 6, 6},
 				   {4, 4, 6, 6, 3, 6},
@@ -67,7 +81,7 @@ int main()
 			}
 				else 
 				{
-				estado = transiciones[determinarCategoria(charLeido)][estado]; //Fila-Columna [estado][determinarCategoria(charLeido)] Corregir
+				estado = transiciones[estado][determinarColumna(charLeido, estado)];
 				}
 		fread ( &charLeido , sizeof(char) , 1 , f ) //Leo el siguiente caracter
 	}
