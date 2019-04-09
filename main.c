@@ -45,25 +45,25 @@ void escribirResultado(int estado, char stringAEscribir[]) //Funcion que va a de
 	switch (estado) // TODO: Asignarle a stringAEscribir el renglon que se tiene que escribir en el archivo
 	{
 	//estado 1 : DECIMAL
-		case '1':
+		case 1:
 		    strcat(stringAEscribir, "\t DECIMAL \n");
 		    fprintf(g,stringAEscribir);
 			break;
 
 	// estado 2 y 4: OCTAL
-		case '2': case '4':
+		case 2: case 4:
 		    strcat(stringAEscribir, "\t OCTAL \n");
 		    fprintf(g,stringAEscribir);
 		break;
 
 	//estado 3 y 5 : HEXADECIMAL
-		case '3': case '5' :
+		case 3: case 5 :
 		    strcat(stringAEscribir, "\t HEXADECIMAL \n");
 		    fprintf(g,stringAEscribir);
 		break;
 
 	// estado 6 : NO RECONOCIDO
-		case '6' :
+		case 6 :
 		    strcat(stringAEscribir, "\t NO RECONOCIDO \n");
 		    fprintf(g,stringAEscribir);
 		break;
@@ -87,6 +87,7 @@ int main()
 				   {5, 5, 5, 5, 6, 6},
 				   {6, 6, 6, 6, 6, 6}
 				 };
+    memset(palabraGuardada,'\0',50); //Me aseguro que dentro del array palabraGuardada no haya basura
 
 	while ( !feof(f) )
 	{
@@ -103,6 +104,7 @@ int main()
 				{
 				estado = transiciones[estado][determinarColumna(charLeido, estado)];
 				palabraGuardada[i] = charLeido;
+				i++;
 				}
 	}
 	fclose(f);
