@@ -77,34 +77,36 @@ int main()
     FILE* f = fopen( "input.txt" , "r+" ); //Abro y leo el archivo de texto
     char charLeido; //Guardo lo que leo del archivo de texto
     char palabraGuardada [50];
-	int estado = 0, i = 0;
-	int transiciones[7][6] = {
+	  int estado = 0, i = 0;
+	  int transiciones[7][6] = 
+        {
                    {2, 1, 1, 6, 6, 6},
                    {1, 1, 1, 6, 6, 6},
-				   {4, 4, 6, 6, 3, 6},
-				   {5, 5, 5, 5, 6, 6},
-				   {4, 4, 6, 6, 6, 6},
-				   {5, 5, 5, 5, 6, 6},
-				   {6, 6, 6, 6, 6, 6}
+				           {4, 4, 6, 6, 3, 6},
+				           {5, 5, 5, 5, 6, 6},
+				           {4, 4, 6, 6, 6, 6},
+				           {5, 5, 5, 5, 6, 6},
+				           {6, 6, 6, 6, 6, 6}
 				 };
+  
     memset(palabraGuardada,'\0',50); //Me aseguro que dentro del array palabraGuardada no haya basura
 
 	while ( !feof(f) )
 	{
-            charLeido = getc(f); //Leo un char del archivo Input.txt
+      charLeido = getc(f); //Leo un char del archivo input.txt
 
 			if ( charLeido == ',' || feof(f))
 			{
-			escribirResultado(estado,palabraGuardada);
-			memset(palabraGuardada,'\0',50);
-            i = 0;
-			estado = 0;
+			  escribirResultado(estado,palabraGuardada);
+			  memset(palabraGuardada,'\0',50);
+        i = 0;
+			  estado = 0;
 			}
 				else
 				{
-				estado = transiciones[estado][determinarColumna(charLeido, estado)];
-				palabraGuardada[i] = charLeido;
-				i++;
+				  estado = transiciones[estado][determinarColumna(charLeido, estado)];
+				  palabraGuardada[i] = charLeido;
+				  i++;
 				}
 	}
 	fclose(f);
