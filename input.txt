@@ -1,2 +1,2 @@
-TODO: Tipear el modelo de test
+12,0127,0xAF3,0X345J,081
 

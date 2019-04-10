@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int determinarColumna(char charLeido, int estado) // Determina la columna de cambio de estado.
 {
@@ -36,54 +37,77 @@ case 6: return 0;
 break;
     }
 }
-void escribirResultado(int estado) //Funcion que va a devolver un archivo de texto, con la clasificacion de cada cadena de caracteres(separados por una coma)
-{
-	char stringAEscribir[40];
 
+
+void escribirResultado(int estado, char stringAEscribir[]) //Funcion que va a devolver un archivo de texto, con la clasificacion de cada cadena de caracteres(separados por una coma)
+{
+	FILE* g = fopen("output.txt","a+");
 	switch (estado) // TODO: Asignarle a stringAEscribir el renglon que se tiene que escribir en el archivo
 	{
-	// Asumimos que estado 2 es hexadecimal
-		case 2:
-			stringAEscribir = numeroCompleto(concat)"\tHEXADECIMAL\n"
-			break;	
-	}
+	//estado 1 : DECIMAL
+		case 1:
+		    strcat(stringAEscribir, "\t DECIMAL \n");
+		    fprintf(g,stringAEscribir);
+			break;
 
-	// TODO: Hacer la parte de guardar en archivo
+	// estado 2 y 4: OCTAL
+		case 2: case 4:
+		    strcat(stringAEscribir, "\t OCTAL \n");
+		    fprintf(g,stringAEscribir);
+		break;
+
+	//estado 3 y 5 : HEXADECIMAL
+		case 3: case 5 :
+		    strcat(stringAEscribir, "\t HEXADECIMAL \n");
+		    fprintf(g,stringAEscribir);
+		break;
+
+	// estado 6 : NO RECONOCIDO
+		case 6 :
+		    strcat(stringAEscribir, "\t NO RECONOCIDO \n");
+		    fprintf(g,stringAEscribir);
+		break;
+	}
+	fclose(g);
+    return;
 }
 
-int main() 
+int main()
 {
-	int estado = 0;
-	int transiciones[7][6] = { 
-		                   {2, 1, 1, 6, 6, 6},
-				   {1, 1, 1, 6, 6, 6},
-				   {4, 4, 6, 6, 3, 6},
-				   {5, 5, 5, 5, 6, 6},
-				   {4, 4, 6, 6, 6, 6},
-				   {5, 5, 5, 5, 6, 6},
-				   {6, 6, 6, 6, 6, 6}
+    FILE* f = fopen( "input.txt" , "r+" ); //Abro y leo el archivo de texto
+    char charLeido; //Guardo lo que leo del archivo de texto
+    char palabraGuardada [50];
+	  int estado = 0, i = 0;
+	  int transiciones[7][6] = 
+        {
+                   {2, 1, 1, 6, 6, 6},
+                   {1, 1, 1, 6, 6, 6},
+				           {4, 4, 6, 6, 3, 6},
+				           {5, 5, 5, 5, 6, 6},
+				           {4, 4, 6, 6, 6, 6},
+				           {5, 5, 5, 5, 6, 6},
+				           {6, 6, 6, 6, 6, 6}
 				 };
-	FILE* f = fopen( "ArchivoDeTexto.txt" , "r+b" ) //Abro y leo el archivo de texto
+  
+    memset(palabraGuardada,'\0',50); //Me aseguro que dentro del array palabraGuardada no haya basura
 
-	char charLeido; //Guardo lo que leo del archivo de texto 
-
-	fread ( &charLeido , sizeof(char) , 1 , f ) //Leo el primer caracter	
-
-	while ( !feof(f) ) 
+	while ( !feof(f) )
 	{
-		cout << charLeido << endl; //Muestro el caracter que lei 	
-		
+      charLeido = getc(f); //Leo un char del archivo input.txt
 
-			if ( charLeido == ',' ) 
+			if ( charLeido == ',' || feof(f))
 			{
-			escribirResultado(estado);
-			estado = 0;
+			  escribirResultado(estado,palabraGuardada);
+			  memset(palabraGuardada,'\0',50);
+        i = 0;
+			  estado = 0;
 			}
-				else 
+				else
 				{
-				estado = transiciones[estado][determinarColumna(charLeido, estado)];
+				  estado = transiciones[estado][determinarColumna(charLeido, estado)];
+				  palabraGuardada[i] = charLeido;
+				  i++;
 				}
-		fread ( &charLeido , sizeof(char) , 1 , f ) //Leo el siguiente caracter
 	}
 	fclose(f);
 	return 0;
