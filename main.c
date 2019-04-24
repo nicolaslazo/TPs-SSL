@@ -1,21 +1,39 @@
 #include <stdio.h>
 
-/*
- *	Formato de tabla de transicion
- *
- *	Columnas			Filas
- *	1	{1, 2, 3, 4, 5}		1	E1
- *	2	+			2	E2
- *	3	*			3	T1
- *	4	(			4	T2
- *	5	)			5	F1
- *	6	NULL			6	N
- *					7	X (RECHAZADO)
+/*	Tabla de transicion:
+ *			|	Num	+	*	(	)	Lambda
+ *		----------------------------------------------------------------
+ *		E	|	TF	-	-	TF	-	-
+ *		F	|	-	TF	-	-	-	e
+ *		T	|	FU	-	-	FU	-	-
+ *		U	|	-	-	FU	-	-	e
+ *		F	|	N	-	-	E)	-	-
+ *		N	|	e	-	-	-	-	-
+ *		X	|	?	?	?	?	?	?
  */
-int tablaDeTransicion[6][7] = {}	// TODO: Averiguar como armar una tabla de transicion
-					// 	 que transiciona a dos items
+
+struct Nodo {
+	char valor;
+	Nodo *sig = NULL;
+}
+
+enum simbolos {
+	// Herramienta a tener en cuenta, estaria excelente si leen del tema
+}
+
+char leerCaracter(); // Esto no tiene que ser una funcion necesariamente, es una abstraccion
 
 int main() {
+	Nodo * cola = new Nodo;
+	cola->valor = '$';
+
+	char caracterLeido;
+	
+	do {
+		caracterLeido = leerCaracter();
+
+
+	} while (cola->valor != '$')
 
 	return 0;
 }
