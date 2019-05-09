@@ -1,72 +1,127 @@
 #include <stdio.h>
 
+#define Simbolo Int
+//	TODO: Averiguar si hacer este tipo de alias es buena practica
+
 /*	Tabla de transicion:
  *			|	Num	+	*	(	)	Lambda
  *		---------------------------------------------------------------
- *		E	|	TF	-	-	TF	-	-
- *		F	|	-	TF	-	-	-	e
- *		T	|	FU	-	-	FU	-	-
- *		U	|	-	-	FU	-	-	e
- * 	 	P	|	N	-	-	E)	-	-
+ *		E	|	T1E2	-	-	T1E2	-	-
+ *		F	|	-	T1E2	-	-	-	e
+ *		T	|	F1T2	-	-	F1T2	-	-
+ *		U	|	-	-	F1T2	-	-	e
+ * 	 	P	|	N	-	-	E1)	-	-
  *		N	|	e	-	-	-	-	-
  *		X	|	?	?	?	?	?	?
  *
- *	Gramatica:
- *		1. E -> TF
- *		2. F -> +TF
- *		3. F -> Lambda
- *		4. T -> FU
- *		5. U -> *FU
- *		6. U -> Lambda
- *		7. F -> (E)
- *		8. F -> N
- *		9. N -> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 }
+ *	Axiomas:
+ *		1. E -> T
+ *		2. E -> E+T
+ *		3. T -> F
+ *		4. T -> T*F
+ *		5. F -> N
+ *		6. F -> (E)
+ *		7. N -> DN
+ *		8. N -> D
+ *		9. D -> [0-9]
  */
 
-struct Nodo {
-	char valor;
-	Nodo *sig = NULL;
+//	TODO: Funcion reportarError que imprime un mensaje en pantalla y sale con codigo de salida 1
+
+////	ACA EMPIEZA LA SECCION DE ALFRED Y NICO
+
+struct NodoPila {
+	Simbolo simbolo;
+	NodoPila * sig = NULL;
+};
+
+void push(Categoria categoria, NodoPila*& pila) {
+	struct NodoPila nuevoNodo;
+
+	nuevoNodo.categoria = valor;
+
+	nuevoNodo.sig = pila;
+	pila = &nuevoNodo;
 }
 
-enum estados {
-	E,
-	F,
-	T,
-	U,
-	P,
-	N
+Simbolo pop(NodoPila*& pila) {
 }
 
-enum caracteres {
+Simbolo peek(/* ??? */) {
+	// TODO: Esta funcion deberia leer el caracter de la string input
+	// que estamos procesando y guardarlo en la variable char caracter
+	
+	return determinarSimbolo(caracter)
+}
+
+enum simbolos {
+	// No terminales
+	E1,
+	E2,
+	T1,
+	T2,
+	F1,
+	N,
+
+	// Terminales
 	NUMERO,
 	MAS,
 	POR,
 	PARENTESIS1,
-	PARENTESIS2,
-	LAMBDA
+	PARENTESIS2
 }
 
-int tablaDeTransicion[6][6] = { { 1, 0, 0, 1, 0, 0},
-			      { 0, 2, 0, 0, 0, 3},
-			      { 4, 0, 0, 4, 0, 0},
-			      { 0, 0, 5, 0, 0, 6},
-			      { 7, 0, 0, 8, 0, 0},
-			      { 9, 0, 0, 0, 0, 0}
+Simbolo determinarSimbolo(char lectura) {
+	switch ( lectura ) {
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			return NUMERO;
+		case '+':
+			return MAS;
+		case '*':
+			return POR;
+		case '(':
+			return PARENTESIS1;
+		case ')':
+			return PARENTESIS2;
+		default:
+			reportarError("Input invalido");
+	}
 }
 
-char leerCaracter(); // Esto no tiene que ser una funcion necesariamente, es una abstraccion
+void ejecutarTransicion(/* String de input? */, NodoPila*& pila) {
+	Simbolo simboloActual = pop(pila);
+	Simbolo sigSimbolo = peek(/* input? */);
+
+	switch ( simboloActual ) {
+		case E1:
+			if (sigSimbolo == NUMERO || sigSimbolo == PARENTESIS1) {
+				push(T1, pila);
+				push(E2, pila);
+			}
+			else {
+				/* ??? */
+			}
+			break;
+		default:
+			/* ??? */
+	}
+}
+
+////	ACA EMPIEZA LA SECCION DE EZE, SOL Y VICTORIA
 
 int main() {
-	Nodo * cola = new Nodo;
-	cola->valor = '$';
-
-	char caracterLeido;
-	
 	do {
-		caracterLeido = leerCaracter();
-
-
-	} while (cola->valor != '$')
+		ejecutarTransicion(/* ??? */);
+	} while (/* No se llega a EOF*/);
 
 	return 0;
 }
