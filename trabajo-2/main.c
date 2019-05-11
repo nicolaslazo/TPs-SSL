@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 #define Simbolo Int
 //	TODO: Averiguar si hacer este tipo de alias es buena practica
@@ -45,29 +44,32 @@ void push(Categoria categoria, NodoPila*& pila) {
 	pila = &nuevoNodo;
 }
 
-Simbolo pop(NodoPila*& pila) { // acá devolvería un string (ej: T1)?
+Simbolo pop(NodoPila*& pila) {
 }
 
 Simbolo peek(/* ??? */) {
 	// TODO: Esta funcion deberia leer el caracter de la string input
 	// que estamos procesando y guardarlo en la variable char caracter
-
+	
 	return determinarSimbolo(caracter)
 }
 
-enum simbolo {
-	E1=1,       // NoTerminales
-	E2=2,
-	T1=3,
-	T2=4,
-	F1=5,
-    N=6
-	NUMERO=7, //Terminales
-	MAS=8,
-	POR=9,
-	PARENTESIS1=10,
-	PARENTESIS2=11
-    }
+enum simbolos {
+	// No terminales
+	E1,
+	E2,
+	T1,
+	T2,
+	F1,
+	N,
+
+	// Terminales
+	NUMERO,
+	MAS,
+	POR,
+	PARENTESIS1,
+	PARENTESIS2
+}
 
 Simbolo determinarSimbolo(char lectura) {
 	switch ( lectura ) {
@@ -96,30 +98,14 @@ Simbolo determinarSimbolo(char lectura) {
 }
 
 void ejecutarTransicion(/* String de input? */, NodoPila*& pila) {
-    enum simbolo simboloActual;
-	bool buscaSiguiente = true; //es true al principio y cuando se hace un pop de la pila
 	Simbolo simboloActual = pop(pila);
-
-	if (buscaSiguiente)
 	Simbolo sigSimbolo = peek(/* input? */);
 
 	switch ( simboloActual ) {
-		case 1: //E1
-        {
+		case E1:
 			if (sigSimbolo == NUMERO || sigSimbolo == PARENTESIS1) {
-                push(E2, pila);
 				push(T1, pila);
-				buscaSiguiente=false;
-			}
-			else {
-				/* deberia cortar??? */
-			}
-        case 3: // T1
-        {
-			if (sigSimbolo == NUMERO || sigSimbolo == PARENTESIS1) {
-                push(T2, pila);
-				push(F1, pila);
-				buscaSiguiente=false;
+				push(E2, pila);
 			}
 			else {
 				/* ??? */
@@ -127,28 +113,7 @@ void ejecutarTransicion(/* String de input? */, NodoPila*& pila) {
 			break;
 		default:
 			/* ??? */
-	    }
-			break;
-    case 5: //F1
-        {
-			if (sigSimbolo == NUMERO)
-                push(N, pila);
-            if (sigSimbolo == PARENTESIS1)
-                push (PARENTESIS2, pila);
-                push (E1, pila);
-				buscaSiguiente=false;
-        }
-			else {
-				/* ??? */
-			}
-			break;
-		default:
-			/* ??? */
-	    }
-		default:
-			/* ??? */
-	    }
-
+	}
 }
 
 ////	ACA EMPIEZA LA SECCION DE EZE, SOL Y VICTORIA
