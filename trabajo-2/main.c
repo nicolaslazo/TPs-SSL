@@ -47,12 +47,7 @@ void push(Categoria categoria, NodoPila*& pila) {
 Simbolo pop(NodoPila*& pila) {
 }
 
-Simbolo peek(/* ??? */) {
-	// TODO: Esta funcion deberia leer el caracter de la string input
-	// que estamos procesando y guardarlo en la variable char caracter
-	
-	return determinarSimbolo(caracter)
-}
+Simbolo peek(NodoPila*& pila) { return pila.simbolo; }
 
 enum simbolos {
 	// No terminales
@@ -68,7 +63,10 @@ enum simbolos {
 	MAS,
 	POR,
 	PARENTESIS1,
-	PARENTESIS2
+	PARENTESIS2,
+
+	FONDODEPILA
+
 }
 
 Simbolo determinarSimbolo(char lectura) {
@@ -97,9 +95,10 @@ Simbolo determinarSimbolo(char lectura) {
 	}
 }
 
-void ejecutarTransicion(/* String de input? */, NodoPila*& pila) {
+int ejecutarTransicion(NodoPila*& pila) {
+	// Tiene que devolver 1 cuando un terminal y un no terminal matchean, sino 0
 	Simbolo simboloActual = pop(pila);
-	Simbolo sigSimbolo = peek(/* input? */);
+	Simbolo sigSimbolo = peek(pila);
 
 	switch ( simboloActual ) {
 		case E1:
@@ -119,9 +118,25 @@ void ejecutarTransicion(/* String de input? */, NodoPila*& pila) {
 ////	ACA EMPIEZA LA SECCION DE EZE, SOL Y VICTORIA
 
 int main() {
-	do {
-		ejecutarTransicion(/* ??? */);
-	} while (/* No se llega a EOF*/);
+	char * input[30] = {0};
+
+	printf("Ingrese calculo > ");
+	scanf("%s", &input);
+
+	// Seteo inicial de pila
+	push(E1);
+
+	for (int index = 0; index != NULL; index++) {
+		Simbolo nuevaLectura = determinarSimbolo(input[index]);
+
+		if ( peek(pila) == NUMERO && nuevaLectura == NUMERO ) continue;
+
+		push(nuevaLectura);
+
+		int huboMatch = 0;
+
+		do { huboMatch = ejecutarTransicion(pila); } while (huboMatch != 1);
+	}
 
 	return 0;
 }
