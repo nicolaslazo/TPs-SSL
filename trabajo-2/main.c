@@ -65,8 +65,9 @@ enum simbolos {
 	PARENTESIS1,
 	PARENTESIS2,
 
-	FONDODEPILA
-
+	// Simbolos especiales
+	FONDODEPILA,
+	ESPACIO
 }
 
 Simbolo determinarSimbolo(char lectura) {
@@ -90,6 +91,8 @@ Simbolo determinarSimbolo(char lectura) {
 			return PARENTESIS1;
 		case ')':
 			return PARENTESIS2;
+		case ' ':
+			return ESPACIO;
 		default:
 			reportarError("Input invalido");
 	}
@@ -129,7 +132,7 @@ int main() {
 	for (int index = 0; index != NULL; index++) {
 		Simbolo nuevaLectura = determinarSimbolo(input[index]);
 
-		if ( peek(pila) == NUMERO && nuevaLectura == NUMERO ) continue;
+		if ( peek(pila) == NUMERO && nuevaLectura == NUMERO || nuevaLectura == ESPACIO) continue;
 
 		push(nuevaLectura);
 
