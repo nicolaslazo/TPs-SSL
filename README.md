@@ -14,4 +14,15 @@ debe contemplar la implementación de un autómata finito determinístico (AFD) 
 
 -------
 
+Trabajo Practico n° 2 - Gramatica para resolver expresiones de Suma y Producto
+
+Implementar en C un programa que permita resolver expresiones aritméticas de suma y producto (utilizar la gramática dada en clase). El mismo deberá tomar una expresión (cadena de caracteres) ingresada por el usuario y deberá devolver su resultado por pantalla en caso de que la expresión sea correcta, caso contrario deberá indicar que no se pudo resolver la expresión. El programa debe contemplar la implementación de la siguiente gramática independiente de contexto G.I.C (vista en clase).
+
+-------
+
+Trabajo Practico n° 3 - Flex para reconocimiento de Categorias Lexicas de C
+
+Implementar en C un programa que permita reconocer en un archivo.c entrada todas las categorías léxicas de C. El mismo deberá  dar como salida en pantalla un reporte. Para desarrollar dicho programa deberá utilizar LEX/FLEX para la generación del código C
+
+-------
 
