@@ -15,7 +15,7 @@ palabras reservadas                                                             
                                                                                          unsigned | void | volatile | while 
 identificadores                                                                          [a-z A-Z _][a-z A-Z 0-9 _]*
 caracteres de puntuacion                                                                 [, . ; : ... ¿? ¡! () [] {} " ' « »_ - ¨ / * §]
-operadores de c                                                                          buscar
+operadores de c                                                                          [=!&*+-/|%><?]
 comentarios                                                                              \/\/(.)*
 
 /*Listados*/
