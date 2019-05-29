@@ -26,40 +26,48 @@
  *    10. D -> [0-9]
  */
 
-struct NodoPila{
+typedef struct NodoPila{
    int simboloNodo;
-   NodoPila *sig;
-};
+   struct NodoPila *sig;
+} pila ;
+
+//typedef struct NodoPila Stack;
+//typedef Stack *sig;
+//typedef Stack *pila;
 
 char error [30];
 
 int reportarError (error){
     printf("%s", error);
-    return 1; }
+    return 1; };
 
-void push (int valor, NodoPila*& pila){
-    NodoPila* nuevo = new NodoPila();
-   (*nuevo).simboloNodo = valor;
-    (*nuevo).sig = NULL;
+void push (int valor, pila *top){
+    pila* nuevo;
+    nuevo = (pila*) malloc(sizeof(pila));
 
-    if (pila== NULL)
-    {
-     pila = nuevo;
-    }
-     else
-        {
-          (*nuevo).sig=pila;
-          pila = nuevo;
-        }
+     if(nuevo != NULL)
+       {
+       nuevo -> simboloNodo = valor;
+       nuevo -> sig = top;
+       top = nuevo;
+       }
+
+    else
+       {printf("\nERROR !!! (Not enough space)");
+   }
 };
 
-int pop(NodoPila*& pila)
+int pop(pila *top)
 {
-    int cimaPila = (*pila).simboloNodo;
-    NodoPila aux = (*pila).sig;
-    delete pila;
-    pila = aux;
-    return cimaPila;
+   int v; //variable for value at the top
+   pila* tempPtr; //temporary pointer
+
+   tempPtr = top;
+   v = top -> simboloNodo;
+    top = top -> sig;
+   free(tempPtr); //free temporary pointer value
+   return v;
+
 };
 
 enum simbolos {
@@ -113,17 +121,17 @@ char determinarSimbolo(char lectura){
    }
 };
 
-int ejecutarTransicion (NodoPila*& pila, char lectura){
+int ejecutarTransicion (pila *top, char lectura){
 
-      int simboloActual = pop(pila);
+      int simboloActual = pop(top);
 
       switch (simboloActual)
       {
          case E1:
             if (lectura == NUMERO || lectura == PARENTESIS1)
                {
-               push(E2, pila);
-               push(T1, pila);
+               push(E2, top);
+               push(T1, top);
                return 0;
                }
             else
@@ -134,16 +142,16 @@ int ejecutarTransicion (NodoPila*& pila, char lectura){
          case E2:
             if (lectura == MAS)
              {
-               push(E2, pila);
-               push(T1, pila);
+               push(E2, top);
+               push(T1, top);
              }
             return 1;
             break;
             case T1:
                if (lectura == NUMERO || lectura == PARENTESIS1)
                {
-                  push(T2, pila);
-                  push(F1, pila);
+                  push(T2, top);
+                  push(F1, top);
                   return 0;
                }
                else
@@ -154,21 +162,21 @@ int ejecutarTransicion (NodoPila*& pila, char lectura){
            case T2:
             if (lectura == POR)
             {
-               push(T2, pila);
-               push(F1, pila);
+               push(T2, top);
+               push(F1, top);
             }
             return 1;
             break;
             case F1:
                if (lectura == NUMERO)
                  {
-                  push(N, pila);
+                  push(N, top);
                   return 0;
                  }
                else if (lectura == PARENTESIS1)
                   {
-                     push (PARENTESIS2, pila);
-                     push (E1, pila);
+                     push (PARENTESIS2, top);
+                     push (E1, top);
                      return 1;
                   }
                else
@@ -179,8 +187,8 @@ int ejecutarTransicion (NodoPila*& pila, char lectura){
             case N:
                if (lectura == NUMERO)
                   {
-                     push (N, pila);
-                     push (D, pila);
+                     push (N, top);
+                     push (D, top);
                      return 0;
                   }
            break;
@@ -209,25 +217,58 @@ int ejecutarTransicion (NodoPila*& pila, char lectura){
    }
 };
 
+
+/*int acum = 0;
+char *c[30] = get c;
+int evaluarExpresion (char digito)
+{
+      while (c= get(digito) != '\0')
+      {
+        if (isDigit(c))//la funcion isDigit devuelve 1 o 0 dependiendo si es un digito o nop
+          {
+            c= convertir (c);
+            acum= acum*10 + c;
+          }
+        if (c='+')
+          {
+            acum= acum + evaluarExpresion(c);
+          }
+        if (c= '*')
+          {
+          acum= acum * evaluarExpresion(c);
+          }
+        if (c = '(' || ')')
+        {
+            int acum2=0;
+            acum2 = evaluarExpresion(c); // aca lo q quise poner es q como tengo un parentesis que siga evaluando la expreesion
+            acum = acum + acum2;
+        }
+
+      }
+   return acum;
+ };
+*/
 int main(){
-    char * input[30] = {0};
+    char input[30] = {0};
     int index= 0;
-    NodoPila* pila= NULL;
+    //typedef Stack *pila;
+   // NodoPila* pila;
+    pila * top;
+    top=NULL;
 
    printf("Ingrese calculo > ");
-
    scanf("%s", &input);
 
-   push (E1,&pila); // Seteo inicial de pila
+   push (E1,top); // Seteo inicial de pila
    int huboMatch = 1;
 
-    while (&pila != NULL)
+    while (top != NULL)
     {
       if (huboMatch)
       {
         int nuevaLectura = determinarSimbolo(input[index]);
 
-        huboMatch = ejecutarTransicion (pila, nuevaLectura);
+        huboMatch = ejecutarTransicion (top, nuevaLectura);
 
       } // devuelve 1 o 0
 
@@ -235,11 +276,14 @@ int main(){
         {
             index ++;
         }
-        else if
+        else if (huboMatch==-1)
         {
-            (huboMatch==-1)
+           exit(0);
         }
-        else huboMatch = ejecutarTransicion(pila,nuevaLectura);
-    }
+        else{
+        int nuevaLectura = determinarSimbolo(input[index]);
+            huboMatch = ejecutarTransicion(top, nuevaLectura);
+           }
     return 0;
-};
+    }
+ };
