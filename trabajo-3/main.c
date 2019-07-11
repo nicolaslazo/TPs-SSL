@@ -3,6 +3,8 @@
 /*Categorias Lexicas			ERX*/
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
+#include "LibLista.h"
 
 struct Identificadores {
   char* nombreIdentificador;
@@ -53,6 +55,13 @@ struct CadenasCaracteresNoReconocidos{
   char* cadenaOCaracterNoReconocido;
   };
 
+NodoLista ** listaOperadores = NULL;
+NodoLista ** listaComentarios = NULL;
+NodoLista ** listaIdentificadores = NULL;
+NodoLista ** listaLiteralesCadena = NULL;
+NodoLista ** listaPalabrasReservadas = NULL;
+NodoLista ** listaCaracteresPuntuacion = NULL;
+
 %}
 
 constantes enteras decimal		[1-9][0-9]*
@@ -77,17 +86,17 @@ comentarios				\/\/(.)*
 
 /*secciones de reglas y acciones */
 
-{constantes enteras decimal}		{cadenaDecimal = cadenaDecimal + atoi(yytext); printf("El valor acumulado es %d\n", cadenaDecimal);}
-{constantes enteras octal}		{cadenaOctal = cadenaOctal + atoi(yytext); printf("El valor acumulado es %d\n", cadenaOctal);}
-{constantes enteras hexadecimal}	{cadenaHexadecimal = cadenaHexadecimal + atoi(yytext); printf("El valor acumulado es %d\n", cadenaHexadecimal);}
-{constantes reales}			{parteEntera = cadenaDecimal + atoi(yytext); printf("El valor acumulado es %d\n", cadena);}
+{constantes enteras decimal}		{
+{constantes enteras octal}		{
+{constantes enteras hexadecimal}	{
+{constantes reales}			{
 {constante caracter}			{
-{literal cadena}			{
-{palabras reservadas}			{printf("La cadena %s representa una palabra reservada\n", yytext);}
-{identificadores}			{printf("La cadena %s representa un identificador\n", yytext);}
-{caracteres de puntuacion}		{
-{operadores de c}			{
-{comentarios}				{
+{literal cadena}			{agregarALista(yytext, listaLiteralesCadena);}
+{palabras reservadas}			{agregarALista(yytext, listaPalabrasReservadas);}
+{identificadores}			{agregarALista(yytext, listaIdentificadores);}
+{caracteres de puntuacion}		{agregarALista(yytext, listaCaracteresDePuntuacion);}
+{operadores de c}			{agregarALista(yytext, listaOperadores);}
+{comentarios}				{agregarALista(yytext, listaComentarios);}
 
 						 
 %%
@@ -98,16 +107,5 @@ int main(){
     yyin = fopen("entrada.txt","r");
     yylex();
     return 0;
-    }
+}
 
-
-
-
-
-
-  
-  
-  
-  
-  
-  

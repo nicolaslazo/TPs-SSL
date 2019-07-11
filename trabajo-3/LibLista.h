@@ -3,13 +3,13 @@
  */
 
 struct NodoLista {
-	int val;
+	char * val;
 	int apariciones;
 	struct NodoLista * sig;
 };
 
 
-void agregarALista(int valor, struct NodoLista ** lista) {
+void agregarALista(char * valor, struct NodoLista ** lista) {
 	struct NodoLista * inspector = *lista;
 
 	while ( inspector != NULL ) {
