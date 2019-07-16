@@ -2,15 +2,49 @@
  * 	LibLista.h: Libreria de utilidades basicas para uso de listas
  */
 
-struct NodoLista {
+struct NodoListaSimple {
 	char * val;
-	int apariciones;
-	struct NodoLista * sig;
+	struct NodoListaSimple * sig;
 };
 
+struct NodoListaConCant {
+	char * val;
+	int apariciones;
+	struct NodoListaConCant * sig;
+};
 
-void agregarALista(char * valor, struct NodoLista ** lista) {
-	struct NodoLista * inspector = *lista;
+struct NodoListaInts {
+	int val;
+	struct NodoListaInts * sig;
+}
+
+struct NodoListaFloats {
+	float val;
+	struct NodoListaFloats * sig;
+}
+
+void agregarALista(char * valor, struct NodoListaSimple ** lista) {
+	struct NodoListaSimple * inspector = *lista;
+
+	while ( inspector != NULL ) {
+		if ( inspector->val == valor ) {
+			inspector->apariciones++;
+
+			return; // Hubo match, sale de la funcion
+		}
+
+		inspector = inspector->sig;
+	}
+
+	// A este punto ya se sabe que el item no existe en la lista
+	
+	struct NodoListaSimple * nuevoNodo = NULL;
+	nuevoNodo = (struct NodoListaSimple *) malloc(sizeof(struct NodoListaSimple));
+	nuevoNodo->val = valor;
+	nuevoNodo->sig = (*lista);
+
+void agregarALista(char * valor, struct NodoListaConCant ** lista) {
+	struct NodoListaConCant * inspector = *lista;
 
 	while ( inspector != NULL ) {
 		if ( inspector->val == valor ) {
@@ -24,8 +58,8 @@ void agregarALista(char * valor, struct NodoLista ** lista) {
 
 	// A este punto ya se sabe que el item no existe en la lista
 	
-	struct NodoLista * nuevoNodo = NULL;
-	nuevoNodo = (struct NodoLista *) malloc(sizeof(struct NodoLista));
+	struct NodoListaConCant * nuevoNodo = NULL;
+	nuevoNodo = (struct NodoListaConCant *) malloc(sizeof(struct NodoListaConCant));
 	nuevoNodo->val = valor;
 	nuevoNodo->apariciones = 1;
 	nuevoNodo->sig = (*lista);
@@ -33,8 +67,61 @@ void agregarALista(char * valor, struct NodoLista ** lista) {
 	(*lista) = nuevoNodo;
 }
 
-void imprimirLista(struct NodoLista ** lista) {
-	struct NodoLista * inspector = (*lista);
+void agregarALista(int valor, struct NodoListaSimple ** lista) {
+	struct NodoListaSimple * inspector = *lista;
+
+	while ( inspector != NULL ) {
+		if ( inspector->val == valor ) {
+			inspector->apariciones++;
+
+			return; // Hubo match, sale de la funcion
+		}
+
+		inspector = inspector->sig;
+	}
+
+	// A este punto ya se sabe que el item no existe en la lista
+	
+	struct NodoListaSimple * nuevoNodo = NULL;
+	nuevoNodo = (struct NodoListaSimple *) malloc(sizeof(struct NodoListaSimple));
+	nuevoNodo->val = valor;
+	nuevoNodo->sig = (*lista);
+
+void agregarALista(float valor, struct NodoListaSimple ** lista) {
+	struct NodoListaSimple * inspector = *lista;
+
+	while ( inspector != NULL ) {
+		if ( inspector->val == valor ) {
+			inspector->apariciones++;
+
+			return; // Hubo match, sale de la funcion
+		}
+
+		inspector = inspector->sig;
+	}
+
+	// A este punto ya se sabe que el item no existe en la lista
+	
+	struct NodoListaSimple * nuevoNodo = NULL;
+	nuevoNodo = (struct NodoListaSimple *) malloc(sizeof(struct NodoListaSimple));
+	nuevoNodo->val = valor;
+	nuevoNodo->sig = (*lista);
+
+int sumaListaInts(NodoListaInts ** lista) {
+	struct NodoListaInts * inspector = *lista;
+	int acumulador = 0;
+
+	while ( inspector != NULL ) {
+		acumulador += inspector->val;
+		inspector = inspector->sig;
+	}
+
+	return acumulador;
+}
+
+void imprimirLista(struct NodoListaConCant ** lista) {
+	/* Funcion para debugging */
+	struct NodoListaConCant * inspector = (*lista);
 
 	if ( inspector == NULL ) {
 		printf("La lista esta vacia\n");

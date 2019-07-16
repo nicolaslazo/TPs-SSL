@@ -6,61 +6,17 @@
 #include <string.h>
 #include "LibLista.h"
 
-struct Identificadores {
-  char* nombreIdentificador;
-  int aparicionesIdentificador;
-  };
-  
-struct LiteralesCadena{
-  char* nombreCadena;
-  int longitudCadena;
-  };
-  
-struct PalabrasReservadas{
-  char* nombrePalabraReservada;
-  };
-  
-struct ConstantesOctales{
-  char* cadenaOctal;
-  };
-  
-struct ConstantesHexadecimales{
-  char* cadenaHexadecimal;
-  };
-  
-struct ConstantesDecimales{
-  char* cadenaDecimal;
-  };
-
-struct ConstantesReales{
-  char* parteMantisa;
-  char* parteEntera;
-  };
-  
-struct CaracteresDePuntuacion{
-  char* caracterPuntuacion;
-  int aparicionesCaracterPuntuacion;
-  };
-  
-struct Operadores{
-  char* operador;
-  int aparicionesOperador;
-  };
-  
-struct ComentariosReconocidos{
-  char* cadenaReconocida;
-  };
-  
-struct CadenasCaracteresNoReconocidos{
-  char* cadenaOCaracterNoReconocido;
-  };
-
-NodoLista ** listaOperadores = NULL;
-NodoLista ** listaComentarios = NULL;
-NodoLista ** listaIdentificadores = NULL;
-NodoLista ** listaLiteralesCadena = NULL;
-NodoLista ** listaPalabrasReservadas = NULL;
-NodoLista ** listaCaracteresPuntuacion = NULL;
+NodoListaConCant ** listaIdentificadores = NULL;
+NodoListaSimple ** listaLiteralesCadena = NULL;
+NodoListaSimple ** listaPalabrasReservadas = NULL;
+NodoListaInts ** listaOctales = NULL;
+NodoListaInts ** listaHexadecimales = NULL;
+NodoListaInts ** listaDecimales = NULL;
+NodoListaFloats ** listaReales = NULL;
+NodoListaConCant ** listaCaracteresDePuntuacion = NULL;
+NodoListaConCant ** listaOperadores = NULL;
+NodoListaSimple ** listaComentarios = NULL;
+NodoListaSimple ** listaOtros = NULL;
 
 %}
 
@@ -86,17 +42,17 @@ comentarios				\/\/(.)*
 
 /*secciones de reglas y acciones */
 
-{constantes enteras decimal}		{
-{constantes enteras octal}		{
-{constantes enteras hexadecimal}	{
-{constantes reales}			{
-{constante caracter}			{
-{literal cadena}			{agregarALista(yytext, listaLiteralesCadena);}
-{palabras reservadas}			{agregarALista(yytext, listaPalabrasReservadas);}
-{identificadores}			{agregarALista(yytext, listaIdentificadores);}
-{caracteres de puntuacion}		{agregarALista(yytext, listaCaracteresDePuntuacion);}
-{operadores de c}			{agregarALista(yytext, listaOperadores);}
-{comentarios}				{agregarALista(yytext, listaComentarios);}
+{constantes enteras decimal}		agregarALista(yytext, listaDecimales);
+{constantes enteras octal}		agregarALista(yytext, listaOctales);
+{constantes enteras hexadecimal}	agregarALista(yytext, listaHexadecimales);
+{constantes reales}			agregarALista(yytext, listaReales);
+{constante caracter}			// ???
+{literal cadena}			agregarALista(yytext, listaLiteralesCadena);
+{palabras reservadas}			agregarALista(yytext, listaPalabrasReservadas);
+{identificadores}			agregarALista(yytext, listaIdentificadores);
+{caracteres de puntuacion}		agregarALista(yytext, listaCaracteresDePuntuacion);
+{operadores de c}			agregarALista(yytext, listaOperadores);
+{comentarios}				agregarALista(yytext, listaComentarios);
 
 						 
 %%
