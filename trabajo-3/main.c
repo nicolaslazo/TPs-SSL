@@ -1,6 +1,4 @@
 %{
-/* Definiciones de ERX*/
-/*Categorias Lexicas			ERX*/
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -40,27 +38,23 @@ comentarios				\/\/(.)*
 
 %%
 
-/*secciones de reglas y acciones */
-
 {constantes enteras decimal}		agregarALista(yytext, listaDecimales);
 {constantes enteras octal}		agregarALista(yytext, listaOctales);
 {constantes enteras hexadecimal}	agregarALista(yytext, listaHexadecimales);
 {constantes reales}			agregarALista(yytext, listaReales);
-{constante caracter}			// ???
 {literal cadena}			agregarALista(yytext, listaLiteralesCadena);
 {palabras reservadas}			agregarALista(yytext, listaPalabrasReservadas);
 {identificadores}			agregarALista(yytext, listaIdentificadores);
 {caracteres de puntuacion}		agregarALista(yytext, listaCaracteresDePuntuacion);
 {operadores de c}			agregarALista(yytext, listaOperadores);
 {comentarios}				agregarALista(yytext, listaComentarios);
-
 						 
 %%
 
 int main(){
 
-    yyout = fopen("salida.txt","w");
     yyin = fopen("entrada.txt","r");
+    yyout = fopen("salida.txt","w");
     yylex();
     return 0;
 }
