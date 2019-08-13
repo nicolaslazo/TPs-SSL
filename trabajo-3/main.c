@@ -59,7 +59,8 @@ int main(){
     	//recorrer el archivo,(tal vez mejor con un for), e ir comparando con los literales cadenas
     
     }
-	
+    switch (cadena)
+	    CASE 1: 
     yyout = fopen("salida.txt","w");
     yylex();
     return 0;
