@@ -54,7 +54,8 @@ comentarios				\/\/(.)*
 int main(){
    
     yyin = fopen("entrada.txt","r");
-	
+/* ver su implementacion en flex, para ver si va en la primer parte o en esta,
+   ver que la solucion propuesta(no terminada) sea viable.
     while (cadena =/ <NULL)
     {
     	//recorrer el archivo,(tal vez mejor con un for), e ir comparando con los literales cadenas
@@ -82,7 +83,7 @@ int main(){
 		if (cadena = comentarios ) {}
 	    case 11:
 		if (cadena = no reconicidos ) {}
-
+*/
     yyout = fopen("salida.txt","w");
 	
     yylex();
