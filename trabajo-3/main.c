@@ -24,7 +24,7 @@ constantes enteras hexadecimal		0[xX][0-9a-fA-F]+
 constantes reales			[0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? 
 	| 				[0-9]+\.([eE][\+\-]?[0-9]+)?
 	|				[0-9]+([eE][\+\-]?[0-9]+)?
-constante caracter			'[ -&\(-~]' | \\[t n 0 ' ...]
+constante caracter			'[ -&\\(-~]' | \\[t n 0 ' ...]
 literal cadena				\"([ -!#-~] | \\\")*\"
 palabras reservadas			auto | break | case | char | const | continue | default
 	| 				do | double | else | enum | extern | float | for | goto
