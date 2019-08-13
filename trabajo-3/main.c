@@ -48,42 +48,12 @@ comentarios				\/\/(.)*
 {caracteres de puntuacion}		agregarALista(yytext, listaCaracteresDePuntuacion);
 {operadores de c}			agregarALista(yytext, listaOperadores);
 {comentarios}				agregarALista(yytext, listaComentarios);
-{no reconocidos}			agregarALista(yytext, listaOtros);						 
+*					agregarALista(yytext, listaOtros);						 
 %%
 
 int main(){
    
     yyin = fopen("entrada.txt","r");
-/* ver su implementacion en flex, para ver si va en la primer parte o en esta,
-   ver que la solucion propuesta(no terminada) sea viable.
-    while (cadena =/ <NULL)
-    {
-    	//recorrer el archivo,(tal vez mejor con un for), e ir comparando con los literales cadenas
-    }
-    switch (cadena)
-	    case 1:
-		if (cadena = constante enteras decimal ) {}
-	    case 2:
-		if (cadena = constante enteras octal ) {}
-	    case 3:
-		if (cadena = constante enteras hexadecimal ) {}
-	    case 4:
-		if (cadena = constantes reales ) {}
-	    case 5:
-		if (cadena = literal cadena ) {}
-	    case 6:
-		if (cadena = palabras reservadas ) {}
-	    case 7:
-		if (cadena = identificadores ) {}
-	    case 8:
-		if (cadena = caracteres de puntuacion ) {}
-	    case 9:
-		if (cadena = operadores de c ) {}
-	    case 10:
-		if (cadena = comentarios ) {}
-	    case 11:
-		if (cadena = no reconicidos ) {}
-*/
     yyout = fopen("salida.txt","w");	
     yylex();
 	
