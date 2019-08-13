@@ -143,8 +143,7 @@ void imprimirLista(struct NodoListaConCant ** lista) {
 		agregarALista(1, &unaLista);
 
 		imprimirLista(&unaLista);
-
+		
 		return 0;
 	}
-
 */
