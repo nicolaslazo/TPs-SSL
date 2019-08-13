@@ -52,10 +52,14 @@ comentarios				\/\/(.)*
 %%
 
 int main(){
-    printf( "Ingrese una cadena de expresiones: " );
-    scanf ( %d, cadena);
+   
     yyin = fopen("entrada.txt","r");
+    while (cadena =/ <NULL)
+    {
+    	//recorrer el archivo,(tal vez mejor con un for), e ir comparando con los literales cadenas
     
+    }
+	
     yyout = fopen("salida.txt","w");
     yylex();
     return 0;
