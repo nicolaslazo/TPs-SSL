@@ -38,7 +38,7 @@ comentarios				\/\/(.)*
 
 %%
 
-{constantes enteras decimal}		agregarALista(yytext, listaDecimales);
+{constantes enteras decimal}		agregarALista(atoi(yytext), listaDecimales);
 {constantes enteras octal}		agregarALista(yytext, listaOctales);
 {constantes enteras hexadecimal}	agregarALista(yytext, listaHexadecimales);
 {constantes reales}			agregarALista(yytext, listaReales);
@@ -84,8 +84,7 @@ int main(){
 	    case 11:
 		if (cadena = no reconicidos ) {}
 */
-    yyout = fopen("salida.txt","w");
-	
+    yyout = fopen("salida.txt","w");	
     yylex();
 	
     return 0;
