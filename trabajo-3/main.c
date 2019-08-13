@@ -52,7 +52,8 @@ comentarios				\/\/(.)*
 %%
 
 int main(){
-    printf( "Ingrese una cadena de expresiones: "
+    printf( "Ingrese una cadena de expresiones: " );
+    scanf ( %d, cadena);
     yyin = fopen("entrada.txt","r");
     
     yyout = fopen("salida.txt","w");
