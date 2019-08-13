@@ -48,7 +48,7 @@ comentarios				\/\/(.)*
 {caracteres de puntuacion}		agregarALista(yytext, listaCaracteresDePuntuacion);
 {operadores de c}			agregarALista(yytext, listaOperadores);
 {comentarios}				agregarALista(yytext, listaComentarios);
-						 
+{no reconocidos}			agregarALista(yytext, listaOtros);						 
 %%
 
 int main(){
