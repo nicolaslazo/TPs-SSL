@@ -40,7 +40,7 @@ comentarios				\/\/(.)*
 
 {constantes enteras decimal}		agregarALista(atoi(yytext), listaDecimales);
 {constantes enteras octal}		agregarALista(yytext, listaOctales);
-{constantes enteras hexadecimal}	agregarALista(yytext, listaHexadecimales);
+{constantes enteras hexadecimal}	agregarALista(atof, listaHexadecimales);
 {constantes reales}			agregarALista(yytext, listaReales);
 {literal cadena}			agregarALista(yytext, listaLiteralesCadena);
 {palabras reservadas}			agregarALista(yytext, listaPalabrasReservadas);
