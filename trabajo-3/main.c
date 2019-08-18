@@ -18,13 +18,13 @@ NodoListaSimple ** listaOtros = NULL;
 
 %}
 
-constantes enteras decimal		[1-9][0-9]*
-constantes enteras octal		0[0-7]*
-constantes enteras hexadecimal		0[xX][0-9a-fA-F]+
-constantes reales			[0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? 
+constDecimales				[1-9][0-9]*
+constOctales				0[0-7]*
+constHexadecimales			0[xX][0-9a-fA-F]+
+constReales				[0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? 
 	| 				[0-9]+\.([eE][\+\-]?[0-9]+)?
-	|				[0-9]+([eE][\+\-]?[0-9]+)?
-constante caracter			'[ -&\\(-~]' | \\[t n 0 ' ...]
+	|				[0-9]([eE][\+\-]?[0-9]+)?
+constCaracter				'[ -&\\(-~]' | \\[t n 0 ' ...]
 literal cadena				\"([ -!#-~] | \\\")*\"
 palabras reservadas			auto | break | case | char | const | continue | default
 	| 				do | double | else | enum | extern | float | for | goto
@@ -38,10 +38,10 @@ comentarios				\/\/(.)*
 
 %%
 
-{constantes enteras decimal}		agregarALista(atoi(yytext), listaDecimales);
-{constantes enteras octal}		agregarALista(yytext, listaOctales);
-{constantes enteras hexadecimal}	agregarALista(atof, listaHexadecimales);
-{constantes reales}			agregarALista(yytext, listaReales);
+{constDecimales}		agregarALista(atoi(yytext), listaDecimales);
+{constOctales}		agregarALista(yytext, listaOctales);
+{constHexadecimales}	agregarALista(atof, listaHexadecimales);
+{constReales}			agregarALista(yytext, listaReales);
 {literal cadena}			agregarALista(yytext, listaLiteralesCadena);
 {palabras reservadas}			agregarALista(yytext, listaPalabrasReservadas);
 {identificadores}			agregarALista(yytext, listaIdentificadores);
@@ -51,10 +51,10 @@ comentarios				\/\/(.)*
 *					agregarALista(yytext, listaOtros);						 
 %%
 
-int main(){
+int main() {
    
-    yyin = fopen("entrada.txt","r");
-    yyout = fopen("salida.txt","w");	
+    yyin = fopen("entrada.txt", "r");
+    yyout = fopen("salida.txt", "w");	
     yylex();
 	
     return 0;
