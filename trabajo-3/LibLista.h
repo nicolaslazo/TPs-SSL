@@ -67,7 +67,7 @@ void agregarAListaConCant(char * valor, struct NodoListaConCant ** lista) {
 }
 
 void agregarAListaInts(int valor, struct NodoListaInts ** lista) {
-	struct NodoListaSimple * inspector = *lista;
+	struct NodoListaInts * inspector = *lista;
 
 	while ( inspector != NULL ) {
 		if ( inspector->val == valor ) {
@@ -85,7 +85,7 @@ void agregarAListaInts(int valor, struct NodoListaInts ** lista) {
 	nuevoNodo->sig = (*lista);
 
 void agregarAListaFloats(float valor, struct NodoListaFloats ** lista) {
-	struct NodoListaSimple * inspector = *lista;
+	struct NodoListaFloats * inspector = *lista;
 
 	while ( inspector != NULL ) {
 		if ( inspector->val == valor ) {
