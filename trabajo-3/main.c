@@ -1,3 +1,4 @@
+
 %{
 #include <math.h>
 #include <stdio.h>
@@ -21,7 +22,7 @@ NodoListaSimple ** listaOtros = NULL;
 
 constDecimales				[1-9][0-9]*
 constOctales				0[0-7]*
-constHexadecimales			0[xX][0-9a-fA-F]+
+constHexadecimales			0[xX][0-9 a-f A-F]+
 constReales				[0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? | [0-9]+\.([eE][\+\-]?[0-9]+)? | [0-9]([eE][\+\-]?[0-9]+)?
 constCaracter				'[ -&\\(-~]' | '\\[t n 0 ' ...]'
 literal cadena				\"([ -!#-~] | \\\")*\"

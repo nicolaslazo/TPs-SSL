@@ -16,12 +16,12 @@ struct NodoListaConCant {
 struct NodoListaInts {
 	int val;
 	struct NodoListaInts * sig;
-}
+};
 
 struct NodoListaFloats {
 	float val;
 	struct NodoListaFloats * sig;
-}
+};
 
 void agregarALista(char * valor, struct NodoListaSimple ** lista) {
 	struct NodoListaSimple * inspector = *lista;
@@ -42,6 +42,7 @@ void agregarALista(char * valor, struct NodoListaSimple ** lista) {
 	nuevoNodo = (struct NodoListaSimple *) malloc(sizeof(struct NodoListaSimple));
 	nuevoNodo->val = valor;
 	nuevoNodo->sig = (*lista);
+}
 
 void agregarALista(char * valor, struct NodoListaConCant ** lista) {
 	struct NodoListaConCant * inspector = *lista;

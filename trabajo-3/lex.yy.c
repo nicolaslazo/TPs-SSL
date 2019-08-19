@@ -503,7 +503,7 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "main.c"
-#line 2 "main.c"
+#line 3 "main.c"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -739,7 +739,7 @@ YY_DECL
 		}
 
 	{
-#line 20 "main.c"
+#line 21 "main.c"
 
 
 #line 746 "lex.yy.c"
@@ -801,54 +801,54 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 22 "main.c"
+#line 23 "main.c"
 [1-9][0-9]*
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 23 "main.c"
+#line 24 "main.c"
 0[0-7]*
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 24 "main.c"
-0[xX][0-9a-fA-F]+
+#line 25 "main.c"
+0[xX][0-9 a-f A-F]+
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 25 "main.c"
+#line 26 "main.c"
 [0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? | [0-9]+\.([eE][\+\-]?[0-9]+)? | [0-9]([eE][\+\-]?[0-9]+)?
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 26 "main.c"
+#line 27 "main.c"
 '[ -&\\(-~]' | '\\[t n 0 ' ...]'
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 27 "main.c"
+#line 28 "main.c"
 cadena				\"([ -!#-~] | \\\")*\"
 palabras reservadas			auto | break | case | char | const | continue | default | do | double | else | enum | extern | float | for | goto | if | int | long | register | return | short | signed | sizeof | static | struct | switch | typedef | union | unsigned | void | volatile | while 
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 29 "main.c"
+#line 30 "main.c"
 [a-z A-Z _][a-z A-Z 0-9 _]*
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 30 "main.c"
+#line 31 "main.c"
 de puntuacion		[, . ; : ... ¿? ¡! () [] {} " ' « »_ - ¨ / * §]
 operadores de c				[=!&*+-/|%><?]
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 32 "main.c"
+#line 33 "main.c"
 \/\/(.)*
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 34 "main.c"
+#line 35 "main.c"
 ECHO;
 	YY_BREAK
 #line 855 "lex.yy.c"
@@ -1852,7 +1852,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 34 "main.c"
+#line 35 "main.c"
 
 
 
