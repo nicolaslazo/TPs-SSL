@@ -1,4 +1,3 @@
-
 %{
 #include <math.h>
 #include <stdio.h>
@@ -34,17 +33,17 @@ comentarios				\/\/(.)*
 
 %%
 
-{constDecimales}		agregarALista(atoi(yytext), listaDecimales);
-{constOctales}		agregarALista(yytext, listaOctales);
-{constHexadecimales}	agregarALista(atof(yytext), listaHexadecimales);
-{constReales}			agregarALista(yytext, listaReales);
-{literal cadena}			agregarALista(yytext, listaLiteralesCadena);
-{palabras reservadas}			agregarALista(yytext, listaPalabrasReservadas);
-{identificadores}			agregarALista(yytext, listaIdentificadores);
-{caracteres de puntuacion}		agregarALista(yytext, listaCaracteresDePuntuacion);
-{operadores de c}			agregarALista(yytext, listaOperadores);
-{comentarios}				agregarALista(yytext, listaComentarios);
-*					agregarALista(yytext, listaOtros);						 
+{constDecimales}			agregarAListaInts(atoi(yytext), listaDecimales);
+{constOctales}				agregarAListaInts(yytext, listaOctales);
+{constHexadecimales}			agregarAListaInts(atof(yytext), listaHexadecimales);
+{constReales}				agregarAListaFloats(yytext, listaReales);
+{literal cadena}			agregarAListaSimple(yytext, listaLiteralesCadena);
+{palabras reservadas}			agregarAListaSimple(yytext, listaPalabrasReservadas);
+{identificadores}			agregarAListaConCant(yytext, listaIdentificadores);
+{caracteres de puntuacion}		agregarAListaConCant(yytext, listaCaracteresDePuntuacion);
+{operadores de c}			agregarAListaConCant(yytext, listaOperadores);
+{comentarios}				agregarAListaSimple(yytext, listaComentarios);
+*					agregarAListaSimple(yytext, listaOtros);						 
 %%
 
 int main() {

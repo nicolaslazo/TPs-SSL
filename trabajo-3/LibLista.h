@@ -23,13 +23,11 @@ struct NodoListaFloats {
 	struct NodoListaFloats * sig;
 };
 
-void agregarALista(char * valor, struct NodoListaSimple ** lista) {
+void agregarAListaSimple(char * valor, struct NodoListaSimple ** lista) {
 	struct NodoListaSimple * inspector = *lista;
 
 	while ( inspector != NULL ) {
 		if ( inspector->val == valor ) {
-			inspector->apariciones++;
-
 			return; // Hubo match, sale de la funcion
 		}
 
@@ -44,7 +42,7 @@ void agregarALista(char * valor, struct NodoListaSimple ** lista) {
 	nuevoNodo->sig = (*lista);
 }
 
-void agregarALista(char * valor, struct NodoListaConCant ** lista) {
+void agregarAListaConCant(char * valor, struct NodoListaConCant ** lista) {
 	struct NodoListaConCant * inspector = *lista;
 
 	while ( inspector != NULL ) {
@@ -68,13 +66,11 @@ void agregarALista(char * valor, struct NodoListaConCant ** lista) {
 	(*lista) = nuevoNodo;
 }
 
-void agregarALista(int valor, struct NodoListaSimple ** lista) {
+void agregarAListaInts(int valor, struct NodoListaInts ** lista) {
 	struct NodoListaSimple * inspector = *lista;
 
 	while ( inspector != NULL ) {
 		if ( inspector->val == valor ) {
-			inspector->apariciones++;
-
 			return; // Hubo match, sale de la funcion
 		}
 
@@ -88,13 +84,11 @@ void agregarALista(int valor, struct NodoListaSimple ** lista) {
 	nuevoNodo->val = valor;
 	nuevoNodo->sig = (*lista);
 
-void agregarALista(float valor, struct NodoListaSimple ** lista) {
+void agregarAListaFloats(float valor, struct NodoListaFloats ** lista) {
 	struct NodoListaSimple * inspector = *lista;
 
 	while ( inspector != NULL ) {
 		if ( inspector->val == valor ) {
-			inspector->apariciones++;
-
 			return; // Hubo match, sale de la funcion
 		}
 

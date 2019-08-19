@@ -503,7 +503,7 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "main.c"
-#line 3 "main.c"
+#line 2 "main.c"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -739,7 +739,7 @@ YY_DECL
 		}
 
 	{
-#line 21 "main.c"
+#line 20 "main.c"
 
 
 #line 746 "lex.yy.c"
@@ -801,54 +801,54 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 23 "main.c"
+#line 22 "main.c"
 [1-9][0-9]*
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 24 "main.c"
+#line 23 "main.c"
 0[0-7]*
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 25 "main.c"
+#line 24 "main.c"
 0[xX][0-9 a-f A-F]+
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 26 "main.c"
+#line 25 "main.c"
 [0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? | [0-9]+\.([eE][\+\-]?[0-9]+)? | [0-9]([eE][\+\-]?[0-9]+)?
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 27 "main.c"
+#line 26 "main.c"
 '[ -&\\(-~]' | '\\[t n 0 ' ...]'
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 28 "main.c"
+#line 27 "main.c"
 cadena				\"([ -!#-~] | \\\")*\"
 palabras reservadas			auto | break | case | char | const | continue | default | do | double | else | enum | extern | float | for | goto | if | int | long | register | return | short | signed | sizeof | static | struct | switch | typedef | union | unsigned | void | volatile | while 
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 30 "main.c"
+#line 29 "main.c"
 [a-z A-Z _][a-z A-Z 0-9 _]*
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 31 "main.c"
+#line 30 "main.c"
 de puntuacion		[, . ; : ... ¿? ¡! () [] {} " ' « »_ - ¨ / * §]
 operadores de c				[=!&*+-/|%><?]
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 33 "main.c"
+#line 32 "main.c"
 \/\/(.)*
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 35 "main.c"
+#line 34 "main.c"
 ECHO;
 	YY_BREAK
 #line 855 "lex.yy.c"
@@ -1852,21 +1852,21 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 35 "main.c"
+#line 34 "main.c"
 
 
 
-{constDecimales}		agregarALista(atoi(yytext), listaDecimales);
-{constOctales}		agregarALista(yytext, listaOctales);
-{constHexadecimales}	agregarALista(atof(yytext), listaHexadecimales);
-{constReales}			agregarALista(yytext, listaReales);
-{literal cadena}			agregarALista(yytext, listaLiteralesCadena);
-{palabras reservadas}			agregarALista(yytext, listaPalabrasReservadas);
-{identificadores}			agregarALista(yytext, listaIdentificadores);
-{caracteres de puntuacion}		agregarALista(yytext, listaCaracteresDePuntuacion);
-{operadores de c}			agregarALista(yytext, listaOperadores);
-{comentarios}				agregarALista(yytext, listaComentarios);
-*					agregarALista(yytext, listaOtros);						 
+{constDecimales}			agregarAListaInts(atoi(yytext), listaDecimales);
+{constOctales}				agregarAListaInts(yytext, listaOctales);
+{constHexadecimales}			agregarAListaInts(atof(yytext), listaHexadecimales);
+{constReales}				agregarAListaFloats(yytext, listaReales);
+{literal cadena}			agregarAListaSimple(yytext, listaLiteralesCadena);
+{palabras reservadas}			agregarAListaSimple(yytext, listaPalabrasReservadas);
+{identificadores}			agregarAListaConCant(yytext, listaIdentificadores);
+{caracteres de puntuacion}		agregarAListaConCant(yytext, listaCaracteresDePuntuacion);
+{operadores de c}			agregarAListaConCant(yytext, listaOperadores);
+{comentarios}				agregarAListaSimple(yytext, listaComentarios);
+*					agregarAListaSimple(yytext, listaOtros);						 
 %%
 
 int main() {
