@@ -17,20 +17,15 @@ NodoListaSimple ** listaComentarios = NULL;
 NodoListaSimple ** listaOtros = NULL;
 
 %}
+%%
 
 constDecimales				[1-9][0-9]*
 constOctales				0[0-7]*
 constHexadecimales			0[xX][0-9a-fA-F]+
-constReales				[0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? 
-	| 				[0-9]+\.([eE][\+\-]?[0-9]+)?
-	|				[0-9]([eE][\+\-]?[0-9]+)?
-constCaracter				'[ -&\\(-~]' | \\[t n 0 ' ...]
+constReales				[0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? | [0-9]+\.([eE][\+\-]?[0-9]+)? | [0-9]([eE][\+\-]?[0-9]+)?
+constCaracter				'[ -&\\(-~]' | '\\[t n 0 ' ...]'
 literal cadena				\"([ -!#-~] | \\\")*\"
-palabras reservadas			auto | break | case | char | const | continue | default
-	| 				do | double | else | enum | extern | float | for | goto
-	| 				if | int | long | register | return | short | signed 
-	|				sizeof | static | struct | switch | typedef | union 
-	|				unsigned | void | volatile | while 
+palabras reservadas			auto | break | case | char | const | continue | default | do | double | else | enum | extern | float | for | goto | if | int | long | register | return | short | signed | sizeof | static | struct | switch | typedef | union | unsigned | void | volatile | while 
 identificadores				[a-z A-Z _][a-z A-Z 0-9 _]*
 caracteres de puntuacion		[, . ; : ... ¿? ¡! () [] {} " ' « »_ - ¨ / * §]
 operadores de c				[=!&*+-/|%><?]
@@ -40,7 +35,7 @@ comentarios				\/\/(.)*
 
 {constDecimales}		agregarALista(atoi(yytext), listaDecimales);
 {constOctales}		agregarALista(yytext, listaOctales);
-{constHexadecimales}	agregarALista(atof, listaHexadecimales);
+{constHexadecimales}	agregarALista(atof(yytext), listaHexadecimales);
 {constReales}			agregarALista(yytext, listaReales);
 {literal cadena}			agregarALista(yytext, listaLiteralesCadena);
 {palabras reservadas}			agregarALista(yytext, listaPalabrasReservadas);
