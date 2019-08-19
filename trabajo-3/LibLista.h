@@ -79,7 +79,7 @@ void agregarAListaInts(int valor, struct NodoListaInts ** lista) {
 
 	// A este punto ya se sabe que el item no existe en la lista
 	
-	struct NodoListaSimple * nuevoNodo = NULL;
+	struct NodoListaInts * nuevoNodo = NULL;
 	nuevoNodo = (struct NodoListaSimple *) malloc(sizeof(struct NodoListaSimple));
 	nuevoNodo->val = valor;
 	nuevoNodo->sig = (*lista);
@@ -97,12 +97,12 @@ void agregarAListaFloats(float valor, struct NodoListaFloats ** lista) {
 
 	// A este punto ya se sabe que el item no existe en la lista
 	
-	struct NodoListaSimple * nuevoNodo = NULL;
+	struct NodoListaFloats * nuevoNodo = NULL;
 	nuevoNodo = (struct NodoListaSimple *) malloc(sizeof(struct NodoListaSimple));
 	nuevoNodo->val = valor;
 	nuevoNodo->sig = (*lista);
 
-int sumaListaInts(NodoListaInts ** lista) {
+int sumaListaInts(struct NodoListaInts ** lista) {
 	struct NodoListaInts * inspector = *lista;
 	int acumulador = 0;
 

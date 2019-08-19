@@ -369,18 +369,18 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[94] =
+static yyconst flex_int16_t yy_accept[100] =
     {   0,
         0,    0,   11,   10,   10,   10,   10,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    6,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        8,    0,    0,    0,    0,    0,    0,    0,    9,    0,
-        0,    0,    0,    4,    0,    0,    0,    0,    2,    0,
-        5,    0,    0,    0,    1,    0,    0,    0,    7,    0,
-        0,    3,    0
+        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,    8,    0,    0,    0,    0,    0,    0,    0,
+        0,    9,    0,    0,    0,    0,    4,    0,    0,    0,
+        0,    0,    2,    0,    0,    5,    0,    0,    0,    6,
+        1,    0,    0,    0,    7,    0,    0,    3,    0
 
     } ;
 
@@ -422,70 +422,70 @@ static yyconst YY_CHAR yy_meta[21] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_uint16_t yy_base[95] =
+static yyconst flex_uint16_t yy_base[101] =
     {   0,
-        0,    2,  100,  101,    0,   90,   86,   80,    3,   86,
-       76,   87,   83,   74,   76,   80,   81,   73,   68,   67,
-       68,   65,   64,   17,   70,   74,   70,   72,   71,   67,
-       66,   67,   64,   62,   59,   54,   53,   52,   60,   47,
-       47,   58,   52,  101,   53,   50,   54,   48,   52,   51,
-       44,   48,   37,   38,   45,   38,   42,   37,   39,   41,
-      101,   29,   27,   38,   34,   33,   24,   32,  101,   30,
-       26,   30,   19,  101,   20,   18,   24,   21,  101,   15,
-      101,   13,   16,   19,  101,   21,    9,   13,  101,   15,
-        6,  101,  101,    0
+        0,    2,  106,  107,    0,   96,   92,   86,    3,   92,
+       82,   93,   89,   80,   82,   86,   87,   79,   74,   73,
+       74,   71,   70,   17,   76,   80,   76,   78,   77,   73,
+       72,   73,   70,   68,   65,   60,   59,   58,   66,   53,
+       53,   64,   58,   67,   58,   55,   59,   53,   57,   56,
+       49,   53,   53,   41,   42,   49,   42,   46,   41,   43,
+       45,   42,  107,   32,   30,   41,   37,   36,   27,   35,
+       33,  107,   32,   28,   32,   21,  107,   22,   22,   19,
+       25,   22,  107,   16,   25,  107,   13,   16,   19,  107,
+      107,   21,    9,   13,  107,   15,    6,  107,  107,    0
 
     } ;
 
-static yyconst flex_int16_t yy_def[95] =
+static yyconst flex_int16_t yy_def[101] =
     {   0,
-       94,   94,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,    0,   93
+      100,  100,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,    0,   99
 
     } ;
 
-static yyconst flex_uint16_t yy_nxt[122] =
+static yyconst flex_uint16_t yy_nxt[128] =
     {   0,
-        4,   93,   93,   93,   93,   93,    8,    5,   93,    5,
-       93,    6,    7,    6,    7,    9,   13,   14,   29,   30,
-       31,   32,   33,   92,   91,   90,   89,   88,   87,   86,
-       85,   84,   83,   82,   81,   80,   79,   78,   77,   76,
-       75,   74,   73,   72,   71,   70,   69,   68,   67,   66,
-       65,   64,   63,   62,   61,   60,   59,   58,   57,   56,
-       55,   54,   53,   52,   51,   50,   49,   48,   47,   46,
-       45,   44,   43,   42,   41,   40,   39,   38,   37,   36,
-       35,   34,   28,   27,   26,   25,   24,   23,   22,   21,
-       20,   19,   18,   17,   16,   15,   12,   11,   10,   93,
+        4,   99,   99,   99,   99,   99,    8,    5,   99,    5,
+       99,    6,    7,    6,    7,    9,   13,   14,   29,   30,
+       31,   32,   33,   98,   97,   96,   95,   94,   93,   92,
+       91,   90,   89,   88,   87,   86,   85,   84,   83,   82,
+       81,   80,   79,   78,   77,   76,   75,   74,   73,   72,
+       71,   70,   69,   68,   67,   66,   65,   64,   63,   62,
+       61,   60,   59,   58,   57,   56,   55,   54,   53,   52,
+       51,   50,   49,   48,   47,   46,   45,   44,   43,   42,
+       41,   40,   39,   38,   37,   36,   35,   34,   28,   27,
+       26,   25,   24,   23,   22,   21,   20,   19,   18,   17,
 
-        3,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93
+       16,   15,   12,   11,   10,   99,    3,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99
     } ;
 
-static yyconst flex_int16_t yy_chk[122] =
+static yyconst flex_int16_t yy_chk[128] =
     {   0,
-       94,    0,    0,    0,    0,    0,    5,    1,    0,    2,
+      100,    0,    0,    0,    0,    0,    5,    1,    0,    2,
         0,    1,    1,    2,    2,    5,    9,    9,   24,   24,
-       24,   24,   24,   91,   90,   88,   87,   86,   84,   83,
-       82,   80,   78,   77,   76,   75,   73,   72,   71,   70,
-       68,   67,   66,   65,   64,   63,   62,   60,   59,   58,
-       57,   56,   55,   54,   53,   52,   51,   50,   49,   48,
-       47,   46,   45,   43,   42,   41,   40,   39,   38,   37,
-       36,   35,   34,   33,   32,   31,   30,   29,   28,   27,
-       26,   25,   23,   22,   21,   20,   19,   18,   17,   16,
-       15,   14,   13,   12,   11,   10,    8,    7,    6,    3,
+       24,   24,   24,   97,   96,   94,   93,   92,   89,   88,
+       87,   85,   84,   82,   81,   80,   79,   78,   76,   75,
+       74,   73,   71,   70,   69,   68,   67,   66,   65,   64,
+       62,   61,   60,   59,   58,   57,   56,   55,   54,   53,
+       52,   51,   50,   49,   48,   47,   46,   45,   44,   43,
+       42,   41,   40,   39,   38,   37,   36,   35,   34,   33,
+       32,   31,   30,   29,   28,   27,   26,   25,   23,   22,
+       21,   20,   19,   18,   17,   16,   15,   14,   13,   12,
 
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93,   93,   93,   93,   93,   93,   93,   93,   93,   93,
-       93
+       11,   10,    8,    7,    6,    3,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,
+       99,   99,   99,   99,   99,   99,   99
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -509,17 +509,17 @@ char *yytext;
 #include <string.h>
 #include "LibLista.h"
 
-NodoListaConCant ** listaIdentificadores = NULL;
-NodoListaSimple ** listaLiteralesCadena = NULL;
-NodoListaSimple ** listaPalabrasReservadas = NULL;
-NodoListaInts ** listaOctales = NULL;
-NodoListaInts ** listaHexadecimales = NULL;
-NodoListaInts ** listaDecimales = NULL;
-NodoListaFloats ** listaReales = NULL;
-NodoListaConCant ** listaCaracteresDePuntuacion = NULL;
-NodoListaConCant ** listaOperadores = NULL;
-NodoListaSimple ** listaComentarios = NULL;
-NodoListaSimple ** listaOtros = NULL;
+struct NodoListaConCant ** listaIdentificadores = NULL;
+struct NodoListaSimple ** listaLiteralesCadena = NULL;
+struct NodoListaSimple ** listaPalabrasReservadas = NULL;
+struct NodoListaInts ** listaOctales = NULL;
+struct NodoListaInts ** listaHexadecimales = NULL;
+struct NodoListaInts ** listaDecimales = NULL;
+struct NodoListaFloats ** listaReales = NULL;
+struct NodoListaConCant ** listaCaracteresDePuntuacion = NULL;
+struct NodoListaConCant ** listaOperadores = NULL;
+struct NodoListaSimple ** listaComentarios = NULL;
+struct NodoListaSimple ** listaOtros = NULL;
 
 #line 525 "lex.yy.c"
 
@@ -769,13 +769,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 94 )
+				if ( yy_current_state >= 100 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (flex_int16_t) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 101 );
+		while ( yy_base[yy_current_state] != 107 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -827,8 +827,8 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 27 "main.c"
-cadena				\"([ -!#-~] | \\\")*\"
-palabras reservadas			auto | break | case | char | const | continue | default | do | double | else | enum | extern | float | for | goto | if | int | long | register | return | short | signed | sizeof | static | struct | switch | typedef | union | unsigned | void | volatile | while 
+\"([ -!#-~] | \\\")*\"
+palabrasReservadas			auto | break | case | char | const | continue | default | do | double | else | enum | extern | float | for | goto | if | int | long | register | return | short | signed | sizeof | static | struct | switch | typedef | union | unsigned | void | volatile | while 
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
@@ -1144,7 +1144,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 94 )
+			if ( yy_current_state >= 100 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (flex_int16_t) yy_c];
@@ -1172,11 +1172,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 94 )
+		if ( yy_current_state >= 100 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (flex_int16_t) yy_c];
-	yy_is_jam = (yy_current_state == 93);
+	yy_is_jam = (yy_current_state == 99);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1860,8 +1860,8 @@ void yyfree (void * ptr )
 {constOctales}				agregarAListaInts(yytext, listaOctales);
 {constHexadecimales}			agregarAListaInts(atof(yytext), listaHexadecimales);
 {constReales}				agregarAListaFloats(yytext, listaReales);
-{literal cadena}			agregarAListaSimple(yytext, listaLiteralesCadena);
-{palabras reservadas}			agregarAListaSimple(yytext, listaPalabrasReservadas);
+{literalCadena}				agregarAListaSimple(yytext, listaLiteralesCadena);
+{palabrasReservadas}			agregarAListaSimple(yytext, listaPalabrasReservadas);
 {identificadores}			agregarAListaConCant(yytext, listaIdentificadores);
 {caracteres de puntuacion}		agregarAListaConCant(yytext, listaCaracteresDePuntuacion);
 {operadores de c}			agregarAListaConCant(yytext, listaOperadores);
