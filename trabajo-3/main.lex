@@ -15,9 +15,8 @@ struct NodoListaConCant ** listaCaracteresDePuntuacion = NULL;
 struct NodoListaConCant ** listaOperadores = NULL;
 struct NodoListaSimple ** listaComentarios = NULL;
 struct NodoListaSimple ** listaOtros = NULL;
-
 %}
-%%
+
 
 constDecimales				[1-9][0-9]*
 constOctales				0[0-7]*
@@ -27,12 +26,11 @@ constCaracter				'[ -&\\(-~]' | '\\[t n 0 ' ...]'
 literalCadena				\"([ -!#-~] | \\\")*\"
 palabrasReservadas			auto | break | case | char | const | continue | default | do | double | else | enum | extern | float | for | goto | if | int | long | register | return | short | signed | sizeof | static | struct | switch | typedef | union | unsigned | void | volatile | while 
 identificadores				[a-z A-Z _][a-z A-Z 0-9 _]*
-caracteres de puntuacion		[, . ; : ... ¿? ¡! () [] {} " ' « »_ - ¨ / * §]
-operadores de c				[=!&*+-/|%><?]
+caracteresDePuntuacion			[, . ; : ... ¿? ¡! () [] {} " ' « »_ - ¨ / * §]
+operadoresDeC				[=!&*+-/|%><?]
 comentarios				\/\/(.)*
 
 %%
-
 {constDecimales}			agregarAListaInts(atoi(yytext), listaDecimales);
 {constOctales}				agregarAListaInts(yytext, listaOctales);
 {constHexadecimales}			agregarAListaInts(atof(yytext), listaHexadecimales);
@@ -40,8 +38,8 @@ comentarios				\/\/(.)*
 {literalCadena}				agregarAListaSimple(yytext, listaLiteralesCadena);
 {palabrasReservadas}			agregarAListaSimple(yytext, listaPalabrasReservadas);
 {identificadores}			agregarAListaConCant(yytext, listaIdentificadores);
-{caracteres de puntuacion}		agregarAListaConCant(yytext, listaCaracteresDePuntuacion);
-{operadores de c}			agregarAListaConCant(yytext, listaOperadores);
+{caracteresDePuntuacion}		agregarAListaConCant(yytext, listaCaracteresDePuntuacion);
+{operadoresDeC}				agregarAListaConCant(yytext, listaOperadores);
 {comentarios}				agregarAListaSimple(yytext, listaComentarios);
 *					agregarAListaSimple(yytext, listaOtros);						 
 %%
