@@ -17,12 +17,11 @@ struct NodoListaSimple ** listaComentarios = NULL;
 struct NodoListaSimple ** listaOtros = NULL;
 %}
 
-
 constDecimales				[1-9][0-9]*
 constOctales				0[0-7]*
-constHexadecimales			0[xX][0-9 a-f A-F]+
+constHexadecimales			0[xX][0-9a-fA-F]+
 constReales				[0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? | [0-9]+\.([eE][\+\-]?[0-9]+)? | [0-9]([eE][\+\-]?[0-9]+)?
-constCaracter				'[ -&\\(-~]' | '\\[t n 0 ' ...]'
+constCaracter				'[ -&\\(-~]' | '\\[t n 0 \' ...]'
 literalCadena				\"([ -!#-~] | \\\")*\"
 palabrasReservadas			auto | break | case | char | const | continue | default | do | double | else | enum | extern | float | for | goto | if | int | long | register | return | short | signed | sizeof | static | struct | switch | typedef | union | unsigned | void | volatile | while 
 identificadores				[a-z A-Z _][a-z A-Z 0-9 _]*
