@@ -21,15 +21,16 @@ constDecimales				[1-9][0-9]*
 constOctales				0[0-7]*
 constHexadecimales			0[xX][0-9a-fA-F]+
 constReales				[0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? | [0-9]+\.([eE][\+\-]?[0-9]+)? | [0-9]([eE][\+\-]?[0-9]+)?
-constCaracter				'[ -&\\(-~]' | '\\[t n 0 \' ...]'
-literalCadena				\"([ -!#-~] | \\\")*\"
+constCaracter				'[ -~]' | '\\[abefnrtv\\\'\"\?]'
+literalCadena				\"([ -~])*\"
 palabrasReservadas			auto | break | case | char | const | continue | default | do | double | else | enum | extern | float | for | goto | if | int | long | register | return | short | signed | sizeof | static | struct | switch | typedef | union | unsigned | void | volatile | while 
-identificadores				[a-z A-Z _][a-z A-Z 0-9 _]*
-caracteresDePuntuacion			[, . ; : ... ¿? ¡! () [] {} " ' « »_ - ¨ / * §]
+identificadores				[_a-zA-Z][_a-zA-Z0-9]*
+caracteresDePuntuacion			, | . | ; | : | ¿ | ? | ( | ) | [ | ] | { | }
 operadoresDeC				[=!&*+-/|%><?]
 comentarios				\/\/(.)*
 
 %%
+
 {constDecimales}			agregarAListaInts(atoi(yytext), listaDecimales);
 {constOctales}				agregarAListaInts(yytext, listaOctales);
 {constHexadecimales}			agregarAListaInts(atof(yytext), listaHexadecimales);
@@ -40,7 +41,8 @@ comentarios				\/\/(.)*
 {caracteresDePuntuacion}		agregarAListaConCant(yytext, listaCaracteresDePuntuacion);
 {operadoresDeC}				agregarAListaConCant(yytext, listaOperadores);
 {comentarios}				agregarAListaSimple(yytext, listaComentarios);
-*					agregarAListaSimple(yytext, listaOtros);						 
+*					agregarAListaSimple(yytext, listaOtros);
+			 
 %%
 
 int main() {
