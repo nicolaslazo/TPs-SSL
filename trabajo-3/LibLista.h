@@ -80,7 +80,7 @@ void agregarAListaInts(int valor, struct NodoListaInts ** lista) {
 	// A este punto ya se sabe que el item no existe en la lista
 	
 	struct NodoListaInts * nuevoNodo = NULL;
-	nuevoNodo = (struct NodoListaSimple *) malloc(sizeof(struct NodoListaSimple));
+	nuevoNodo = (struct NodoListaInts *) malloc(sizeof(struct NodoListaSimple));
 	nuevoNodo->val = valor;
 	nuevoNodo->sig = (*lista);
 
@@ -98,7 +98,7 @@ void agregarAListaFloats(float valor, struct NodoListaFloats ** lista) {
 	// A este punto ya se sabe que el item no existe en la lista
 	
 	struct NodoListaFloats * nuevoNodo = NULL;
-	nuevoNodo = (struct NodoListaSimple *) malloc(sizeof(struct NodoListaSimple));
+	nuevoNodo = (struct NodoListaFloats *) malloc(sizeof(struct NodoListaSimple));
 	nuevoNodo->val = valor;
 	nuevoNodo->sig = (*lista);
 

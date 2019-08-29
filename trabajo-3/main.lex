@@ -20,28 +20,28 @@ struct NodoListaSimple ** listaOtros = NULL;
 constDecimales				[1-9][0-9]*
 constOctales				0[0-7]*
 constHexadecimales			0[xX][0-9a-fA-F]+
-constReales				[0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)? | [0-9]+\.([eE][\+\-]?[0-9]+)? | [0-9]([eE][\+\-]?[0-9]+)?
-constCaracter				'[ -~]' | '\\[abefnrtv\\\'\"\?]'
-literalCadena				\"([ -~])*\"
-palabrasReservadas			auto | break | case | char | const | continue | default | do | double | else | enum | extern | float | for | goto | if | int | long | register | return | short | signed | sizeof | static | struct | switch | typedef | union | unsigned | void | volatile | while 
+constReales				[0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)?|[0-9]+\.([eE][\+\-]?[0-9]+)?|[0-9]([eE][\+\-]?[0-9]+)?
+constCaracter				'[ -~]'|'\\[abefnrtv\\\'\"\?]'
+literalCadena				\"[ -~]*\"
+palabrasReservadas			auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for|goto|if|int|long|register|return|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile|while 
 identificadores				[_a-zA-Z][_a-zA-Z0-9]*
-caracteresDePuntuacion			, | . | ; | : | ¿ | ? | ( | ) | [ | ] | { | }
-operadoresDeC				[=!&*+-/|%><?]
+caracteresDePuntuacion 			[,\.;:\?\(\)\[\]\{\}]
+operadoresDeC				[=!&\*\+\-/|%><\?]
 comentarios				\/\/(.)*
 
 %%
 
 {constDecimales}			agregarAListaInts(atoi(yytext), listaDecimales);
-{constOctales}				agregarAListaInts(yytext, listaOctales);
+{constOctales}				agregarAListaInts(atoi(yytext), listaOctales);
 {constHexadecimales}			agregarAListaInts(atof(yytext), listaHexadecimales);
-{constReales}				agregarAListaFloats(yytext, listaReales);
+{constReales}				agregarAListaFloats(atof(yytext), listaReales);
 {literalCadena}				agregarAListaSimple(yytext, listaLiteralesCadena);
 {palabrasReservadas}			agregarAListaSimple(yytext, listaPalabrasReservadas);
 {identificadores}			agregarAListaConCant(yytext, listaIdentificadores);
 {caracteresDePuntuacion}		agregarAListaConCant(yytext, listaCaracteresDePuntuacion);
 {operadoresDeC}				agregarAListaConCant(yytext, listaOperadores);
 {comentarios}				agregarAListaSimple(yytext, listaComentarios);
-*					agregarAListaSimple(yytext, listaOtros);
+.					agregarAListaSimple(yytext, listaOtros);
 			 
 %%
 
