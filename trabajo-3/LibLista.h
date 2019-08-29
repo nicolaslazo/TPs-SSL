@@ -83,6 +83,7 @@ void agregarAListaInts(int valor, struct NodoListaInts ** lista) {
 	nuevoNodo = (struct NodoListaInts *) malloc(sizeof(struct NodoListaSimple));
 	nuevoNodo->val = valor;
 	nuevoNodo->sig = (*lista);
+}
 
 void agregarAListaFloats(float valor, struct NodoListaFloats ** lista) {
 	struct NodoListaFloats * inspector = *lista;
@@ -101,6 +102,7 @@ void agregarAListaFloats(float valor, struct NodoListaFloats ** lista) {
 	nuevoNodo = (struct NodoListaFloats *) malloc(sizeof(struct NodoListaSimple));
 	nuevoNodo->val = valor;
 	nuevoNodo->sig = (*lista);
+}
 
 int sumaListaInts(struct NodoListaInts ** lista) {
 	struct NodoListaInts * inspector = *lista;
