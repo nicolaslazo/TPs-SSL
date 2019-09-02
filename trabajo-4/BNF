@@ -1,0 +1,60 @@
+%{  /* seccion de definiciones */
+	
+	/* delimitadores de cod C */
+
+%}
+
+%%
+
+%union{
+	char  *t_cadena;
+	float t_float;	
+}
+
+/* los tokens son los simbolos no temrinales, type son los terminales */
+%token <t_float>NUM
+%token <t_cadena>IDENTIFICADOR
+%token TIPO_DATO
+%token /*PREGUNTAR CUALES FALTAN */
+%type exp
+
+%left '='
+%right OR
+%right AND
+%right '<' '>' MAYORIGUAL MENORIGUAL
+%right '+' '-'
+%right '*' '/' '%'
+%right '^'
+
+%%     /* Reglas gramaticales y las acciones */
+
+exp:
+	| exp '=' exp /* NOSE QUE ACCION PONERLE */
+	| exp OR exp 
+	| exp AND exp
+	| exp MAYORIGUAL exp
+	| exp '>' exp
+	| exp MENORIGUAL exp
+	| exp '<' exp
+	| exp '+' exp   {$$ = $1 + $3; } 
+	| exp '-' exp   {$$ = $1 - $3; }
+	| exp '*' exp   {$$ = $1 * $3; }
+	| exp '/' exp   {$$ = $1 / $3 ;  }
+	| exp '^' exp   {$$ = pow($1, $3); }
+	| 
+	/* expUnario NOSE COMO DECLARARLO */
+
+
+
+/* error es un token especial de error de bison. Necesita que se le especifique el punto de corte para que el error no reporte todo hasta el final del archivo como un solo error. El profe escribe
+	caracterDeCorte: 	',' | ';' | '='  */
+
+void yyerror(char *s){ 
+	printf("\n Esta sentencia es incorrecta : %s, s);
+	printf("\n Presione cualquier tecla para salir...");
+	/* getch() NOSE SI SE PUEDE PONER*/
+}
+
+main(){
+	yyparse();
+}
