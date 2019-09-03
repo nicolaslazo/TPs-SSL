@@ -126,7 +126,7 @@ void imprimirLista(struct NodoListaConCant ** lista) {
 	}
 
 	while ( inspector != NULL ) {
-		printf("%d: %d\n", inspector->val, inspector->apariciones);
+		printf("%s: %d\n", inspector->val, inspector->apariciones);
 
 		inspector = inspector->sig;
 	}
