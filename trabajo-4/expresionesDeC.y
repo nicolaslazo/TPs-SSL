@@ -6,3 +6,4 @@
 "<="	{return MENORIGUAL;}
 ">="	{return MAYORIGUAL;}
 "=="	{return "IGUALDAD";}
+"!="  {return "DESIGUALDAD;}
