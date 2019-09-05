@@ -1,6 +1,6 @@
 %{  /* seccion de definiciones */
-	
-	/* delimitadores de cod C */
+
+#DEFINE YYDEBBUG 1
 
 %}
 
@@ -8,20 +8,24 @@
 
 %union{
 	char  *t_cadena;
-	float t_float;	
+	float t_float;
+	int t_entero;
+	int t_tipo;	
 }
 
 /* los tokens son los simbolos no temrinales, type son los terminales */
 %token <t_float>NUM
 %token <t_cadena>IDENTIFICADOR
-%token TIPO_DATO
-%token /*PREGUNTAR CUALES FALTAN */
+%token <t_cadena>LITERALCADENA //nose si esta bien el tipo q le puse
+%token MAYORIGUAL MENORIGUAL
+%token DESIGUALDAD IGUALDAD
+%token AND OR
 %type exp
 
 %left '='
 %right OR
 %right AND
-%right '<' '>' MAYORIGUAL MENORIGUAL
+%right '<' '>' MAYORIGUAL MENORIGUAL		//aca faltaria igualdad,desigualdad, y en las reglas gramaticales tmb
 %right '+' '-'
 %right '*' '/' '%'
 %right '^'
@@ -29,25 +33,23 @@
 %%     /* Reglas gramaticales y las acciones */
 
 exp:
-	| exp '=' exp /* NOSE QUE ACCION PONERLE */
-	| exp OR exp 
-	| exp AND exp
-	| exp MAYORIGUAL exp
-	| exp '>' exp
-	| exp MENORIGUAL exp
-	| exp '<' exp
-	| exp '+' exp   {$$ = $1 + $3; } 
-	| exp '-' exp   {$$ = $1 - $3; }
-	| exp '*' exp   {$$ = $1 * $3; }
-	| exp '/' exp   {$$ = $1 / $3 ;  }
-	| exp '^' exp   {$$ = pow($1, $3); }
-	| 
-	/* expUnario NOSE COMO DECLARARLO */
-
-
-
-/* error es un token especial de error de bison. Necesita que se le especifique el punto de corte para que el error no reporte todo hasta el final del archivo como un solo error. El profe escribe
-	caracterDeCorte: 	',' | ';' | '='  */
+	| exp '=' exp 			{$$ = $1}
+	| exp OR exp			{$$ = $1 OR $3; }
+	| exp AND exp			{$$ = $1 AND $3; }
+	| exp MAYORIGUAL exp		{$$ = $1 MAYORIGUAL $3; }
+	| exp '>' exp			{$$ = $1 > $3}
+	| exp MENORIGUAL exp		{$$ = $1 MENORIGUAL $3; }
+	| exp '<' exp			{$$ = $1 < $3}
+	| exp '+' exp   		{$$ = $1 + $3; } 
+	| exp '-' exp   		{$$ = $1 - $3; }
+	| exp '*' exp   		{$$ = $1 * $3; }
+	| exp '/' exp   		{ if($3!=0){
+						$$ = $1/$3;
+					 }else{ printf("\n Valor no reconocido para la division.");} } //nose si esto esta bien con poner solo el printf o es con el flag_error=1
+	| exp '^' exp   		{$$ = pow($1, $3); }
+	| IDENTIFICADOR
+	| NUM
+	| LITERALCADENA
 
 void yyerror(char *s){ 
 	printf("\n Esta sentencia es incorrecta : %s, s);
@@ -56,5 +58,5 @@ void yyerror(char *s){
 }
 
 main(){
-	yyparse();
+	yyparse();	
 }
