@@ -24,7 +24,7 @@ struct NodoListaFloats {
 };
 
 void agregarAListaSimple(char * valor, struct NodoListaSimple ** lista) {
-	struct NodoListaSimple * inspector = *lista;
+	struct NodoListaSimple * inspector = lista;
 
 	while ( inspector != NULL ) {
 		if ( inspector->val == valor ) {
@@ -39,11 +39,11 @@ void agregarAListaSimple(char * valor, struct NodoListaSimple ** lista) {
 	struct NodoListaSimple * nuevoNodo = NULL;
 	nuevoNodo = (struct NodoListaSimple *) malloc(sizeof(struct NodoListaSimple));
 	nuevoNodo->val = valor;
-	nuevoNodo->sig = (*lista);
+	nuevoNodo->sig = lista;
 }
 
 void agregarAListaConCant(char * valor, struct NodoListaConCant ** lista) {
-	struct NodoListaConCant * inspector = *lista;
+	struct NodoListaConCant *inspector = lista;
 
 	while ( inspector != NULL ) {
 		if ( inspector->val == valor ) {
@@ -61,13 +61,13 @@ void agregarAListaConCant(char * valor, struct NodoListaConCant ** lista) {
 	nuevoNodo = (struct NodoListaConCant *) malloc(sizeof(struct NodoListaConCant));
 	nuevoNodo->val = valor;
 	nuevoNodo->apariciones = 1;
-	nuevoNodo->sig = (*lista);
+	nuevoNodo->sig = lista;
 
-	(*lista) = nuevoNodo;
+	lista = nuevoNodo;
 }
 
 void agregarAListaInts(int valor, struct NodoListaInts ** lista) {
-	struct NodoListaInts * inspector = *lista;
+	struct NodoListaInts * inspector = lista;
 
 	while ( inspector != NULL ) {
 		if ( inspector->val == valor ) {
@@ -82,11 +82,11 @@ void agregarAListaInts(int valor, struct NodoListaInts ** lista) {
 	struct NodoListaInts * nuevoNodo = NULL;
 	nuevoNodo = (struct NodoListaInts *) malloc(sizeof(struct NodoListaSimple));
 	nuevoNodo->val = valor;
-	nuevoNodo->sig = (*lista);
+	nuevoNodo->sig = lista;
 }
 
 void agregarAListaFloats(float valor, struct NodoListaFloats ** lista) {
-	struct NodoListaFloats * inspector = *lista;
+	struct NodoListaFloats * inspector = lista;
 
 	while ( inspector != NULL ) {
 		if ( inspector->val == valor ) {
@@ -101,7 +101,7 @@ void agregarAListaFloats(float valor, struct NodoListaFloats ** lista) {
 	struct NodoListaFloats * nuevoNodo = NULL;
 	nuevoNodo = (struct NodoListaFloats *) malloc(sizeof(struct NodoListaSimple));
 	nuevoNodo->val = valor;
-	nuevoNodo->sig = (*lista);
+	nuevoNodo->sig = lista;
 }
 
 int sumaListaInts(struct NodoListaInts ** lista) {
@@ -118,7 +118,7 @@ int sumaListaInts(struct NodoListaInts ** lista) {
 
 void imprimirLista(struct NodoListaConCant ** lista) {
 	/* Funcion para debugging */
-	struct NodoListaConCant * inspector = (*lista);
+	struct NodoListaConCant * inspector = lista;
 
 	if ( inspector == NULL ) {
 		printf("La lista esta vacia\n");
