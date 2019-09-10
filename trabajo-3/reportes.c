@@ -21,24 +21,50 @@ int octToDec(char oct[]){
         i--;
     }
     return dec;
-int listadoDeIdentificadores //cant de veces q aparecen listaId
+struct listadoDeIdentificadores{ //cant de veces q aparecen listaId
+  char* nombreIdentificador;
+  int aparicionesIdentificador;
+};
+  
+struct listadoDeLiteralesCadena{ //longitud d los mismos listaLiteralesCadena
+  char* nombreCadena;
+  int longitudCadena;
+};
+  
+struct listadoDePalabrasReservadas{ // listaPalabrasReservadas
+  char* nombrePalabrasReservadas;
+};
 
-int listadoDeLiteralesCadena //longitud d los mismos listaLiteralesCadena
-
-struct listadoDePalabrasReservadas // listaPalabrasReservadAS
-
-int listadoDeConstantesOctales //valor entero decimal listaOctales
-
-int listadoDeConstantesHexadecimales //valor entero decimal listaHexadecimales
-
-float listadoDeConstantesDecimales //valor acumulado listaDecimales
-
-float listadoDeConstantesReales //valor de mantisa y parte entera listaReales
-
-int listadoDeCaracteresDePuntuacion //cant de veces q aparecen listaCaracteresDePuntuacion
-
-int listadoDeOperadores //cant de veces q aparecen listaOperadores
-
-listadoDeComentarios //listaComentarios
-
-listadoDeCadenasNoReconocidas
+struct listadoDeConstantesOctales{ //valor entero decimal listaOctales
+  char* constanteOctal;
+};
+  
+struct listadoDeConstantesHexadecimales{ //valor entero decimal listaHexadecimales
+  char* constanteHexadecimal;
+};
+  
+struct listadoDeConstantesDecimales{ //valor acumulado listaDecimales
+  char* constantesDecimales;
+};
+  
+struct listadoDeConstantesReales{ //valor de mantisa y parte entera listaReales
+  char* constantesReales;
+};
+  
+struct listadoDeCaracteresDePuntuacion{ //cant de veces q aparecen listaCaracteresDePuntuacion
+  char* caracterDePuntuacion;
+  int aparicionesCaracterDePuntuacion;
+};
+  
+struct listadoDeOperadores{ //cant de veces q aparecen listaOperadores
+  char* operadores;
+  int aparicionesOperadores;
+};
+  
+struct listadoDeComentariosReconocidos{ //listaComentarios
+  char* comentarioReconocido;
+};
+  
+struct listadoDeCadenasNoReconocidas{
+  char* cadenaNoReconocidas;
+};
