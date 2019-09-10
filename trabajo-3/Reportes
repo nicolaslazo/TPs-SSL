@@ -1,21 +1,21 @@
-listadoDeIdentificadores
+listadoDeIdentificadores //cant de veces q aparecen
 
-listadoDeLiteralesCadena
+listadoDeLiteralesCadena //longitud d los mismos
 
-listadoDePalabrasReservadas
+listadoDePalabrasReservadas 
 
-listadoDeConstantesOctales
+listadoDeConstantesOctales //valor entero decimal
 
-listadoDeConstantesHexadecimales
+listadoDeConstantesHexadecimales //valor entero decimal 
 
-listadoDeConstantesDecimales
+listadoDeConstantesDecimales //valor acumulado 
 
-listadoDeConstantesReales
+listadoDeConstantesReales //valor de mantisa y parte entera
 
-listadoDeCaracteresDePuntuacion
+listadoDeCaracteresDePuntuacion //cant de veces q aparecen
 
-listadoDeOperadores
+listadoDeOperadores //cant de veces q aparecen
 
-listadoDeComentarios
+listadoDeComentarios 
 
 listadoDeCadenasNoReconocidas
