@@ -15,6 +15,8 @@ struct NodoListaConCant ** listaCaracteresDePuntuacion = NULL;
 struct NodoListaConCant ** listaOperadores = NULL;
 struct NodoListaSimple ** listaComentarios = NULL;
 struct NodoListaSimple ** listaOtros = NULL;
+
+int acum = 0;
 %}
 
 constDecimales				[1-9][0-9]*
