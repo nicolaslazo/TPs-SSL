@@ -1,6 +1,7 @@
 %{  /* seccion de definiciones */
 
 #DEFINE YYDEBBUG 1
+int flag_error=0;
 
 %}
 
@@ -14,42 +15,100 @@
 }
 
 /* los tokens son los simbolos no temrinales, type son los terminales */
-%token <t_float>NUM
-%token <t_cadena>IDENTIFICADOR
-%token <t_cadena>LITERALCADENA //nose si esta bien el tipo q le puse
+%token <t_entero>DIGITO
+%token <t_cadena>CARACTERES 
 %token MAYORIGUAL MENORIGUAL
 %token DESIGUALDAD IGUALDAD
 %token AND OR
-%type exp
+%token error
+
+%type expresion
+%type identificador
+%type num
+%type constoctal constdec consthexa
+%type listaSentencia sentencia sentCompuesta sentInteraccion sentSalto sentSeleccion sentenciaExp
+%type listaDeclaraciones listaSentencia declaracion
+
 
 %left '='
 %right OR
 %right AND
 %right '<' '>' MAYORIGUAL MENORIGUAL		//aca faltaria igualdad,desigualdad, y en las reglas gramaticales tmb
+%right DESIGUALDAD IGUALDAD
 %right '+' '-'
 %right '*' '/' '%'
 %right '^'
+%right IF ELSE WHILE DO SWITCH FOR RETURN 
 
 %%     /* Reglas gramaticales y las acciones */
 
-exp:
-	| exp '=' exp 			{$$ = $1}
-	| exp OR exp			{$$ = $1 OR $3; }
-	| exp AND exp			{$$ = $1 AND $3; }
-	| exp MAYORIGUAL exp		{$$ = $1 MAYORIGUAL $3; }
-	| exp '>' exp			{$$ = $1 > $3}
-	| exp MENORIGUAL exp		{$$ = $1 MENORIGUAL $3; }
-	| exp '<' exp			{$$ = $1 < $3}
-	| exp '+' exp   		{$$ = $1 + $3; } 
-	| exp '-' exp   		{$$ = $1 - $3; }
-	| exp '*' exp   		{$$ = $1 * $3; }
-	| exp '/' exp   		{ if($3!=0){
-						$$ = $1/$3;
-					 }else{ printf("\n Valor no reconocido para la division.");} } //nose si esto esta bien con poner solo el printf o es con el flag_error=1
-	| exp '^' exp   		{$$ = pow($1, $3); }
-	| IDENTIFICADOR
-	| NUM
+expresion:
+	
+	| expresion '=' expresion			{$$ = $1;}
+	| expresion OR expresion			{$$ = $1 || $3; }
+	| expresion AND expresion			{$$ = $1 && $3; }
+	| expresion MAYORIGUAL expresion		{$$ = $1 >= $3; }
+	| expresion '>' expresion			{$$ = $1 > $3}
+	| expresion MENORIGUAL expresion		{$$ = $1 <= $3; }
+	| expresion '<' expresion			{$$ = $1 < $3}
+	| expresion DESIGUALDAD expresion { $$ = $1 != $3;}
+	| expresion '+' expresion   		{$$ = $1 + $3; } 
+	| expresion '-' expresion  		{$$ = $1 - $3; }
+	| expresion '*' expresion  		{$$ = $1 * $3; }
+	| expresion '/' expresion   		{ if($3!=0){$$ = $1/$3; }else{ printf("\n Valor no reconocido para la division.");} }
+	| expresion '^' expresion   		{$$ = pow($1, $3); }
+	| identificador
+	| num
 	| LITERALCADENA
+
+identificador : 
+	| CARACTERES //noDigito
+	| identificador CARACTERES
+	| identificador DIGITO 
+
+num : //num seria constanteEntera en la BNF de C
+	| constdec 
+	| constoctal
+	| consthexa
+
+constdec :
+		| constdec DIGITO {if($1==0){flag_error=1; printf("Error, no es un numero decimal");}else{ flag_error=0; $$ = $1++$3;}} //preguntar: si esta bien, mi idea es que si detecta que el primer digito es cero me tire error, caso contrario que concatene los caracteres.
+
+constoctal : 0
+		| constoctal DIGITO // ACA IRIA DIGITO? 
+
+consthexa : 0x DIGITO
+		| 0X DIGITO
+		| consthexa CARACTERES
+		
+
+sentencia :  sentCompuesta
+	| sentenciaExp
+	| sentSeleccion
+	| sentInteraccion
+	| sentSalto
+
+sentCompuesta : 
+	| listaDeclaraciones listaSentencia  //esta ggramatica es sentCompuesta -> {listaDeclaraciones listaSentencia} como pongo los llaves, bison entiende de llaves?
+
+listaDeclaraciones : declaracion
+	| listaDeclaraciones declaracion
+
+listaSentencia : sentencia
+	| listaSentencia sentencia
+
+sentenciaExp :
+	| exp
+
+sentSeleccion : IF '(' expresion ')' sentencia	{if($3){$$=$4;}else{flag_error=1; printf("Error expresion invalida");}}
+	| IF '(' expresion ')' sentencia ELSE sentencia  	{if(!$3){flag_error=1; printf("Error, condicion invalida");}else{ if($3){$$ = $4;}}else{ $$ = $5;} }
+	| WHILE'(' expresion ')' sentencia {while($3){$$=$5; flag_error=0;}}
+	| SWITCH'(' expresion ')' sentencia  {switch($3){ //como pongo aca lo de case break.. }}
+	| DO sentencia WHILE'(' expresion')'  {do{$2}while($5);}
+	| FOR'(' expresion ';' expresion ';' expresion ')' sentencia {for($3; $5; $7){$$ = $9;}}
+	| RETURN expresion  {return $2;}
+	| RETURN
+
 
 void yyerror(char *s){ 
 	printf("\n Esta sentencia es incorrecta : %s, s);
