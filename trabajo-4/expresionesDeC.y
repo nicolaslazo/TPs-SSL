@@ -26,4 +26,4 @@ auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for
 
 
 
-/*ver lineas 4 y 5, ver si estan bien*/
+/*ver lineas 16 y 17,24 ver si estan bien*/
