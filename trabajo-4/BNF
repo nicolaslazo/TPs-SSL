@@ -14,7 +14,7 @@ int flag_error=0;
 	int t_tipo;	
 }
 
-/* los tokens son los simbolos no temrinales, type son los terminales */
+/* los tokens son los simbolos no terminales, type son los terminales */
 %token <t_entero>DIGITO
 %token <t_cadena>CARACTERES 
 %token MAYORIGUAL MENORIGUAL
