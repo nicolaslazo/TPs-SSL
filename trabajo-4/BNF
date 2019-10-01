@@ -33,12 +33,12 @@ int flag_error=0;
 %left '='
 %right OR
 %right AND
-%right '<' '>' MAYORIGUAL MENORIGUAL		//aca faltaria igualdad,desigualdad, y en las reglas gramaticales tmb
-%right DESIGUALDAD IGUALDAD
+%right '<' '>' '>=' '<='		//aca faltaria igualdad,desigualdad, y en las reglas gramaticales tmb
+%right '=!' '=='
 %right '+' '-'
 %right '*' '/' '%'
 %right '^'
-%right IF ELSE WHILE DO SWITCH FOR RETURN 
+%right if else while do switch for return 
 
 %%     /* Reglas gramaticales y las acciones */
 
