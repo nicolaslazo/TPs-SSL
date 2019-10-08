@@ -14,14 +14,13 @@ auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for
 //ACA FALTARIA DEFINIR LA ERX DE LOS DEMAS
 
 "="   {return ASIGNACION;}
-"+="  {return ASIGNACION;}
 "||"	{return OR;}
 "&&"	{return AND;}
 "=="	{return IGUALDAD;}
 ">="	{return MAYORIGUAL;}
 "<="	{return MENORIGUAL;}
 "!="  {return "DESIGUALDAD;}
-"++"  {return "";} /*ver si va*/
+//operadores unarios no van!!!!
 
 
 
