@@ -31,7 +31,7 @@ int flag_error=0;
 %type constoctal constdec consthexa
 %type listaSentencia sentencia sentCompuesta sentInteraccion sentSalto sentSeleccion sentenciaExp
 %type listaDeclaraciones listaSentencia declaracion
-
+%type constExpres
 
 %left '='
 %right OR
@@ -109,7 +109,7 @@ sentenciaExp :
 sentSeleccion : IF '(' expresion ')' sentencia	{if($3){$$=$5;}
 	| IF '(' expresion ')' sentencia ELSE sentencia  {if($3){$$=$5}else{ $$ = $7;}}
 	| WHILE'(' expresion ')' sentencia {while($3){$$=$5; flag_error=0;}}
-	| SWITCH'(' expresion ')' CASE ':' expresion sentencia  {switch($3){ case:$7 $$=$8;}}
+	| SWITCH'(' expresion ')' CASE constExpres ':' sentencia BREAK {switch($3){ case $6 : $$=$8; break;}}
 	| DO sentencia WHILE'(' expresion')'  {do{$$=$2}while($5);}
 	| FOR'(' expresion ';' expresion ';' expresion ')' sentencia {for($3; $5; $7){$$ = $9;}}
 	| RETURN expresion  {return $2;}
