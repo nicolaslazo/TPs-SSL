@@ -11,8 +11,6 @@ auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for
 [=!&\*\+\-/|%><\?]     {return OPERADORDEC;}
 \/\/(.)*           {return COMENTARIOS;}
 
-//ACA FALTARIA DEFINIR LA ERX DE LOS DEMAS
-
 "="   {return ASIGNACION;}
 "||"	{return OR;}
 "&&"	{return AND;}
@@ -22,7 +20,3 @@ auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for
 "!="  {return "DESIGUALDAD;}
 //operadores unarios no van!!!!
 
-
-
-
-/*ver lineas 16 y 17,24 ver si estan bien*/
