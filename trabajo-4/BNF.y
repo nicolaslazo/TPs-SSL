@@ -1,9 +1,7 @@
 %{  /* seccion de definiciones */
 
-#define YYDEBBUG 1
+#define YYDEBUG 1
 #include <stdio.h>
-
-int flag_error=0;
 
 %}
 
@@ -14,7 +12,7 @@ int flag_error=0;
 	float t_float;
 	int t_entero;
 	int t_tipo;	
-}
+} // Cuando se usan estos tipos?
 
 /* los tokens son los simbolos no terminales, type son los terminales */
 %token <t_entero>DIGITO
@@ -23,13 +21,13 @@ int flag_error=0;
 %token DESIGUALDAD IGUALDAD
 %token AND OR
 %token ERROR
-%token IF ELSE WHILE DO SWITCH FOR RETURN CASE BREAK
+%token IF ELSE WHILE DO SWITCH FOR RETURN CASE BREAK DEFAULT
 
 %type expresion
 %type identificador
 %type num
 %type constoctal constdec consthexa
-%type listaSentencia sentencia sentCompuesta sentInteraccion sentSalto sentSeleccion sentenciaExp
+%type listaSentencia sentencia sentCompuesta sentInteraccion sentSalto sentSeleccion sentenciaExp sentenciaSwitch sentenciaSwitchDefault
 %type listaDeclaraciones listaSentencia declaracion
 %type constExpres
 
@@ -63,55 +61,67 @@ expresion:
 	| identificador
 	| num
 	| LITERALCADENA
-	| ERROR					{ printf("Error en expresion"); }
+	| error ';'					{ printf("Error en expresion"); }
 
 identificador: 
 	| CARACTERES //noDigito
 	| identificador CARACTERES
 	| identificador DIGITO 
-	| ERROR                                         { printf("Identificador desconocido"); }
+	| error ';'                                         { printf("Identificador desconocido"); }
 
 num: //num seria constanteEntera en la BNF de C
 	| constdec 
 	| constoctal
 	| consthexa
-	| ERROR                                         { printf("Entero no valido"); }
+	| error ';'                                         { printf("Entero no valido"); }
 
 constdec:
-		| constdec DIGITO {}
+	| constdec DIGITO
 
 constoctal: 0
-	| constoctal DIGITO // ACA IRIA DIGITO? 
+	| constoctal DIGITO // ACA IRIA DIGITO? // Acá iría dígito, hay que ponerlo en expresionesDeC.l 
 
 consthexa: 0x DIGITO
-		| 0X DIGITO
-		| consthexa CARACTERES
+	| 0X DIGITO
+	| consthexa CARACTERES
 		
 
 sentencia:  sentCompuesta
 	| sentenciaExp
 	| sentSeleccion
 	| sentInteraccion
-	| sentSalto
+	| sentSalto // Faltan sentInteraccion y sentSalto
 
 sentCompuesta: 
-	| listaDeclaraciones listaSentencia  //esta ggramatica es sentCompuesta -> {listaDeclaraciones listaSentencia} como pongo los llaves, bison entiende de llaves?
+	| '{' listaDeclaraciones listaSentencia '}'
 
 listaDeclaraciones: declaracion
-	| listaDeclaraciones declaracion
+	| listaDeclaraciones declaracion // Falta declarar declaracion
 
 listaSentencia: sentencia
 	| listaSentencia sentencia
 
 sentenciaExp:
-	| exp
+	| exp // Redundante?
 
 sentSeleccion: IF '(' expresion ')' sentencia
 	| IF '(' expresion ')' sentencia ELSE sentencia 
 	| WHILE'(' expresion ')' sentencia
-	| SWITCH'(' expresion ')' CASE constExpres ':' sentencia BREAK
+	| SWITCH'(' expresion ')' sentenciaSwitch
 	| DO sentencia WHILE'(' expresion')' 
 	| FOR'(' expresion ';' expresion ';' expresion ')' sentencia
 	| RETURN expresion 
 	| RETURN
-        | ERROR		{ printf("Error en sentSeleccion\n"); }
+        | error ';'		{ printf("Error en sentSeleccion\n"); }
+
+sentenciaSwitch: '{' sentenciaCase sentenciaSwitchDefault '}';
+
+sentenciaCase: /* Vacio */
+	     | CASE num ':' sentencia
+	     ;
+
+sentenciaSwitchDefault: /* Vacio */
+		      | DEFAULT ':' sentencia
+		      ;
+
+// Falta ; después de cada definición de no terminal, como hice en sentenciaCase y sentenciaSwitch
