@@ -22,7 +22,8 @@ int flag_error=0;
 %token MAYORIGUAL MENORIGUAL
 %token DESIGUALDAD IGUALDAD
 %token AND OR
-%token error
+%token ERROR
+%token IF ELSE WHILE DO SWITCH FOR RETURN CASE BREAK
 
 %type expresion
 %type identificador
@@ -40,7 +41,7 @@ int flag_error=0;
 %right '+' '-'
 %right '*' '/' '%'
 %right '^'
-%right if else while do switch for return 
+ 
 
 %%     /* Reglas gramaticales y las acciones */
 
@@ -105,21 +106,16 @@ listaSentencia : sentencia
 sentenciaExp :
 	| exp
 
-sentSeleccion : IF '(' expresion ')' sentencia	{if($3){$$=$4;}else{flag_error=1; printf("Error expresion invalida");}}
-	| IF '(' expresion ')' sentencia ELSE sentencia  	{if(!$3){flag_error=1; printf("Error, condicion invalida");}else{ if($3){$$ = $4;}}else{ $$ = $5;} }
+sentSeleccion : IF '(' expresion ')' sentencia	{if($3){$$=$5;}
+	| IF '(' expresion ')' sentencia ELSE sentencia  {if($3){$$=$5}else{ $$ = $7;}}
 	| WHILE'(' expresion ')' sentencia {while($3){$$=$5; flag_error=0;}}
-	| SWITCH'(' expresion ')' sentencia  {switch($3){ //como pongo aca lo de case break.. }}
-	| DO sentencia WHILE'(' expresion')'  {do{$2}while($5);}
+	| SWITCH'(' expresion ')' CASE ':' expresion sentencia  {switch($3){ case:$7 $$=$8;}}
+	| DO sentencia WHILE'(' expresion')'  {do{$$=$2}while($5);}
 	| FOR'(' expresion ';' expresion ';' expresion ')' sentencia {for($3; $5; $7){$$ = $9;}}
 	| RETURN expresion  {return $2;}
 	| RETURN
+        | ERROR
 
-
-void yyerror(char *s){ 
-	printf("\n Esta sentencia es incorrecta : %s, s);
-	printf("\n Presione cualquier tecla para salir...");
-	/* getch() NOSE SI SE PUEDE PONER*/
-}
 
 main(){
 	yyparse();	
