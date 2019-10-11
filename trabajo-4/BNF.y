@@ -79,7 +79,7 @@ constdec:
 	| constdec DIGITO
 
 constoctal: 0
-	| constoctal DIGITO // ACA IRIA DIGITO? // Acá iría dígito, hay que ponerlo en expresionesDeC.l 
+	| constoctal DIGITO // Acá iría dígito, hay que ponerlo en expresionesDeC.l 
 
 consthexa: 0x DIGITO
 	| 0X DIGITO
@@ -90,7 +90,12 @@ sentencia:  sentCompuesta
 	| sentenciaExp
 	| sentSeleccion
 	| sentInteraccion
-	| sentSalto // Faltan sentInteraccion y sentSalto
+	| sentSalto // Faltan sentInteraccion (LISTO) y sentSalto (LISTO) 
+	
+sentInteraccion:  
+	|WHILE'(' expresion ')' sentencia
+	|DO sentencia WHILE'(' expresion')'
+	|FOR'(' expresion ';' expresion ';' expresion ')' sentencia
 
 sentCompuesta: 
 	| '{' listaDeclaraciones listaSentencia '}'
@@ -106,10 +111,7 @@ sentenciaExp:
 
 sentSeleccion: IF '(' expresion ')' sentencia
 	| IF '(' expresion ')' sentencia ELSE sentencia 
-	| WHILE'(' expresion ')' sentencia
-	| SWITCH'(' expresion ')' sentenciaSwitch
-	| DO sentencia WHILE'(' expresion')' 
-	| FOR'(' expresion ';' expresion ';' expresion ')' sentencia
+	| SWITCH'(' expresion ')' sentenciaSwitch 
 	| RETURN expresion 
 	| RETURN
         | error ';'		{ printf("Error en sentSeleccion\n"); }
@@ -123,5 +125,9 @@ sentenciaCase: /* Vacio */
 sentenciaSwitchDefault: /* Vacio */
 		      | DEFAULT ':' sentencia
 		      ;
+
+sentSalto :
+	| RETURN expresion
+	| RETURN
 
 // Falta ; después de cada definición de no terminal, como hice en sentenciaCase y sentenciaSwitch
