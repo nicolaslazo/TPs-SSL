@@ -2,6 +2,7 @@
 	#include <stdio.h>
 %}
 %%
+[0-9]	{return DIGITO} //uno de 0 1 2 3 4 5 6 7 8 9 
 [0-9]+(\.[0-9]+)?	{return CONSTANTE;}
 [1-9][0-9]*       {return CONSTANTEDECIMAL;}
 0[0-7]*           {return CONSTANTEOCTAL;}
