@@ -22,7 +22,7 @@ auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for
 ">="	{return MAYORIGUAL;}
 "<="	{return MENORIGUAL;}
 "!="  {return "DESIGUALDAD;}
-//operadores unarios no van!!!!
+
 
 %%
 
