@@ -5,8 +5,6 @@
 
 %}
 
-%%
-
 %union{
 	char  *t_cadena;
 	float t_float;
@@ -15,18 +13,19 @@
 } // Cuando se usan estos tipos?
 
 /* los tokens son los simbolos no terminales, type son los terminales */
-%token <t_entero>DIGITO
-%token <t_cadena>CARACTERES 
+%token <t_entero> DIGITO
+%token <t_cadena> CARACTERES 
 %token MAYORIGUAL MENORIGUAL
 %token DESIGUALDAD IGUALDAD
 %token AND OR
 %token ERROR
+%token TIPODEDATO
 %token IF ELSE WHILE DO SWITCH FOR RETURN CASE BREAK DEFAULT
 
 %type expresion
-%type identificador
-%type num
-%type constoctal constdec consthexa
+%type <t_cadena> identificador
+%type <t_entero> num
+%type <t_entero> constoctal constdec consthexa
 %type listaSentencia sentencia sentCompuesta sentInteraccion sentSalto sentSeleccion sentenciaExp sentenciaSwitch sentenciaSwitchDefault
 %type listaDeclaraciones listaSentencia declaracion
 %type constExpres
@@ -34,8 +33,8 @@
 %left '='
 %right OR
 %right AND
-%right '<' '>' '>=' '<='
-%right '=!' '=='
+%right '<' '>' MAYORIGUAL MENORIGUAL
+%right DESIGUALDAD IGUALDAD
 %right '+' '-'
 %right '*' '/' '%'
 %right '^'
@@ -43,8 +42,7 @@
 
 %%     /* Reglas gramaticales y las acciones */
 
-expresion:
-	
+expresion: /* Vacio */
 	| expresion '=' expresion
 	| expresion OR expresion
 	| expresion AND expresion
@@ -62,52 +60,69 @@ expresion:
 	| num
 	| LITERALCADENA
 	| error ';'					{ printf("Error en expresion"); }
+	;
 
-identificador: 
+identificador: /* Vacio */
 	| CARACTERES //noDigito
 	| identificador CARACTERES
 	| identificador DIGITO 
-	| error ';'                                         { printf("Identificador desconocido"); }
+	| error ';'            			     { printf("Identificador desconocido"); }
+	;
 
-num: //num seria constanteEntera en la BNF de C
+num: /* Vacio */ //num seria constanteEntera en la BNF de C
 	| constdec 
 	| constoctal
 	| consthexa
 	| error ';'                                         { printf("Entero no valido"); }
+	;
 
-constdec:
+constdec: /* Vacio */
 	| constdec DIGITO
+	;
 
 constoctal: 0
 	| constoctal DIGITO // Acá iría dígito, hay que ponerlo en expresionesDeC.l 
+	;
 
 consthexa: 0x DIGITO
 	| 0X DIGITO
 	| consthexa CARACTERES
+	;
 		
-
 sentencia:  sentCompuesta
 	| sentenciaExp
 	| sentSeleccion
 	| sentInteraccion
-	| sentSalto // Faltan sentInteraccion (LISTO) y sentSalto (LISTO) 
+	| sentSalto 
+	;
 	
 sentInteraccion:  
 	|WHILE'(' expresion ')' sentencia
 	|DO sentencia WHILE'(' expresion')'
 	|FOR'(' expresion ';' expresion ';' expresion ')' sentencia
+	;
 
 sentCompuesta: 
 	| '{' listaDeclaraciones listaSentencia '}'
+	;
 
 listaDeclaraciones: declaracion
-	| listaDeclaraciones declaracion // Falta declarar declaracion
+	| listaDeclaraciones declaracion 
+	;
 
 listaSentencia: sentencia
 	| listaSentencia sentencia
+	;
 
-sentenciaExp:
-	| exp // Redundante?
+declaracion: TIPODEDATO inicializacionDeclarado;
+
+inicializacionDeclarado: identificador
+		       | identificador = expresionConstante
+		       ;
+
+sentenciaExp: /* Vacio */
+	| exp
+	;
 
 sentSeleccion: IF '(' expresion ')' sentencia
 	| IF '(' expresion ')' sentencia ELSE sentencia 
@@ -115,6 +130,7 @@ sentSeleccion: IF '(' expresion ')' sentencia
 	| RETURN expresion 
 	| RETURN
         | error ';'		{ printf("Error en sentSeleccion\n"); }
+	;
 
 sentenciaSwitch: '{' sentenciaCase sentenciaSwitchDefault '}';
 
@@ -126,8 +142,7 @@ sentenciaSwitchDefault: /* Vacio */
 		      | DEFAULT ':' sentencia
 		      ;
 
-sentSalto :
+sentSalto: /* Vacio */
 	| RETURN expresion
 	| RETURN
-
-// Falta ; después de cada definición de no terminal, como hice en sentenciaCase y sentenciaSwitch
+	;
