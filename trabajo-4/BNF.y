@@ -5,16 +5,9 @@
 
 %}
 
-%union{
-	char  *t_cadena;
-	float t_float;
-	int t_entero;
-	int t_tipo;	
-} // Cuando se usan estos tipos?
-
 /* los tokens son los simbolos no terminales, type son los terminales */
-%token <t_entero> DIGITO
-%token <t_cadena> CARACTERES 
+%token DIGITO
+%token CARACTERES 
 %token MAYORIGUAL MENORIGUAL
 %token DESIGUALDAD IGUALDAD
 %token AND OR
@@ -23,9 +16,9 @@
 %token IF ELSE WHILE DO SWITCH FOR RETURN CASE BREAK DEFAULT
 
 %type expresion
-%type <t_cadena> identificador
-%type <t_entero> num
-%type <t_entero> constoctal constdec consthexa
+%type identificador
+%type num
+%type constoctal constdec consthexa
 %type listaSentencia sentencia sentCompuesta sentInteraccion sentSalto sentSeleccion sentenciaExp sentenciaSwitch sentenciaSwitchDefault
 %type listaDeclaraciones listaSentencia declaracion
 %type constExpres
