@@ -16,15 +16,7 @@
 %token ERROR
 %token TIPODEDATO
 %token IF ELSE WHILE DO SWITCH FOR RETURN CASE BREAK DEFAULT
-/*
-%type expresion
-%type identificador
-%type num
-%type constoctal constdec consthexa
-%type listaSentencia sentencia sentCompuesta sentInteraccion sentSalto sentSeleccion sentenciaExp sentenciaSwitch sentenciaSwitchDefault
-%type listaDeclaraciones listaSentencia declaracion
-%type constExpres
-*/
+
 %left '='
 %right OR
 %right AND
