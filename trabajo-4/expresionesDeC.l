@@ -23,7 +23,7 @@ auto|break|case|const|continue|default|do|else|enum|extern|for|goto|if|register|
 "=="	{return IGUALDAD;}
 ">="	{return MAYORIGUAL;}
 "<="	{return MENORIGUAL;}
-"!="  {return "DESIGUALDAD;}
+"!="  {return DESIGUALDAD;}
 
 
 %%

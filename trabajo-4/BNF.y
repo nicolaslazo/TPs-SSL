@@ -7,6 +7,8 @@
 
 /* los tokens son los simbolos no terminales, type son los terminales */
 %token DIGITO
+%token CONSTANTE CONSTANTEREAL CONSTANTEOCTAL CONSTANTEDECIMAL CONSTANTEHEXADECIMAL
+%token LITERALCADENA
 %token CARACTERES 
 %token MAYORIGUAL MENORIGUAL
 %token DESIGUALDAD IGUALDAD
@@ -14,7 +16,7 @@
 %token ERROR
 %token TIPODEDATO
 %token IF ELSE WHILE DO SWITCH FOR RETURN CASE BREAK DEFAULT
-
+/*
 %type expresion
 %type identificador
 %type num
@@ -22,7 +24,7 @@
 %type listaSentencia sentencia sentCompuesta sentInteraccion sentSalto sentSeleccion sentenciaExp sentenciaSwitch sentenciaSwitchDefault
 %type listaDeclaraciones listaSentencia declaracion
 %type constExpres
-
+*/
 %left '='
 %right OR
 %right AND
@@ -63,30 +65,19 @@ identificador: /* Vacio */
 	;
 
 num: /* Vacio */ //num seria constanteEntera en la BNF de C
-	| constdec 
-	| constoctal
-	| consthexa
+   	| CONSTANTE
+	| CONSTANTEREAL
+	| CONSTANTEDECIMAL
+	| CONSTANTEOCTAL
+	| CONSTANTEHEXADECIMAL
 	| error ';'                                         { printf("Entero no valido"); }
 	;
 
-constdec: /* Vacio */
-	| constdec DIGITO
-	;
-
-constoctal: 0
-	| constoctal DIGITO // Acá iría dígito, hay que ponerlo en expresionesDeC.l 
-	;
-
-consthexa: 0x DIGITO
-	| 0X DIGITO
-	| consthexa CARACTERES
-	;
-		
 sentencia:  sentCompuesta
-	| sentenciaExp
 	| sentSeleccion
 	| sentInteraccion
 	| sentSalto 
+	| expresion
 	;
 	
 sentInteraccion:  
@@ -110,12 +101,8 @@ listaSentencia: sentencia
 declaracion: TIPODEDATO inicializacionDeclarado;
 
 inicializacionDeclarado: identificador
-		       | identificador = expresionConstante
+		       | identificador '=' num
 		       ;
-
-sentenciaExp: /* Vacio */
-	| exp
-	;
 
 sentSeleccion: IF '(' expresion ')' sentencia
 	| IF '(' expresion ')' sentencia ELSE sentencia 
