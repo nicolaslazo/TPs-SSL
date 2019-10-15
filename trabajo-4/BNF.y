@@ -26,6 +26,7 @@
 %right '*' '/' '%'
 %right '^'
  
+%start sentencia
 
 %%     /* Reglas gramaticales y las acciones */
 

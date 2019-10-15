@@ -2,12 +2,12 @@
 	#include <stdio.h>
 %}
 %%
-[0-9]	{return DIGITO} //uno de 0 1 2 3 4 5 6 7 8 9 
-[0-9]+(\.[0-9]+)?	{return CONSTANTE;}
 [1-9][0-9]*       {return CONSTANTEDECIMAL;}
 0[0-7]*           {return CONSTANTEOCTAL;}
 0[xX][0-9a-fA-F]+ {return CONSTANTEHEXADECIMAL;}
 [0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)?|[0-9]+\.([eE][\+\-]?[0-9]+)?|[0-9]([eE][\+\-]?[0-9]+)? {return CONSTANTEREAL:} 
+[0-9]+(\.[0-9]+)?	{return CONSTANTE;}
+[0-9]	{return DIGITO} //uno de 0 1 2 3 4 5 6 7 8 9 
 '[ -~]'|'\\[abefnrtv\\\'\"\?]' {return CONSTANTECARACTER;}
 \"[ -~]*\"        {return LITERALCADENA;}
 char|double|float|int|long|short {return TIPODEDATO;}
