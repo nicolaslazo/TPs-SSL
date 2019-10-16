@@ -45,7 +45,6 @@ expresion: /* Vacio */
 	| expresion '/' expresion   
 	| expresion '^' expresion   
 	| identificador
-	| num
 	| LITERALCADENA
 	| error ';'					{ printf("Error en expresion"); }
 	;
@@ -93,9 +92,6 @@ listaSentencia: sentencia
 
 declaracion: TIPODEDATO inicializacionDeclarado;
 
-inicializacionDeclarado: identificador
-		       | identificador '=' num
-		       ;
 
 sentSeleccion: IF '(' expresion ')' sentencia
 	| IF '(' expresion ')' sentencia ELSE sentencia 
@@ -107,9 +103,6 @@ sentSeleccion: IF '(' expresion ')' sentencia
 
 sentenciaSwitch: '{' sentenciaCase sentenciaSwitchDefault '}';
 
-sentenciaCase: /* Vacio */
-	     | CASE num ':' sentencia
-	     ;
 
 sentenciaSwitchDefault: /* Vacio */
 		      | DEFAULT ':' sentencia
