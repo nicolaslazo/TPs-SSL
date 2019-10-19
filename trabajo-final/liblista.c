@@ -1,15 +1,15 @@
 #define LONG_MAX_IDENT 31
 #include <string.h>
 
-typedef struct {
-	char *identificador;
-	NodoIdentificador *sig = NULL;
-} NodoIdentificador;
+int agregarIdentificador(NodoIdentificador *listaIdentificadores, tipoDato tipo, char *identificador) {
+	if (estaEnLista(listaIdentificadores, identificador)) {
+		printf("Variable %s ya habia sido declarada.\n", identificador);
 
-int agregarIdentificador(NodoIdentificador *listaIdentificadores, char *identificador) {
-	if (estaEnLista(listaIdentificadores, identificador)) return 1;
+		return 1;
+	}
 
 	NodoIdentificador *nuevoNodo;
+	nuevoNodo->tipo = tipo;
 	nuevoNodo->identificador = identificador;
 	nuevoNodo->sig = listaIdentificadores;
 
@@ -20,10 +20,22 @@ int estaEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
 	NodoIdentificador *inspector = listaIdentificadores;
 
 	while (inspector != NULL) {
-		if (!strncmp(inspector, identificador, LONG_MAX_IDENT)) return 1;
+		if (!strncmp(inspector->identificador, identificador, LONG_MAX_IDENT)) return 1;
 
 		inspector = inspector->sig;
 	}
 
 	return 0;
+}
+
+void reportarVariables(NodoIdentificador *lista) {
+	NodoIdentificador *inspector;
+
+	printf("Se declararon las siguientes variables: \n");
+
+	while (inspector != NULL) {
+		printf("\t%s: (%s)\n", inspector->identificador, inspector->tipo);
+
+		inspector = inspector->sig;
+	}
 }
