@@ -31,12 +31,29 @@ int estaEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
 
 void reportarVariables(NodoIdentificador *lista) {
 	NodoIdentificador *inspector;
+	char * tipoAImprimir;
 
 	printf("Se declararon las siguientes variables: \n");
 
 	while (inspector != NULL) {
-		printf("\t%s: (%s)\n", inspector->identificador, inspector->tipo);
+		switch (inspector->tipo) {
+			case CHAR:
+				tipoAImprimir = "Char";
+				break;
+			case FLOAT:
+				tipoAImprimir = "Float";
+				break;
+			case INT:
+				tipoAImprimir = "Int";
+				break;
+			default:
+				return 1
+		}
+
+		printf("\t%s: (%s)\n", inspector->identificador, tipoAImprimir);
 
 		inspector = inspector->sig;
+
+		return 0;
 	}
 }
