@@ -1,5 +1,6 @@
 #define LONG_MAX_IDENT 31
 #include <string.h>
+#include <stdio.h>
 
 int agregarIdentificador(NodoIdentificador *listaIdentificadores, tipoDato tipo, char *identificador) {
 	if (estaEnLista(listaIdentificadores, identificador)) {
