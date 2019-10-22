@@ -6,7 +6,6 @@
 %}
 
 /* los tokens son los simbolos no terminales, type son los terminales */
-%token DIGITO
 %token CONSTANTE CONSTANTEREAL CONSTANTEOCTAL CONSTANTEDECIMAL CONSTANTEHEXADECIMAL
 %token LITERALCADENA
 %token CARACTERES 
@@ -47,7 +46,7 @@ expresion: 	expresion '=' expresion
 		| IDENTIFICADOR
 		| num
 		| LITERALCADENA
-		| error					{ printf("Error en expresion"); }
+		| error ';'	{ printf("Error en expresion"); }
 ;
 
 num: 	  CONSTANTE
@@ -55,13 +54,13 @@ num: 	  CONSTANTE
 	| CONSTANTEDECIMAL
 	| CONSTANTEOCTAL
 	| CONSTANTEHEXADECIMAL
-	| error ';'                                         { printf("Entero no valido"); }
+	| error ';'		{ printf("Entero no valido"); }
 ;
 
 sentencia:  sentCompuesta
 	| sentSeleccion
 	| sentInteraccion
-	| Salto
+	| sentSalto
 	| expresion ';'
 ;
 	
@@ -95,15 +94,16 @@ sentSeleccion: IF '(' expresion ')' sentencia
         | error ';'		{ printf("Error en sentSeleccion\n"); }
 ;
 
-sentenciaSwitch: '{' sentenciaCase sentenciaSwitchDefault '}';
-
-
-sentenciaCase: CASE num ':' sentencia
+sentenciaSwitch: '{' sentenciaCase sentenciaSwitchDefault '}'
+	       | '{' sentenciaCase '}'
+	       | '{' sentenciaSwitchDefault '}'
+	       | '{' '}'
 ;
 
-sentenciaSwitchDefault: DEFAULT ':' sentencia
-;
+sentenciaCase: CASE num ':' sentencia;
 
-Salto: RETURN expresion ';'
-	| RETURN ';'
+sentenciaSwitchDefault: DEFAULT ':' sentencia;
+
+sentSalto: RETURN expresion ';'
+	 | RETURN ';'
 ;
