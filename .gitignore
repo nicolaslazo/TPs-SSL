@@ -2,3 +2,5 @@
 *.tab.c
 *.tab.h
 *.out
+entrada.txt
+salida.txt
