@@ -1,4 +1,5 @@
 %{ 
+	#include "BNF.tab.h"
 	#include <stdio.h>
 %}
 %%
