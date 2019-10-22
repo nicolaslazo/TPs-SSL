@@ -6,16 +6,18 @@
 %}
 
 /* los tokens son los simbolos no terminales, type son los terminales */
-%token CONSTANTE CONSTANTEREAL CONSTANTEOCTAL CONSTANTEDECIMAL CONSTANTEHEXADECIMAL
+%token CONSTANTE CONSTANTEREAL CONSTANTEOCTAL CONSTANTEDECIMAL CONSTANTEHEXADECIMAL CONSTANTECARACTER
 %token LITERALCADENA
-%token CARACTERES 
+%token CARACTER CARACTERDEPUNTUACION
 %token MAYORIGUAL MENORIGUAL
-%token DESIGUALDAD IGUALDAD
+%token DESIGUALDAD IGUALDAD ASIGNACION
 %token AND OR
 %token TIPODEDATO
-%token IF ELSE WHILE DO SWITCH FOR CASE BREAK DEFAULT
+%token IF ELSE WHILE DO SWITCH FOR CASE BREAK DEFAULT PALABRARESERVADA
 %token RETURN
 %token IDENTIFICADOR
+%token COMENTARIO
+%token OPERADORDEC
 
 %left '='
 %right OR
@@ -30,8 +32,7 @@
 
 %%     /* Reglas gramaticales y las acciones */
 
-expresion: 	expresion '=' expresion
-		| expresion OR expresion
+expresion: 	  expresion OR expresion
 		| expresion AND expresion
 		| expresion MAYORIGUAL expresion
 		| expresion '>' expresion
@@ -43,6 +44,7 @@ expresion: 	expresion '=' expresion
 		| expresion '*' expresion  
 		| expresion '/' expresion   
 		| expresion '^' expresion   
+		| expresion '%' expresion
 		| IDENTIFICADOR
 		| num
 		| LITERALCADENA
