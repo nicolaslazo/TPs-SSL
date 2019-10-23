@@ -10,7 +10,7 @@
 %token LITERALCADENA
 %token CARACTER CARACTERDEPUNTUACION
 %token MAYORIGUAL MENORIGUAL
-%token DESIGUALDAD IGUALDAD ASIGNACION
+%token DESIGUALDAD IGUALDAD 
 %token AND OR
 %token TIPODEDATO
 %token IF ELSE WHILE DO SWITCH FOR CASE BREAK DEFAULT PALABRARESERVADA
@@ -60,6 +60,7 @@ num: 	  CONSTANTE
 ;
 
 sentencia:  sentCompuesta
+	| sentAsignacion
 	| sentSeleccion
 	| sentInteraccion
 	| sentSalto
@@ -72,22 +73,25 @@ sentInteraccion:
 	|FOR'(' expresion ';' expresion ';' expresion ')' sentencia
 ;
 
-sentCompuesta: '{' listaDeclaraciones listaSentencia '}'
+sentCompuesta: '{' listaDeclaracion listaSentencia '}'
+	     	| '{' listaDeclaracion '}'
 		| '{' '}'
-;
-
-listaDeclaraciones: declaracion
-	| listaDeclaraciones declaracion 
 ;
 
 listaSentencia: sentencia
 	| listaSentencia sentencia
 ;
 
+listaDeclaracion: declaracion ';' listaDeclaracion
+		| /* Vacio */
+;
+
 declaracion: TIPODEDATO inicializacionDeclarado;
 
-inicializacionDeclarado: IDENTIFICADOR
+inicializacionDeclarado: IDENTIFICADOR ',' inicializacionDeclarado
+		       | IDENTIFICADOR '=' num ',' inicializacionDeclarado
 		       | IDENTIFICADOR '=' num
+		       | IDENTIFICADOR
 ;
 
 sentSeleccion: IF '(' expresion ')' sentencia
@@ -109,3 +113,5 @@ sentenciaSwitchDefault: DEFAULT ':' sentencia;
 sentSalto: RETURN expresion ';'
 	 | RETURN ';'
 ;
+
+sentAsignacion: IDENTIFICADOR '=' expresion ';'

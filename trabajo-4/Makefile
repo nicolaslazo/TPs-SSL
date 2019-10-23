@@ -1,6 +1,6 @@
 target lex.yy.c BNF.tab.c:
-	flex expresionesDeC.l
-	bison -d BNF.y
+	flex -d expresionesDeC.l
+	bison --debug -d BNF.y
 	gcc -g lex.yy.c BNF.tab.c -ll -ly -o output
 
 clean:
