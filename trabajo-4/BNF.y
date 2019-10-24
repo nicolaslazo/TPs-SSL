@@ -64,12 +64,13 @@ sentencia:  sentCompuesta
 	| sentSeleccion
 	| sentInteraccion
 	| sentSalto
+	| BREAK ';'
 	| expresion ';'
 	| error ';'		{ printf("Sentencia no valida\n"); }
 ;
 	
 sentInteraccion:  
-	|WHILE'(' expresion ')' sentencia
+	|WHILE '(' expresion ')' sentencia
 	|DO sentencia WHILE'(' expresion')' ';'
 	|FOR'(' expresion ';' expresion ';' expresion ')' sentencia
 ;

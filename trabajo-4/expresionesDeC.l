@@ -5,6 +5,16 @@
 
 %%
 
+"while" 	{ return WHILE; }
+"if"		{ return IF; }
+"else"		{ return ELSE; }
+"do"		{ return DO; }
+"switch"	{ return SWITCH; }
+"for"		{ return FOR; }
+"case"		{ return CASE; }
+"break"		{ return BREAK; }
+"default"	{ return DEFAULT; }
+
 [1-9][0-9]*       {printf("Num found\n"); return CONSTANTEDECIMAL;}
 0[0-7]*           {return CONSTANTEOCTAL;}
 0[xX][0-9a-fA-F]+ {return CONSTANTEHEXADECIMAL;}
@@ -13,7 +23,7 @@
 '[ -~]'|'\\[abefnrtv\\\'\"\?]' {return CONSTANTECARACTER;}
 \"[ -~]*\"        {return LITERALCADENA;}
 char|double|float|int|long|short {printf("Type found\n"); return TIPODEDATO;}
-auto|break|case|const|continue|default|do|else|enum|extern|for|goto|if|register|return|signed|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile|while {return PALABRARESERVADA;} 
+auto|const|continue|enum|extern|goto|register|signed|sizeof|static|struct|typedef|union|unsigned|void|volatile { return PALABRARESERVADA; } 
 [_a-zA-Z][_a-zA-Z0-9]* {printf("Identifier found\n"); return IDENTIFICADOR;}
 [,\.;:\?\(\)\[\]]  {return CARACTERDEPUNTUACION;}
 [!&\*\+\-/|%><\?]     {return OPERADORDEC;}
@@ -25,16 +35,6 @@ auto|break|case|const|continue|default|do|else|enum|extern|for|goto|if|register|
 ">="	{return MAYORIGUAL;}
 "<="	{return MENORIGUAL;}
 "!="  {return DESIGUALDAD;}
-
-"while" 	{ return WHILE; }
-"if"		{ return IF; }
-"else"		{ return ELSE; }
-"do"		{ return DO; }
-"switch"	{ return SWITCH; }
-"for"		{ return FOR; }
-"case"		{ return CASE; }
-"break"		{ return BREAK; }
-"default"	{ return DEFAULT; }
 
 %%
 
