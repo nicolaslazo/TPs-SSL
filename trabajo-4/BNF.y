@@ -48,7 +48,7 @@ expresion: 	  expresion OR expresion
 		| IDENTIFICADOR
 		| num
 		| LITERALCADENA
-		| error ';'	{ printf("Error en expresion"); }
+		| error ';'	{ printf("Error en expresion\n"); }
 ;
 
 num: 	  CONSTANTE
@@ -56,7 +56,7 @@ num: 	  CONSTANTE
 	| CONSTANTEDECIMAL
 	| CONSTANTEOCTAL
 	| CONSTANTEHEXADECIMAL
-	| error ';'		{ printf("Entero no valido"); }
+	| error ';'		{ printf("Entero no valido\n"); }
 ;
 
 sentencia:  sentCompuesta
@@ -65,11 +65,12 @@ sentencia:  sentCompuesta
 	| sentInteraccion
 	| sentSalto
 	| expresion ';'
+	| error ';'		{ printf("Sentencia no valida\n"); }
 ;
 	
 sentInteraccion:  
 	|WHILE'(' expresion ')' sentencia
-	|DO sentencia WHILE'(' expresion')'
+	|DO sentencia WHILE'(' expresion')' ';'
 	|FOR'(' expresion ';' expresion ';' expresion ')' sentencia
 ;
 

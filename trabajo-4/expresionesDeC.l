@@ -26,12 +26,22 @@ auto|break|case|const|continue|default|do|else|enum|extern|for|goto|if|register|
 "<="	{return MENORIGUAL;}
 "!="  {return DESIGUALDAD;}
 
+"while" 	{ return WHILE; }
+"if"		{ return IF; }
+"else"		{ return ELSE; }
+"do"		{ return DO; }
+"switch"	{ return SWITCH; }
+"for"		{ return FOR; }
+"case"		{ return CASE; }
+"break"		{ return BREAK; }
+"default"	{ return DEFAULT; }
+
 %%
 
 int main() {
 	yyin = fopen("entrada.txt", "r");
 	yyout = fopen("salida.txt", "w");
-	yylex();
+	yyparse();
 
 	return 0;
 }
