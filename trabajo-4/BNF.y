@@ -59,7 +59,7 @@ num: 	  CONSTANTE
 	| error ';'		{ printf("Entero no valido\n"); }
 ;
 
-sentencia:  sentCompuesta
+sentencia:  sentCompuesta	{ printf("Sentencia compuesta encontrada\n"); }
 	| sentAsignacion
 	| sentSeleccion
 	| sentInteraccion
@@ -70,9 +70,9 @@ sentencia:  sentCompuesta
 ;
 	
 sentInteraccion:  
-	|WHILE '(' expresion ')' sentencia
-	|DO sentencia WHILE'(' expresion')' ';'
-	|FOR'(' expresion ';' expresion ';' expresion ')' sentencia
+	|WHILE '(' expresion ')' sentencia 	{ printf("While encontrado\n"); }
+	|DO sentencia WHILE'(' expresion')' ';'		{ printf("Do encontrado\n"); }
+	|FOR'(' expresion ';' expresion ';' expresion ')' sentencia 	{ printf("For encontrado\n"); }
 ;
 
 sentCompuesta: '{' listaDeclaracion listaSentencia '}'
