@@ -3,6 +3,17 @@
 #define YYDEBUG 1
 #include <stdio.h>
 
+typedef enum {
+	TIPOCHAR,
+	TIPODOUBLE,
+	TIPOFLOAT,
+	TIPOINT,
+	TIPOLONG,
+	TIPOSHORT
+} t_tipoDato;
+
+t_tipoDato datoDeclarado;
+
 %}
 
 /* los tokens son los simbolos no terminales, type son los terminales */
@@ -12,7 +23,7 @@
 %token MAYORIGUAL MENORIGUAL
 %token DESIGUALDAD IGUALDAD 
 %token AND OR
-%token TIPODEDATO
+%token CHAR DOUBLE FLOAT INT LONG SHORT
 %token IF ELSE WHILE DO SWITCH FOR CASE BREAK DEFAULT PALABRARESERVADA
 %token RETURN
 %token IDENTIFICADOR
@@ -88,7 +99,15 @@ listaDeclaracion: declaracion ';' listaDeclaracion
 		| /* Vacio */
 ;
 
-declaracion: TIPODEDATO inicializacionDeclarado;
+declaracion: tipoDeDato inicializacionDeclarado;
+
+tipoDeDato: CHAR 	{ datoDeclarado = TIPOCHAR; }
+	  | DOUBLE	{ datoDeclarado = TIPODOUBLE; }
+	  | FLOAT	{ datoDeclarado = TIPOFLOAT; }
+	  | INT		{ datoDeclarado = TIPOINT; }
+	  | LONG	{ datoDeclarado = TIPOLONG; }
+	  | SHORT	{ datoDeclarado = TIPOSHORT; }
+;
 
 inicializacionDeclarado: IDENTIFICADOR ',' inicializacionDeclarado
 		       | IDENTIFICADOR '=' num ',' inicializacionDeclarado
