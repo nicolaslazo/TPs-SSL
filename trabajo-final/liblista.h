@@ -5,7 +5,17 @@
 		CHAR,
 		FLOAT,
 		INT
-	} tipoDato;
+	} tipoSemantico;
+
+	
+	typedef enum {
+		TIPOCHAR,
+		TIPODOUBLE,
+		TIPOFLOAT,
+		TIPOINT,
+		TIPOLONG,
+		TIPOSHORT
+	} tipoVariable;
 
 	typedef struct {
 		tipoDato tipo;
