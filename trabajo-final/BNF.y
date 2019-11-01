@@ -2,33 +2,52 @@
 
 #define YYDEBUG 1
 #include <stdio.h>
+#include "utils/liblista.h"
+#include "utils/verifsemantica.h"
 
-typedef enum {
-	TIPOCHAR,
-	TIPODOUBLE,
-	TIPOFLOAT,
-	TIPOINT,
-	TIPOLONG,
-	TIPOSHORT
-} t_tipoDato;
 
-t_tipoDato datoDeclarado;
+TipoVariable datoDeclarado;
 
 %}
 
+%union { 
+  struct {
+     char cadena[50];
+     float  valor;
+     int  tipo;
+  } s;
+}
+
 /* los tokens son los simbolos no terminales, type son los terminales */
-%token CONSTANTE CONSTANTEREAL CONSTANTEOCTAL CONSTANTEDECIMAL CONSTANTEHEXADECIMAL CONSTANTECARACTER
-%token LITERALCADENA
-%token CARACTER CARACTERDEPUNTUACION
-%token MAYORIGUAL MENORIGUAL
-%token DESIGUALDAD IGUALDAD 
-%token AND OR
-%token CHAR DOUBLE FLOAT INT LONG SHORT
-%token IF ELSE WHILE DO SWITCH FOR CASE BREAK DEFAULT PALABRARESERVADA
-%token RETURN
-%token IDENTIFICADOR
-%token COMENTARIO
-%token OPERADORDEC
+%token <s> CONSTANTE CONSTANTEREAL CONSTANTEOCTAL CONSTANTEDECIMAL CONSTANTEHEXADECIMAL CONSTANTECARACTER
+%token <s> LITERALCADENA
+%token <s> CARACTER CARACTERDEPUNTUACION
+%token <s> MAYORIGUAL MENORIGUAL
+%token <s> DESIGUALDAD IGUALDAD 
+%token <s> AND OR
+%token <s> CHAR DOUBLE FLOAT INT LONG SHORT
+%token <s> IF ELSE WHILE DO SWITCH FOR CASE BREAK DEFAULT PALABRARESERVADA
+%token <s> RETURN
+%token <s> IDENTIFICADOR
+%token <s> COMENTARIO
+%token <s> OPERADORDEC
+
+%type <s> expresion
+%type <s> num
+%type <s> sentencia
+%type <s> sentInteraccion
+%type <s> sentCompuesta
+%type <s> listaSentencia
+%type <s> listaDeclaracion
+%type <s> declaracion
+%type <s> tipoDeDato
+%type <s> inicializacionDeclarado
+%type <s> sentSeleccion
+%type <s> sentenciaSwitch
+%type <s> sentenciaCase
+%type <s> sentenciaSwitchDefault
+%type <s> sentSalto
+%type <s> sentAsignacion
 
 %left '='
 %right OR
@@ -80,10 +99,9 @@ sentencia:  sentCompuesta	{ printf("Sentencia compuesta encontrada\n"); }
 	| error ';'		{ printf("Sentencia no valida\n"); }
 ;
 	
-sentInteraccion:  
-	|WHILE '(' expresion ')' sentencia 	{ printf("While encontrado\n"); }
-	|DO sentencia WHILE'(' expresion')' ';'		{ printf("Do encontrado\n"); }
-	|FOR'(' expresion ';' expresion ';' expresion ')' sentencia 	{ printf("For encontrado\n"); }
+sentInteraccion: WHILE '(' expresion ')' sentencia 	{ printf("While encontrado\n"); }
+		| DO sentencia WHILE'(' expresion')' ';'		{ printf("Do encontrado\n"); }
+		| FOR'(' expresion ';' expresion ';' expresion ')' sentencia 	{ printf("For encontrado\n"); }
 ;
 
 sentCompuesta: '{' listaDeclaracion listaSentencia '}'
