@@ -1,29 +1,15 @@
 #ifndef LIBLISTA_H_
 #define LIBLISTA_H_
 
-	typedef enum {
-		CHAR,
-		FLOAT,
-		INT
-	} tipoSemantico;
-
-	
-	typedef enum {
-		TIPOCHAR,
-		TIPODOUBLE,
-		TIPOFLOAT,
-		TIPOINT,
-		TIPOLONG,
-		TIPOSHORT
-	} tipoVariable;
-
-	typedef struct {
-		tipoDato tipo;
+	struct s_NodoIdentificador {
+		int tipo;
 		char *identificador;
-		NodoIdentificador *sig = NULL;
-	} NodoIdentificador;
+		struct s_NodoIdentificador *sig;
+	};
 
-	int agregarIdentificador(NodoIdentificador *, char *, char *);
+	typedef struct s_NodoIdentificador NodoIdentificador;
+
+	int registrarDeclaracion(NodoIdentificador *, int, char *);
 	int identificadorEnLista(NodoIdentificador *, char *);
 	void reportarVariables(NodoIdentificador *);
 

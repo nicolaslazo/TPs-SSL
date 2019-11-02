@@ -2,12 +2,14 @@
 #include <string.h>
 #include <stdio.h>
 
-int agregarIdentificador(NodoIdentificador *listaIdentificadores, tipoDato tipo, char *identificador) {
-	if (estaEnLista(listaIdentificadores, identificador)) {
+int registrarDeclaracion(NodoIdentificador *listaIdentificadores, int tipo, char *identificador) {
+	if (identificadorEnLista(listaIdentificadores, identificador)) {
 		printf("Variable %s ya habia sido declarada.\n", identificador);
 
 		return 1;
 	}
+
+	if ( listaIdentificadores == NULL) 
 
 	NodoIdentificador *nuevoNodo;
 	nuevoNodo->tipo = tipo;
@@ -37,20 +39,29 @@ void reportarVariables(NodoIdentificador *lista) {
 
 	while (inspector != NULL) {
 		switch (inspector->tipo) {
-			case CHAR:
+			case TIPOCHAR:
 				tipoAImprimir = "Char";
 				break;
-			case FLOAT:
+			case TIPODOUBLE:
+				tipoAImprimir = "Double";
+				break;
+			case TIPOFLOAT:
 				tipoAImprimir = "Float";
 				break;
-			case INT:
+			case TIPOINT:
 				tipoAImprimir = "Int";
+				break;
+			case TIPOLONG:
+				tipoAImprimir = "Long";
+				break;
+			case TIPOSHORT:
+				tipoAImprimir = "Short";
 				break;
 			default:
 				return 1
 		}
 
-		printf("\t%s: (%s)\n", inspector->identificador, tipoAImprimir);
+		printf("\t[%s] %s\n", tipoAImprimir, inspector->identificador);
 
 		inspector = inspector->sig;
 
