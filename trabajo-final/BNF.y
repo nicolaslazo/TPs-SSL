@@ -153,4 +153,4 @@ sentSalto: RETURN expresion ';'
 	 | error ';'	{ printf("Error en sentencia de salto en linea %d\n", numLinea); }
 ;
 
-sentAsignacion: IDENTIFICADOR '=' expresion ';'
+sentAsignacion: IDENTIFICADOR '=' expresion ';' { if ($<s.esNum>3) $<s.esNum>1 = 1; }
