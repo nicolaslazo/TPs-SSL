@@ -16,6 +16,8 @@ int registrarDeclaracion(NodoIdentificador *listaIdentificadores, int tipo, char
 	nuevoNodo->identificador = identificador;
 	nuevoNodo->sig = listaIdentificadores;
 
+	reportarVariable(nuevoNodo);
+
 	return 0;
 }
 
@@ -31,40 +33,33 @@ int estaEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
 	return 0;
 }
 
-void reportarVariables(NodoIdentificador *lista) {
-	NodoIdentificador *inspector;
+int reportarVariable(NodoIdentificador *item) {
 	char * tipoAImprimir;
 
-	printf("Se declararon las siguientes variables: \n");
-
-	while (inspector != NULL) {
-		switch (inspector->tipo) {
-			case TIPOCHAR:
-				tipoAImprimir = "Char";
-				break;
-			case TIPODOUBLE:
-				tipoAImprimir = "Double";
-				break;
-			case TIPOFLOAT:
-				tipoAImprimir = "Float";
-				break;
-			case TIPOINT:
-				tipoAImprimir = "Int";
-				break;
-			case TIPOLONG:
-				tipoAImprimir = "Long";
-				break;
-			case TIPOSHORT:
-				tipoAImprimir = "Short";
-				break;
-			default:
-				return 1
-		}
-
-		printf("\t[%s] %s\n", tipoAImprimir, inspector->identificador);
-
-		inspector = inspector->sig;
-
-		return 0;
+	switch (inspector->tipo) {
+		case TIPOCHAR:
+			tipoAImprimir = "Char";
+			break;
+		case TIPODOUBLE:
+			tipoAImprimir = "Double";
+			break;
+		case TIPOFLOAT:
+			tipoAImprimir = "Float";
+			break;
+		case TIPOINT:
+			tipoAImprimir = "Int";
+			break;
+		case TIPOLONG:
+			tipoAImprimir = "Long";
+			break;
+		case TIPOSHORT:
+			tipoAImprimir = "Short";
+			break;
+		default:
+			return 1;
 	}
+
+	printf("\t[%s] %s\n", tipoAImprimir, inspector->identificador);
+
+	return 0;
 }

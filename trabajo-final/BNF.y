@@ -5,15 +5,15 @@
 	#include "utils/liblista.h"
 	#include "utils/verifsemantica.h"
 
-	int numLinea = 1;
-
 	TipoVariable datoDeclarado;
 	NodoIdentificador *listaVariables = NULL;
+
 %}
 
 %union { 
   struct {
-	int esNum = 0;
+	int esNum;
+	char *valor;
   } s;
 }
 
@@ -60,22 +60,22 @@
 
 %%     /* Reglas gramaticales y las acciones */
 
-expresion: 	  expresion OR expresion 		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }
-		| expresion AND expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }
-		| expresion MAYORIGUAL expresion	{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }
-		| expresion '>' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }
-		| expresion MENORIGUAL expresion	{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }
-		| expresion '<' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }
-		| expresion DESIGUALDAD expresion 	{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }
-		| expresion '+' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }   
-		| expresion '-' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }  
-		| expresion '*' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }  
-		| expresion '/' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }   
-		| expresion '^' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }   
-		| expresion '%' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Tipos incompatibles en linea %d\n", numLinea) else $<s.esNum>$ = 1; }
+expresion: 	  expresion OR expresion 		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
+		| expresion AND expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
+		| expresion MAYORIGUAL expresion	{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
+		| expresion '>' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
+		| expresion MENORIGUAL expresion	{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
+		| expresion '<' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
+		| expresion DESIGUALDAD expresion 	{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
+		| expresion '+' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }   
+		| expresion '-' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }  
+		| expresion '*' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }  
+		| expresion '/' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }   
+		| expresion '^' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }   
+		| expresion '%' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
 		| IDENTIFICADOR 
 		| num
-		| error ';'	{ printf("Error en expresion en linea %d\n", numLinea); }
+		| error ';'	{ printf("Error en expresion\n"); }
 ;
 
 num: 	  CONSTANTE
@@ -83,7 +83,7 @@ num: 	  CONSTANTE
 	| CONSTANTEDECIMAL
 	| CONSTANTEOCTAL
 	| CONSTANTEHEXADECIMAL
-	| error ';'		{ printf("Entero no valido en linea %d\n", numLinea); }
+	| error ';'		{ printf("Error: entero no valido\n"); }
 ;
 
 sentencia:  sentCompuesta
@@ -93,19 +93,19 @@ sentencia:  sentCompuesta
 	| sentSalto
 	| BREAK ';'
 	| expresion ';'
-	| error ';'		{ printf("Sentencia no valida en linea %d\n", numLinea); }
+	| error ';'		{ printf("Error: sentencia no valida\n"); }
 ;
 	
 sentInteraccion: WHILE '(' expresion ')' sentencia 	{ printf("While encontrado\n"); }
 		| DO sentencia WHILE'(' expresion')' ';'		{ printf("Do encontrado\n"); }
 		| FOR'(' expresion ';' expresion ';' expresion ')' sentencia 	{ printf("For encontrado\n"); }
-		| error ';'	{ printf("Sentencia de interaccion no valida en linea %d\n", numLinea); }
+		| error ';'	{ printf("Error: sentencia de interaccion no valida\n"); }
 ;
 
 sentCompuesta: '{' listaDeclaracion listaSentencia '}'
 	     	| '{' listaDeclaracion '}'
 		| '{' '}'
-		| error ';'	{ printf("Sentencia compuesta no valida en %d\n", numLinea); }
+		| error ';'	{ printf("Error: sentencia compuesta no valida\n"); }
 ;
 
 listaSentencia: sentencia
@@ -126,16 +126,16 @@ tipoDeDato: CHAR 	{ datoDeclarado = TIPOCHAR; }
 	  | SHORT	{ datoDeclarado = TIPOSHORT; }
 ;
 
-inicializacionDeclarado: IDENTIFICADOR { registrarDeclaracion(listaVariables, datoDeclarado, yytext); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' num { if ($<s.esNum>3) $<s.esNum>1 = 1; registrarDeclaracion(listaVariables, datoDeclarado, yytext); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' num { if ($<s.esNum>3) $<s.esNum>1 = 1; registrarDeclaracion(listaVariables, datoDeclarado, yytext); }
-		       | IDENTIFICADOR { registrarDeclaracion(listaVariables, datoDeclarado, yytext); }
+inicializacionDeclarado: IDENTIFICADOR { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); } ',' inicializacionDeclarado
+		       | IDENTIFICADOR '=' num { if ($<s.esNum>3) { $<s.esNum>1 = 1; registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
+		       | IDENTIFICADOR '=' num { if ($<s.esNum>3) { $<s.esNum>1 = 1; registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); } else printf("Error: asignacion no valida\n"); }
+		       | IDENTIFICADOR { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); }
 ;
 
 sentSeleccion: IF '(' expresion ')' sentencia
 	| IF '(' expresion ')' sentencia ELSE sentencia 
 	| SWITCH'(' expresion ')' sentenciaSwitch 
-        | error ';'		{ printf("Error en sentSeleccion en linea %d\n", numLinea); }
+        | error ';'		{ printf("Error en sentSeleccion\n"); }
 ;
 
 sentenciaSwitch: '{' sentenciaCase sentenciaSwitchDefault '}'
@@ -150,7 +150,7 @@ sentenciaSwitchDefault: DEFAULT ':' sentencia;
 
 sentSalto: RETURN expresion ';'
 	 | RETURN ';'
-	 | error ';'	{ printf("Error en sentencia de salto en linea %d\n", numLinea); }
+	 | error ';'	{ printf("Error en sentencia de salto\n"); }
 ;
 
-sentAsignacion: IDENTIFICADOR '=' expresion ';' { if ($<s.esNum>3) $<s.esNum>1 = 1 else $<s.esNum> = 0; }
+sentAsignacion: IDENTIFICADOR '=' expresion ';' { if ($<s.esNum>3) $<s.esNum>1 = 1; else $<s.esNum>1 = 0; }

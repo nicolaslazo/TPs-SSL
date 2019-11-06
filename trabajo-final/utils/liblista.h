@@ -11,6 +11,6 @@
 
 	int registrarDeclaracion(NodoIdentificador *, int, char *);
 	int identificadorEnLista(NodoIdentificador *, char *);
-	void reportarVariables(NodoIdentificador *);
+	int reportarVariable(NodoIdentificador *);
 
 #endif

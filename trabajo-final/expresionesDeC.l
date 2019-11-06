@@ -1,8 +1,6 @@
 %{ 
 	#include <stdio.h>
 	#include "BNF.tab.h"
-
-	int numLinea = 1;
 %}
 
 %%
@@ -23,27 +21,24 @@ int		{ return INT; }
 long		{ return LONG; }
 short		{ return SHORT; }
 
-\n		{ numLinea++; }
-
 [1-9][0-9]*       { yylval.s.esNum = 1; return CONSTANTEDECIMAL; }
 0[0-7]*           { yylval.s.esNum = 1; return CONSTANTEOCTAL; }
 0[xX][0-9a-fA-F]+ { yylval.s.esNum = 1; return CONSTANTEHEXADECIMAL; }
 [0-9]*\.[0-9]+([eE][\+\-]?[0-9]+)?|[0-9]+\.([eE][\+\-]?[0-9]+)?|[0-9]([eE][\+\-]?[0-9]+)? { yylval.s.esNum = 1; return CONSTANTEREAL; } 
 [0-9]+(\.[0-9]+)?	{ yylval.s.esNum = 1; return CONSTANTE; }
 '[ -~]'|'\\[abefnrtv\\\'\"\?]' { yylval.s.esNum = 1; return CONSTANTECARACTER; }
-\"[ -~]*\"        { return LITERALCADENA; }
-auto|const|continue|enum|extern|goto|register|signed|sizeof|static|struct|typedef|union|unsigned|void|volatile { return PALABRARESERVADA; } 
-[_a-zA-Z][_a-zA-Z0-9]* { return IDENTIFICADOR; }
-[,\.;:\?\(\)\[\]]  { return CARACTERDEPUNTUACION; }
-[!&\*\+\-/|%><\?]     { return OPERADORDEC; }
-\/\/(.)*|\/\*(.)*\*\/           { return COMENTARIO; }
+auto|const|continue|enum|extern|goto|register|signed|sizeof|static|struct|typedef|union|unsigned|void|volatile { yylval.s.esNum = 0; return PALABRARESERVADA; } 
+[_a-zA-Z][_a-zA-Z0-9]* { yylval.s.valor = yytext; yylval.s.esNum = 0; return IDENTIFICADOR; }
+[,\.;:\?\(\)\[\]]  { yylval.s.esNum = 0; return CARACTERDEPUNTUACION; }
+[!&\*\+\-/|%><\?]     { yylval.s.esNum = 0; return OPERADORDEC; }
+\/\/(.)*|\/\*(.)*\*\/           { yylval.s.esNum = 0; return COMENTARIO; }
 
-"||"	{ return OR; }
-"&&"	{ return AND; }
-"=="	{ return IGUALDAD; }
-">="	{ return MAYORIGUAL; }
-"<="	{ return MENORIGUAL; }
-"!=" 	{ return DESIGUALDAD; }
+"||"	{ yylval.s.esNum = 0; return OR; }
+"&&"	{ yylval.s.esNum = 0; return AND; }
+"=="	{ yylval.s.esNum = 0; return IGUALDAD; }
+">="	{ yylval.s.esNum = 0; return MAYORIGUAL; }
+"<="	{ yylval.s.esNum = 0; return MENORIGUAL; }
+"!=" 	{ yylval.s.esNum = 0; return DESIGUALDAD; }
 
 %%
 
@@ -51,8 +46,6 @@ int main() {
 	yyin = fopen("entrada.txt", "r");
 	yyout = fopen("salida.txt", "w");
 	yyparse();
-
-	reportarVariables(listaVariables);
 
 	return 0;
 }
