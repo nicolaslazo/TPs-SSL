@@ -36,14 +36,14 @@
 			return 1;
 		}
 	
-		NodoIdentificador *nuevoNodo;
-		nuevoNodo->tipo = tipo;
-		nuevoNodo->identificador = identificador;
-		nuevoNodo->sig = listaIdentificadores;
+		NodoIdentificador nuevoNodo;
+		nuevoNodo.tipo = tipo;
+		nuevoNodo.identificador = identificador;
+		nuevoNodo.sig = listaIdentificadores;
 
-		listaIdentificadores = nuevoNodo;
+		listaIdentificadores = &nuevoNodo;
 	
-		reportarVariable(nuevoNodo);
+		reportarVariable(&nuevoNodo);
 	
 		return 0;
 	}
@@ -182,6 +182,7 @@ sentencia:  sentCompuesta
 	| sentSeleccion
 	| sentInteraccion
 	| sentSalto
+	| COMENTARIO
 	| BREAK ';'
 	| expresion ';'
 	| error ';'		{ printf("Error: sentencia no valida\n"); }

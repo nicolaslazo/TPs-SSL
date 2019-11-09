@@ -5,6 +5,27 @@
 
 %%
 
+"{"		{ return '{'; }
+"}"		{ return '}'; }
+"="		{ return '='; }
+"<"		{ return '<'; }
+">"		{ return '>'; }
+"+"		{ return '+'; }
+"-"		{ return '-'; }
+"*"		{ return '*'; }
+"/"		{ return '/'; }
+"%"		{ return '%'; }
+";"		{ return ';'; }
+"("		{ return '('; }
+")"		{ return ')'; }
+
+"||"	{ yylval.s.esNum = 0; return OR; }
+"&&"	{ yylval.s.esNum = 0; return AND; }
+"=="	{ yylval.s.esNum = 0; return IGUALDAD; }
+">="	{ yylval.s.esNum = 0; return MAYORIGUAL; }
+"<="	{ yylval.s.esNum = 0; return MENORIGUAL; }
+"!=" 	{ yylval.s.esNum = 0; return DESIGUALDAD; }
+
 while 		{ return WHILE; }
 if		{ return IF; }
 else		{ return ELSE; }
@@ -33,18 +54,10 @@ auto|const|continue|enum|extern|goto|register|signed|sizeof|static|struct|typede
 [!&\*\+\-/|%><\?]     { yylval.s.esNum = 0; return OPERADORDEC; }
 \/\/(.)*|\/\*(.)*\*\/           { yylval.s.esNum = 0; return COMENTARIO; }
 
-"||"	{ yylval.s.esNum = 0; return OR; }
-"&&"	{ yylval.s.esNum = 0; return AND; }
-"=="	{ yylval.s.esNum = 0; return IGUALDAD; }
-">="	{ yylval.s.esNum = 0; return MAYORIGUAL; }
-"<="	{ yylval.s.esNum = 0; return MENORIGUAL; }
-"!=" 	{ yylval.s.esNum = 0; return DESIGUALDAD; }
-
 %%
 
 int main() {
 	yyin = fopen("entrada.txt", "r");
-	yyout = fopen("salida.txt", "w");
 	yyparse();
 
 	return 0;
