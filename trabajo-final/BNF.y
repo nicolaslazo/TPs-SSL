@@ -96,7 +96,10 @@
 	
 		return 0;
 	}
+
 %}
+
+%define parse.error verbose
 
 %union { 
   struct {
@@ -192,6 +195,7 @@ sentInteraccion: WHILE '(' expresion ')' sentencia 	{ printf("While encontrado\n
 
 sentCompuesta: '{' listaDeclaracion listaSentencia '}'
 	     	| '{' listaDeclaracion '}'
+		| '{' listaSentencia '}'
 		| '{' '}'
 		| error ';'	{ printf("Error: sentencia compuesta no valida\n"); }
 ;
