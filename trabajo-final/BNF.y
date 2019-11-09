@@ -1,13 +1,101 @@
 %{  /* seccion de definiciones */
 
 	#define YYDEBUG 1
+	#define LONG_MAX_IDENT 31
 	#include <stdio.h>
-	#include "utils/liblista.h"
-	#include "utils/verifsemantica.h"
+
+	struct s_NodoIdentificador {
+		int tipo;
+		char *identificador;
+		struct s_NodoIdentificador *sig;
+	};
+
+	typedef struct s_NodoIdentificador NodoIdentificador;
+
+	typedef enum {
+		NUM,
+		ERROR
+	} TipoSemantico;
+	
+	typedef enum {
+		TIPOCHAR,
+		TIPODOUBLE,
+		TIPOFLOAT,
+		TIPOINT,
+		TIPOLONG,
+		TIPOSHORT
+	} TipoVariable;
 
 	TipoVariable datoDeclarado;
 	NodoIdentificador *listaVariables = NULL;
 
+	int registrarDeclaracion(NodoIdentificador *listaIdentificadores, int tipo, char *identificador) {
+		if (estaEnLista(listaIdentificadores, identificador)) {
+			printf("Variable %s ya habia sido declarada.\n", identificador);
+	
+			return 1;
+		}
+	
+		NodoIdentificador *nuevoNodo;
+		nuevoNodo->tipo = tipo;
+		nuevoNodo->identificador = identificador;
+		nuevoNodo->sig = listaIdentificadores;
+
+		listaIdentificadores = nuevoNodo;
+	
+		reportarVariable(nuevoNodo);
+	
+		return 0;
+	}
+	
+	int estaEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
+		NodoIdentificador *inspector = listaIdentificadores;
+	
+		while (inspector != NULL) {
+			if (!strncmp(inspector->identificador, identificador, LONG_MAX_IDENT)) return 1;
+	
+			inspector = inspector->sig;
+		}
+	
+		return 0;
+	}
+	
+	int reportarVariable(NodoIdentificador *item) {
+		char * tipoAImprimir;
+	
+		switch (item->tipo) {
+			case TIPOCHAR:
+				tipoAImprimir = "Char";
+				break;
+			case TIPODOUBLE:
+				tipoAImprimir = "Double";
+				break;
+			case TIPOFLOAT:
+				tipoAImprimir = "Float";
+				break;
+			case TIPOINT:
+				tipoAImprimir = "Int";
+				break;
+			case TIPOLONG:
+				tipoAImprimir = "Long";
+				break;
+			case TIPOSHORT:
+				tipoAImprimir = "Short";
+				break;
+			default:
+				return 1;
+		}
+	
+		printf("\t[%s] %s\n", tipoAImprimir, item->identificador);
+	
+		return 0;
+	}
+
+	int verifTiposValidos(TipoSemantico a, TipoSemantico b) {
+		if (a == NUM && b == NUM) return 1;
+	
+		return 0;
+	}
 %}
 
 %union { 
