@@ -253,6 +253,6 @@ sentSalto: RETURN expresion ';'
 	 | error ';'	{ printf("Error en sentencia de salto\n"); }
 ;
 
-sentAsignacion: IDENTIFICADOR '=' expresion ';' { if ($<s.esNum>3) $<s.esNum>1 = 1; else $<s.esNum>1 = 0; } 
+sentAsignacion: IDENTIFICADOR '=' expresion ';' { if ($<s.esNum>3) $<s.esNum>1 = 1; else  $<s.esNum>1 = 0; } 
 	      | error ';'			{ printf("Error en asignacion\n"); }
 ;
