@@ -18,6 +18,7 @@
 ";"		{ return ';'; }
 "("		{ return '('; }
 ")"		{ return ')'; }
+","		{ return ','; }
 
 "||"	{ yylval.s.esNum = 0; return OR; }
 "&&"	{ yylval.s.esNum = 0; return AND; }
