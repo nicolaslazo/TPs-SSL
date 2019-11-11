@@ -217,37 +217,6 @@ int ejecutarTransicion (pila *top, char lectura){
    }
 };
 
-
-/*int acum = 0;
-char *c[30] = get c;
-int evaluarExpresion (char digito)
-{
-      while (c= get(digito) != '\0')
-      {
-        if (isDigit(c))//la funcion isDigit devuelve 1 o 0 dependiendo si es un digito o nop
-          {
-            c= convertir (c);
-            acum= acum*10 + c;
-          }
-        if (c='+')
-          {
-            acum= acum + evaluarExpresion(c);
-          }
-        if (c= '*')
-          {
-          acum= acum * evaluarExpresion(c);
-          }
-        if (c = '(' || ')')
-        {
-            int acum2=0;
-            acum2 = evaluarExpresion(c); // aca lo q quise poner es q como tengo un parentesis que siga evaluando la expreesion
-            acum = acum + acum2;
-        }
-
-      }
-   return acum;
- };
-*/
 int main(){
     char input[30] = {0};
     int index= 0;
