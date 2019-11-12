@@ -13,11 +13,6 @@
 	typedef struct s_NodoIdentificador NodoIdentificador;
 
 	typedef enum {
-		NUM,
-		ERROR
-	} TipoSemantico;
-	
-	typedef enum {
 		TIPOCHAR,
 		TIPODOUBLE,
 		TIPOFLOAT,
@@ -87,12 +82,6 @@
 		}
 	
 		printf("\t[%s] %s\n", tipoAImprimir, item->identificador);
-	
-		return 0;
-	}
-
-	int verifTiposValidos(TipoSemantico a, TipoSemantico b) {
-		if (a == NUM && b == NUM) return 1;
 	
 		return 0;
 	}
