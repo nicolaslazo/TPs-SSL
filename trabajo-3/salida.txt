@@ -1,0 +1,13 @@
+
+{constDecimales}			        {imprimirLista(&listaDecimales);}
+{constOctales}				        {imprimirLista(&listaOctales);}
+{constHexadecimales}			    {imprimirLista(&listaHexadecimales);}
+{constReales}				          {imprimirLista(&listaReales);}
+{literalCadena}				        {imprimirLista(&listaLiteralesCadena);}
+{palabrasReservadas}			    {imprimirLista(&listaPalabrasReservadas);}
+{identificadores}			        {imprimirLista(&listaIdentificadores);}
+{caracteresDePuntuacion}		  {imprimirLista(&listaCaracteresDePuntuacion);}
+{operadoresDeC}				        {imprimirLista(&listaOperadores);}
+{comentarios}				          {imprimirLista(&listaComentarios);}
+.                             {imprimirLista(&listaOtros);}
+                           
