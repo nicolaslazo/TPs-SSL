@@ -29,3 +29,9 @@ Implementar en C un programa que permita reconocer en un archivo.c entrada todas
 Trabajo Practico n° 4 - Bison para reconocimiento de Estructuras de Frase de C
 
 Implementar en C un programa que permita reconocer expresiones, declaraciones de variables, declaraciones de funciones, sentencias de distintos tipos y definiciones de funciones. El mismo deberá tomar un archivo de texto como entrada y dar como salida en pantalla un reporte variables declaradas indicando tipo de dato, funciones declaradas, sentencias encontradas. Deberá indicarse aquellas secuencias que no pertenezcan a ninguna categoría léxica o estructuras que no sean válidas sintácticamente. Para desarrollar dicho programa deberá utilizar LEX/FLEX combinado con YACC/BISON para la generación del código C.
+
+-------
+
+Trabajo Practico n° 5 - Analizador lexico, sintactico y semantico de C
+
+Implementar en C un programa que realice el análisis léxico, sintáctico y semántico de un archivo fuente del lenguaje C generando su respectivo reporte sobre el análisis realizado. El mismo será un modelo simplificado que solamente realizará determinadas validaciones semánticas.
