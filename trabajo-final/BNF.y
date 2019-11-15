@@ -6,6 +6,7 @@
 
 	struct s_NodoIdentificador {
 		int tipo;
+		int esNum;
 		char *identificador;
 		struct s_NodoIdentificador *sig;
 	};
@@ -43,15 +44,21 @@
 		return 0;
 	}
 	
-	int estaEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
+	NodoIdentificador * encontrarEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
 		NodoIdentificador *inspector = listaIdentificadores;
 	
 		while (inspector != NULL) {
-			if (!strncmp(inspector->identificador, identificador, LONG_MAX_IDENT)) return 1;
+			if (!strncmp(inspector->identificador, identificador, LONG_MAX_IDENT)) return NULL;
 	
 			inspector = inspector->sig;
 		}
 	
+		return inspector;
+	}
+
+	int estaEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
+		if (encontrarEnLista(listaIdentificadores, identificador) != NULL) return 1;
+
 		return 0;
 	}
 	
@@ -83,6 +90,15 @@
 	
 		printf("\t[%s] %s\n", tipoAImprimir, item->identificador);
 	
+		return 0;
+	}
+
+	int setearEsNum(char *identificador, int valorNuevo) {
+		NodoIdentificador *nodo = encontrarEnLista(listaVariables, identificador);
+		
+		if (nodo == NULL) return 1;
+
+		nodo->esNum = valorNuevo;
 		return 0;
 	}
 
@@ -153,7 +169,7 @@ expresion: 	  expresion OR expresion 		{ if (!$<s.esNum>1 || !$<s.esNum>3) print
 		| expresion '/' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }   
 		| expresion '^' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }   
 		| expresion '%' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
-		| IDENTIFICADOR 			{ if ($<s.esNum>1) $<s.esNum>$ = 1; else $<s.esNum>$ = 0; }
+		| IDENTIFICADOR 			{ printf("Se busca la string [%s]\n", $<s.valor>1); if (encontrarEnLista(listaVariables, $<s.valor>1)->esNum) $<s.esNum>$ = 1; else $<s.esNum>$ = 0; }
 		| num					{ if ($<s.esNum>1) $<s.esNum>$ = 1; else $<s.esNum>$ = 0; }
 		| error ';'	{ printf("Error en expresion\n"); }
 ;
@@ -171,6 +187,8 @@ sentencia:  sentCompuesta
 	| sentSeleccion
 	| sentInteraccion
 	| sentSalto
+	| listaSentencia
+	| listaDeclaracion
 	| COMENTARIO
 	| BREAK ';'
 	| expresion ';'
@@ -209,10 +227,10 @@ tipoDeDato: CHAR 	{ datoDeclarado = TIPOCHAR; }
 	  | error 	{ printf("Error: tipo de dato no reconocido\n"); }
 ;
 
-inicializacionDeclarado: IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' num 	{ if ($<s.esNum>3) { $<s.esNum>1 = 1; registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' num 	{ if ($<s.esNum>3) { $<s.esNum>1 = 1; registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); } else printf("Error: asignacion no valida\n"); }
-		       | IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); }
+inicializacionDeclarado: IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); } ',' inicializacionDeclarado
+		       | IDENTIFICADOR '=' num 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
+		       | IDENTIFICADOR '=' num 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); }
+		       | IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); }
 		       | error 			{ printf("Error en inicializacion de la variable declarada\n"); }
 ;
 
@@ -242,6 +260,6 @@ sentSalto: RETURN expresion ';'
 	 | error ';'	{ printf("Error en sentencia de salto\n"); }
 ;
 
-sentAsignacion: IDENTIFICADOR '=' expresion ';' { if ($<s.esNum>3) $<s.esNum>1 = 1; else  $<s.esNum>1 = 0; } 
+sentAsignacion: IDENTIFICADOR '=' expresion ';' { printf("Se setea con yytext [%s]\n", $<s.valor>1); if ($<s.esNum>3) setearEsNum($<s.valor>1, 1); else setearEsNum($<s.valor>1, 0); } 
 	      | error ';'			{ printf("Error en asignacion\n"); }
 ;
