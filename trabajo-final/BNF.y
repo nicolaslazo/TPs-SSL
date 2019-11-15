@@ -48,12 +48,12 @@
 		NodoIdentificador *inspector = listaIdentificadores;
 	
 		while (inspector != NULL) {
-			if (!strncmp(inspector->identificador, identificador, LONG_MAX_IDENT)) return NULL;
+			if (!strncmp(inspector->identificador, identificador, LONG_MAX_IDENT)) return inspector;
 	
 			inspector = inspector->sig;
 		}
 	
-		return inspector;
+		return NULL;
 	}
 
 	int estaEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
@@ -96,7 +96,10 @@
 	int setearEsNum(char *identificador, int valorNuevo) {
 		NodoIdentificador *nodo = encontrarEnLista(listaVariables, identificador);
 		
-		if (nodo == NULL) return 1;
+		if (nodo == NULL) {
+			printf("Error: variable %s no declarada", identificador);
+			return 1;
+		}
 
 		nodo->esNum = valorNuevo;
 		return 0;
@@ -169,7 +172,12 @@ expresion: 	  expresion OR expresion 		{ if (!$<s.esNum>1 || !$<s.esNum>3) print
 		| expresion '/' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }   
 		| expresion '^' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }   
 		| expresion '%' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
-		| IDENTIFICADOR 			{ printf("Se busca la string [%s]\n", $<s.valor>1); if (encontrarEnLista(listaVariables, $<s.valor>1)->esNum) $<s.esNum>$ = 1; else $<s.esNum>$ = 0; }
+		| IDENTIFICADOR 			{ printf("Se busca la string [%s]\n", $<s.valor>1); 
+								NodoIdentificador *encontrado = encontrarEnLista(listaVariables, $<s.valor>1); 
+								if (encontrado == NULL) printf("Error: variable %s no declarada\n", $<s.valor>1); 
+								else if (encontrado->esNum) $<s.esNum>$ = 1; 
+								else $<s.esNum>$ = 0; 
+							}
 		| num					{ if ($<s.esNum>1) $<s.esNum>$ = 1; else $<s.esNum>$ = 0; }
 		| error ';'	{ printf("Error en expresion\n"); }
 ;
@@ -228,8 +236,8 @@ tipoDeDato: CHAR 	{ datoDeclarado = TIPOCHAR; }
 ;
 
 inicializacionDeclarado: IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' num 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' num 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); }
+		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
+		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); }
 		       | IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); }
 		       | error 			{ printf("Error en inicializacion de la variable declarada\n"); }
 ;
