@@ -1,13 +1,15 @@
 %{  /* seccion de definiciones */
 
 	#define YYDEBUG 1
-	#define LONG_MAX_IDENT 31
 	#include <stdio.h>
+	#include <string.h>
+
+	// NOTA: Se toma 31 como el largo maximo de un identificador
 
 	struct s_NodoIdentificador {
 		int tipo;
 		int esNum;
-		char *identificador;
+		char identificador[31];
 		struct s_NodoIdentificador *sig;
 	};
 
@@ -25,7 +27,7 @@
 	TipoVariable datoDeclarado;
 	NodoIdentificador *listaVariables = NULL;
 
-	int registrarDeclaracion(NodoIdentificador *listaIdentificadores, int tipo, char *identificador) {
+	int registrarDeclaracion(NodoIdentificador *listaIdentificadores, int tipo, char identificador[]) {
 		if (estaEnLista(listaIdentificadores, identificador)) {
 			printf("Variable %s ya habia sido declarada.\n", identificador);
 	
@@ -34,21 +36,21 @@
 	
 		NodoIdentificador nuevoNodo;
 		nuevoNodo.tipo = tipo;
-		nuevoNodo.identificador = identificador;
+		strcpy(nuevoNodo.identificador, identificador);
 		nuevoNodo.sig = listaIdentificadores;
 
 		listaIdentificadores = &nuevoNodo;
-	
+
 		reportarVariable(&nuevoNodo);
 	
 		return 0;
 	}
 	
-	NodoIdentificador * encontrarEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
+	NodoIdentificador * encontrarEnLista(NodoIdentificador *listaIdentificadores, char identificador[]) {
 		NodoIdentificador *inspector = listaIdentificadores;
 	
 		while (inspector != NULL) {
-			if (!strncmp(inspector->identificador, identificador, LONG_MAX_IDENT)) return inspector;
+			if (!strncmp(inspector->identificador, identificador, 31)) return inspector;
 	
 			inspector = inspector->sig;
 		}
@@ -56,7 +58,7 @@
 		return NULL;
 	}
 
-	int estaEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
+	int estaEnLista(NodoIdentificador *listaIdentificadores, char identificador[]) {
 		if (encontrarEnLista(listaIdentificadores, identificador) != NULL) return 1;
 
 		return 0;
@@ -93,7 +95,7 @@
 		return 0;
 	}
 
-	int setearEsNum(char *identificador, int valorNuevo) {
+	int setearEsNum(char identificador[], int valorNuevo) {
 		NodoIdentificador *nodo = encontrarEnLista(listaVariables, identificador);
 		
 		if (nodo == NULL) {
@@ -112,7 +114,7 @@
 %union { 
   struct {
 	int esNum;
-	char *valor;
+	char valor[31];
   } s;
 }
 
