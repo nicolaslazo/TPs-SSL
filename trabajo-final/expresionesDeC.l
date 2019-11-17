@@ -1,5 +1,6 @@
 %{ 
 	#include <stdio.h>
+	#include <string.h>
 	#include "BNF.tab.h"
 %}
 
@@ -51,7 +52,7 @@ short		{ return SHORT; }
 [0-9]+(\.[0-9]+)?	{ yylval.s.esNum = 1; return CONSTANTE; }
 '[ -~]'|'\\[abefnrtv\\\'\"\?]' { yylval.s.esNum = 1; return CONSTANTECARACTER; }
 auto|const|continue|enum|extern|goto|register|signed|sizeof|static|struct|typedef|union|unsigned|void|volatile { yylval.s.esNum = 0; return PALABRARESERVADA; } 
-[_a-zA-Z][_a-zA-Z0-9]* { yylval.s.valor = yytext; yylval.s.esNum = 0; return IDENTIFICADOR; }
+[_a-zA-Z][_a-zA-Z0-9]* { strcpy(yylval.s.valor, yytext); return IDENTIFICADOR; }
 [,\.;:\?\(\)\[\]]  { yylval.s.esNum = 0; return CARACTERDEPUNTUACION; }
 [!&\*\+\-/|%><\?]     { yylval.s.esNum = 0; return OPERADORDEC; }
 \/\/(.)*|\/\*(.)*\*\/           { yylval.s.esNum = 0; return COMENTARIO; }

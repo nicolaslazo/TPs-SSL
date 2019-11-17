@@ -1,22 +1,20 @@
 %{  /* seccion de definiciones */
 
 	#define YYDEBUG 1
-	#define LONG_MAX_IDENT 31
 	#include <stdio.h>
+	#include <string.h>
+
+	// NOTA: Se toma 31 como el largo maximo de un identificador
 
 	struct s_NodoIdentificador {
 		int tipo;
-		char *identificador;
+		int esNum;
+		char identificador[31];
 		struct s_NodoIdentificador *sig;
 	};
 
 	typedef struct s_NodoIdentificador NodoIdentificador;
 
-	typedef enum {
-		NUM,
-		ERROR
-	} TipoSemantico;
-	
 	typedef enum {
 		TIPOCHAR,
 		TIPODOUBLE,
@@ -29,7 +27,7 @@
 	TipoVariable datoDeclarado;
 	NodoIdentificador *listaVariables = NULL;
 
-	int registrarDeclaracion(NodoIdentificador *listaIdentificadores, int tipo, char *identificador) {
+	int registrarDeclaracion(NodoIdentificador *listaIdentificadores, int tipo, char identificador[]) {
 		if (estaEnLista(listaIdentificadores, identificador)) {
 			printf("Variable %s ya habia sido declarada.\n", identificador);
 	
@@ -38,25 +36,31 @@
 	
 		NodoIdentificador nuevoNodo;
 		nuevoNodo.tipo = tipo;
-		nuevoNodo.identificador = identificador;
+		strcpy(nuevoNodo.identificador, identificador);
 		nuevoNodo.sig = listaIdentificadores;
 
 		listaIdentificadores = &nuevoNodo;
-	
+
 		reportarVariable(&nuevoNodo);
 	
 		return 0;
 	}
 	
-	int estaEnLista(NodoIdentificador *listaIdentificadores, char *identificador) {
+	NodoIdentificador * encontrarEnLista(NodoIdentificador *listaIdentificadores, char identificador[]) {
 		NodoIdentificador *inspector = listaIdentificadores;
 	
 		while (inspector != NULL) {
-			if (!strncmp(inspector->identificador, identificador, LONG_MAX_IDENT)) return 1;
+			if (!strncmp(inspector->identificador, identificador, 31)) return inspector;
 	
 			inspector = inspector->sig;
 		}
 	
+		return NULL;
+	}
+
+	int estaEnLista(NodoIdentificador *listaIdentificadores, char identificador[]) {
+		if (encontrarEnLista(listaIdentificadores, identificador) != NULL) return 1;
+
 		return 0;
 	}
 	
@@ -91,9 +95,15 @@
 		return 0;
 	}
 
-	int verifTiposValidos(TipoSemantico a, TipoSemantico b) {
-		if (a == NUM && b == NUM) return 1;
-	
+	int setearEsNum(char identificador[], int valorNuevo) {
+		NodoIdentificador *nodo = encontrarEnLista(listaVariables, identificador);
+		
+		if (nodo == NULL) {
+			printf("Error: variable %s no declarada", identificador);
+			return 1;
+		}
+
+		nodo->esNum = valorNuevo;
 		return 0;
 	}
 
@@ -104,7 +114,7 @@
 %union { 
   struct {
 	int esNum;
-	char *valor;
+	char valor[31];
   } s;
 }
 
@@ -164,7 +174,12 @@ expresion: 	  expresion OR expresion 		{ if (!$<s.esNum>1 || !$<s.esNum>3) print
 		| expresion '/' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }   
 		| expresion '^' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }   
 		| expresion '%' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
-		| IDENTIFICADOR 			{ if ($<s.esNum>1) $<s.esNum>$ = 1; else $<s.esNum>$ = 0; }
+		| IDENTIFICADOR 			{ printf("Se busca la string [%s]\n", $<s.valor>1); 
+								NodoIdentificador *encontrado = encontrarEnLista(listaVariables, $<s.valor>1); 
+								if (encontrado == NULL) printf("Error: variable %s no declarada\n", $<s.valor>1); 
+								else if (encontrado->esNum) $<s.esNum>$ = 1; 
+								else $<s.esNum>$ = 0; 
+							}
 		| num					{ if ($<s.esNum>1) $<s.esNum>$ = 1; else $<s.esNum>$ = 0; }
 		| error ';'	{ printf("Error en expresion\n"); }
 ;
@@ -182,6 +197,8 @@ sentencia:  sentCompuesta
 	| sentSeleccion
 	| sentInteraccion
 	| sentSalto
+	| listaSentencia
+	| listaDeclaracion
 	| COMENTARIO
 	| BREAK ';'
 	| expresion ';'
@@ -220,10 +237,10 @@ tipoDeDato: CHAR 	{ datoDeclarado = TIPOCHAR; }
 	  | error 	{ printf("Error: tipo de dato no reconocido\n"); }
 ;
 
-inicializacionDeclarado: IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' num 	{ if ($<s.esNum>3) { $<s.esNum>1 = 1; registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' num 	{ if ($<s.esNum>3) { $<s.esNum>1 = 1; registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); } else printf("Error: asignacion no valida\n"); }
-		       | IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); }
+inicializacionDeclarado: IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); } ',' inicializacionDeclarado
+		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
+		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); }
+		       | IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); }
 		       | error 			{ printf("Error en inicializacion de la variable declarada\n"); }
 ;
 
@@ -253,6 +270,6 @@ sentSalto: RETURN expresion ';'
 	 | error ';'	{ printf("Error en sentencia de salto\n"); }
 ;
 
-sentAsignacion: IDENTIFICADOR '=' expresion ';' { if ($<s.esNum>3) $<s.esNum>1 = 1; else  $<s.esNum>1 = 0; } 
+sentAsignacion: IDENTIFICADOR '=' expresion ';' { printf("Se setea con yytext [%s]\n", $<s.valor>1); if ($<s.esNum>3) setearEsNum($<s.valor>1, 1); else setearEsNum($<s.valor>1, 0); } 
 	      | error ';'			{ printf("Error en asignacion\n"); }
 ;

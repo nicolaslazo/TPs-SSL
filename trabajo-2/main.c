@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 /* Tabla de transicion:
  *       |  Num   +  *   (      )   Lambda
  *    ---------------------------------------------------------------
@@ -256,3 +257,4 @@ int main(){
     return 0;
     }
  };
+
