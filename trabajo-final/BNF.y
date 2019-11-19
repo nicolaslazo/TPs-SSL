@@ -57,6 +57,22 @@
 	
 		return NULL;
 	}
+	
+/* 
+int buscarTipo (char* identificador){
+	nodoIdentificador* inspector = listaIdentificadores;
+	while(inspector!=NULL){
+		if(!strcmp(inspector->identificador, identificador)){
+			if(strcmp(aux->tipo,"int")== 0 || strcmp(aux->tipo,"char")== 0 || strcmp(aux->tipo,"float")== 0 || strcmp(aux->tipo,"double")== 0){return 1;} else { return 2;};
+		}else{
+		inspector=inspector->sig;
+		}
+
+
+	}
+	return 0;
+}
+*/
 
 	int estaEnLista(NodoIdentificador *listaIdentificadores, char identificador[]) {
 		if (encontrarEnLista(listaIdentificadores, identificador) != NULL) return 1;
