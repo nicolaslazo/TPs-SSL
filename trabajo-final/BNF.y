@@ -166,6 +166,7 @@
 
 listaSentencia: sentencia
 	| listaSentencia sentencia
+	| error		{ printf("Error en listaSentencia\n"); }
 ;
 
 sentencia:  sentCompuesta
@@ -185,15 +186,18 @@ sentCompuesta: '{' listaDeclaracion listaSentencia '}'
 	     	| '{' listaDeclaracion '}'
 		| '{' listaSentencia '}'
 		| '{' '}'
-		| error ';'	{ printf("Error: sentencia compuesta no valida\n"); }
+		| error '}'	{ printf("Error: sentencia compuesta no valida\n"); }
 ;
 
 
 listaDeclaracion: declaracion ';' listaDeclaracion
 		| /* Vacio */
+		| error ';'	{ printf("Error en listaSentencia\n"); }
 ;
 
 declaracion: tipoDeDato inicializacionDeclarado ';'
+	   | error ';'		{ printf("Error en declaracion\n"); }
+;
 
 tipoDeDato: CHAR 	{ datoDeclarado = TIPOCHAR; }
 	  | DOUBLE	{ datoDeclarado = TIPODOUBLE; }
@@ -201,14 +205,14 @@ tipoDeDato: CHAR 	{ datoDeclarado = TIPOCHAR; }
 	  | INT		{ datoDeclarado = TIPOINT; }
 	  | LONG	{ datoDeclarado = TIPOLONG; }
 	  | SHORT	{ datoDeclarado = TIPOSHORT; }
-	  | error 	{ printf("Error: tipo de dato no reconocido\n"); }
+	  | error ';'	{ printf("Error: tipo de dato no reconocido\n"); }
 ;
 
 inicializacionDeclarado: IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); } ',' inicializacionDeclarado
 		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
 		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); }
 		       | IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); }
-		       | error 			{ printf("Error en inicializacion de la variable declarada\n"); }
+		       | error ';'		{ printf("Error en inicializacion de la variable declarada\n"); }
 ;
 
 sentSeleccion: IF '(' expresion ')' sentencia
@@ -221,15 +225,15 @@ sentenciaSwitch: '{' sentenciaCase sentenciaSwitchDefault '}'
 	       | '{' sentenciaCase '}'
 	       | '{' sentenciaSwitchDefault '}'
 	       | '{' '}'
-	       | error 				{ printf("Error en sentencia switch\n"); }
+	       | error '}'			{ printf("Error en sentencia switch\n"); }
 ;
 
 sentenciaCase: CASE num ':' sentencia
-	     | error 				{ printf("Error en sentencia case\n"); }
+	     | error '}'			{ printf("Error en sentencia case\n"); }
 ;
 
 sentenciaSwitchDefault: DEFAULT ':' sentencia
-		      | error 			{ printf("Error en el default de una sentencia switch\n"); }
+		      | error '}'		{ printf("Error en el default de una sentencia switch\n"); }
 ;
 
 sentInteraccion: WHILE '(' expresion ')' sentencia 	{ printf("While encontrado\n"); }
