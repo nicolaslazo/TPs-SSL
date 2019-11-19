@@ -29,27 +29,28 @@
 	TipoVariable datoDeclarado;
 	NodoIdentificador *listaVariables = NULL;
 
-	int registrarDeclaracion(NodoIdentificador *listaIdentificadores, int tipo, char identificador[]) {
-		if (estaEnLista(listaIdentificadores, identificador)) {
+	int registrarDeclaracion(int tipo, char identificador[]) {
+		if (estaEnLista(identificador)) {
 			printf("Variable %s ya habia sido declarada.\n", identificador);
 	
 			return 1;
 		}
 	
-		NodoIdentificador nuevoNodo;
-		nuevoNodo.tipo = tipo;
-		strcpy(nuevoNodo.identificador, identificador);
-		nuevoNodo.sig = listaIdentificadores;
+		NodoIdentificador *nuevoNodo = malloc(sizeof(NodoIdentificador));
+		nuevoNodo->tipo = tipo;
+		nuevoNodo->esNum = 0;
+		strcpy(nuevoNodo->identificador, identificador);
+		nuevoNodo->sig = listaVariables;
 
-		listaIdentificadores = &nuevoNodo;
+		listaVariables = nuevoNodo;
 
-		reportarVariable(&nuevoNodo);
+		reportarVariable(nuevoNodo);
 	
 		return 0;
 	}
 	
-	NodoIdentificador * encontrarEnLista(NodoIdentificador *listaIdentificadores, char identificador[]) {
-		NodoIdentificador *inspector = listaIdentificadores;
+	NodoIdentificador * encontrarEnLista(char identificador[]) {
+		NodoIdentificador *inspector = listaVariables;
 	
 		while (inspector != NULL) {
 			if (!strncmp(inspector->identificador, identificador, 31)) return inspector;
@@ -61,8 +62,8 @@
 	}
 	
 
-	int estaEnLista(NodoIdentificador *listaIdentificadores, char identificador[]) {
-		if (encontrarEnLista(listaIdentificadores, identificador) != NULL) return 1;
+	int estaEnLista(char identificador[]) {
+		if (encontrarEnLista(identificador) != NULL) return 1;
 
 		return 0;
 	}
@@ -99,7 +100,7 @@
 	}
 
 	int setearEsNum(char identificador[], int valorNuevo) {
-		NodoIdentificador *nodo = encontrarEnLista(listaVariables, identificador);
+		NodoIdentificador *nodo = encontrarEnLista(identificador);
 		
 		if (nodo == NULL) {
 			printf("Error: variable %s no declarada", identificador);
@@ -209,10 +210,10 @@ tipoDeDato: CHAR 	{ datoDeclarado = TIPOCHAR; }
 	  | error ';'	{ printf("Error: tipo de dato no reconocido\n"); }
 ;
 
-inicializacionDeclarado: IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); printf("listaVariables @ %p\n", listaVariables); } else printf("Error: asignacion no valida\n"); }
-		       | IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); }
+inicializacionDeclarado: IDENTIFICADOR 		{ registrarDeclaracion(datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); } ',' inicializacionDeclarado
+		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
+		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); printf("listaVariables @ %p\n", listaVariables); } else printf("Error: asignacion no valida\n"); }
+		       | IDENTIFICADOR 		{ registrarDeclaracion(datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); }
 		       | error ';'		{ printf("Error en inicializacion de la variable declarada\n"); }
 ;
 
@@ -266,7 +267,7 @@ expresion: 	  expresion OR expresion 		{ if (!$<s.esNum>1 || !$<s.esNum>3) print
 		| expresion '^' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }   
 		| expresion '%' expresion		{ if (!$<s.esNum>1 || !$<s.esNum>3) printf("Error: tipos incompatibles\n"); else $<s.esNum>$ = 1; }
 		| IDENTIFICADOR 			{ printf("Se busca la string [%s]\n", $<s.valor>1); 
-								NodoIdentificador *encontrado = encontrarEnLista(listaVariables, $<s.valor>1); 
+								NodoIdentificador *encontrado = encontrarEnLista($<s.valor>1); 
 								if (encontrado == NULL) printf("Error: variable %s no declarada\n", $<s.valor>1); 
 								else if (encontrado->esNum) $<s.esNum>$ = 1; 
 								else $<s.esNum>$ = 0; 
