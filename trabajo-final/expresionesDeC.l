@@ -4,6 +4,8 @@
 	#include "BNF.tab.h"
 %}
 
+%option noyywrap
+
 %%
 
 "{"		{ return '{'; }
@@ -65,3 +67,5 @@ int main() {
 
 	return 0;
 }
+
+yyerror() { }

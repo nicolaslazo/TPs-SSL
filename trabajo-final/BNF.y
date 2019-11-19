@@ -159,7 +159,7 @@
 %right '+' '-'
 %right '*' '/' '%'
 %right '^'
- 
+
 %start sentencia
 
 %%     /* Reglas gramaticales y las acciones */
@@ -176,6 +176,7 @@ sentencia:  sentCompuesta
 	| sentSalto
 	| listaSentencia
 	| listaDeclaracion
+	| declaracion
 	| COMENTARIO
 	| BREAK ';'
 	| expresion ';'
@@ -210,7 +211,7 @@ tipoDeDato: CHAR 	{ datoDeclarado = TIPOCHAR; }
 
 inicializacionDeclarado: IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); } ',' inicializacionDeclarado
 		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); } ',' inicializacionDeclarado
-		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); } else printf("Error: asignacion no valida\n"); }
+		       | IDENTIFICADOR '=' expresion 	{ if ($<s.esNum>3) { registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 1); printf("listaVariables @ %p\n", listaVariables); } else printf("Error: asignacion no valida\n"); }
 		       | IDENTIFICADOR 		{ registrarDeclaracion(listaVariables, datoDeclarado, $<s.valor>1); setearEsNum($<s.valor>1, 0); }
 		       | error ';'		{ printf("Error en inicializacion de la variable declarada\n"); }
 ;
